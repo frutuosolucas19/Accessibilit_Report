@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Acessibilit Report</string>
+    <string name="criarDenuncia">Criar Denúncia</string>
+    <string name="minhasDenuncias">Minhas Denúncias</string>
+    <string name="locaisDenunciados">Locais Denunciados</string>
+    <string name="locaisAdaptados">Locais Adaptados</string>
+    <string name="forumAcessibilidade">Fórum de Acessibilidade</string>
+    <string name="direitosAcessibilidade">Direitos sobre Acessibilidade</string>
+    <string name="suporte">Suporte</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

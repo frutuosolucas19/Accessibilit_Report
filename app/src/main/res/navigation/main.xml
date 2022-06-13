@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/criarDenuncia"
+        android:name="com.example.acessibilit_report.CadastroDenunciaFragment"
+        android:label="Cadastro de Denúncias"
+        tools:layout="@layout/fragment_cadastro_denuncia" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.acessibilit_report.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+</navigation>

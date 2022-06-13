@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/criarDenuncia"
+        android:title="@string/criarDenuncia" />
+    <item
+        android:id="@+id/minhasDenuncias"
+        android:title="@string/minhasDenuncias" />
+    <item
+        android:id="@+id/locaisDenunciados"
+        android:title="@string/locaisDenunciados" />
+    <item
+        android:id="@+id/locaisAdaptados"
+        android:title="@string/locaisAdaptados" />
+    <item
+        android:id="@+id/forumAcessibilidade"
+        android:title="@string/forumAcessibilidade" />
+    <item
+        android:id="@+id/direitosAcessibilidade"
+        android:title="@string/direitosAcessibilidade" />
+    <item
+        android:id="@+id/suporte"
+        android:title="@string/suporte" />
+</menu>
