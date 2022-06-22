@@ -10,5 +10,7 @@
     <color name="cor_primaria">#2260b6</color>
     <color name="LightSeaGreen">#20B2AA</color>
     <color name="vermelho">	#FF0000</color>
+    <color name="azul_login"> #1278f8</color>
+
 
 </resources>

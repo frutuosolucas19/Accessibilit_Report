@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         getSupportActionBar().hide();
-        txtEmailUsuario = (EditText) findViewById(R.id.editTextEmailUsuario);
+        txtEmailUsuario = (EditText) findViewById(R.id.editTextEmail);
         txtSenha = (EditText) findViewById(R.id.editTextSenha);
         btnEntrar = (Button) findViewById(R.id.buttonLogin);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
@@ -36,6 +36,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btnEntrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

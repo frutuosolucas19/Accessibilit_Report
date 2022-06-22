@@ -18,8 +18,11 @@
 
             <EditText
                 android:id="@+id/editTextEmailUsuario5"
-                android:layout_width="299dp"
-                android:layout_height="48dp"
+                style="@style/Edit_text"
+                android:layout_width="323dp"
+                android:layout_height="57dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Sugestão"
@@ -30,8 +33,11 @@
 
             <EditText
                 android:id="@+id/editTextEmailUsuario4"
-                android:layout_width="299dp"
-                android:layout_height="48dp"
+                style="@style/Edit_text"
+                android:layout_width="323dp"
+                android:layout_height="57dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:hint="Problema"
@@ -42,8 +48,11 @@
 
             <EditText
                 android:id="@+id/editTextEmailUsuario3"
-                android:layout_width="299dp"
-                android:layout_height="48dp"
+                style="@style/Edit_text"
+                android:layout_width="323dp"
+                android:layout_height="57dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Endereço"
@@ -54,8 +63,11 @@
 
             <EditText
                 android:id="@+id/editTextEmailUsuario2"
-                android:layout_width="299dp"
-                android:layout_height="48dp"
+                style="@style/Edit_text"
+                android:layout_width="323dp"
+                android:layout_height="57dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
                 android:layout_marginTop="44dp"
                 android:ems="10"
                 android:hint="Nome do Local"
