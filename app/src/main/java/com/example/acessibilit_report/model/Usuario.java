@@ -1,4 +1,4 @@
-package com.example.acessibilit_report.Model;
+package com.example.acessibilit_report.model;
 
 public class Usuario {
 

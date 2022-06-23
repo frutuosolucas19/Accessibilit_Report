@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         txtEmailUsuario = (EditText) findViewById(R.id.editTextEmail);
         txtSenha = (EditText) findViewById(R.id.editTextSenha);
-        btnEntrar = (Button) findViewById(R.id.buttonLogin);
+        btnEntrar = (Button) findViewById(R.id.buttonCadastro);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
 
         txvCadastrar.setOnClickListener(new View.OnClickListener() {

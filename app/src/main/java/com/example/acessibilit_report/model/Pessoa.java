@@ -1,22 +1,13 @@
-package com.example.acessibilit_report.Model;
+package com.example.acessibilit_report.model;
 
 import java.io.Serializable;
 
 public class Pessoa implements Serializable {
 
-    private long id;
     private String nome;
     private String usuario;
     private String email;
     private String imagem;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -47,6 +38,13 @@ public class Pessoa implements Serializable {
     }
 
     public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public Pessoa(String nome, String usuario, String email, String imagem) {
+        this.nome = nome;
+        this.usuario = usuario;
+        this.email = email;
         this.imagem = imagem;
     }
 }
