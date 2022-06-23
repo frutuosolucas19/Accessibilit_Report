@@ -64,7 +64,7 @@ public class CadastroActivity extends AppCompatActivity {
 
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://localhost:8080/api/pessoa")
+                    .baseUrl("http://localhost:8080/api/pessoa/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
