@@ -8,7 +8,7 @@ import retrofit2.http.POST;
 
 public interface PessoaService {
 
-    @POST("pessoa")
+    @POST
     Call<Pessoa> createPost(@Body Pessoa pessoa);
 
 }

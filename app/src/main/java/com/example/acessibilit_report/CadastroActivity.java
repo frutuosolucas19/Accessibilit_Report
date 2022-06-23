@@ -27,7 +27,7 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtSenha;
     private EditText txtConfirmaSenha;
-    private Button btnEntrar;
+    private Button btnCadastro;
     private TextView txvEsqueceuSenha;
     private TextView txvCadastrar;
 
@@ -37,7 +37,6 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        Context context = this;
         getSupportActionBar().hide();
 
         txtNome = (EditText) findViewById(R.id.editTextNome);
@@ -45,13 +44,12 @@ public class CadastroActivity extends AppCompatActivity {
         txtEmail = (EditText) findViewById(R.id.editTextEmail);
         txtSenha = (EditText) findViewById(R.id.editTextSenha);
         txtConfirmaSenha = (EditText) findViewById(R.id.editTextConfirmaSenha);
-        btnEntrar = (Button) findViewById(R.id.buttonCadastro);
+        btnCadastro = (Button) findViewById(R.id.buttonCadastro);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
 
-        btnEntrar.setOnClickListener(new View.OnClickListener() {
+        btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // validating if the text field is empty or not.
                 if (txtNome.getText().toString().isEmpty() && txtUsuario.getText().toString().isEmpty()
                         && txtEmail.getText().toString().isEmpty() && txtSenha.getText().toString().isEmpty()) {
                     Toast.makeText(CadastroActivity.this, "Por favor, informe todos os valores!", Toast.LENGTH_SHORT).show();
@@ -66,7 +64,7 @@ public class CadastroActivity extends AppCompatActivity {
 
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://localhost:8080/api")
+                    .baseUrl("http://localhost:8080/api/pessoa")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
