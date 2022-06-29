@@ -15,4 +15,9 @@
         android:name="com.example.acessibilit_report.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/minhasDenuncias"
+        android:name="com.example.acessibilit_report.MinhasDenunciasFragment"
+        android:label="fragment_minhas_denuncias"
+        tools:layout="@layout/fragment_minhas_denuncias" />
 </navigation>

@@ -2,19 +2,10 @@ package com.example.acessibilit_report.model;
 
 public class Usuario {
 
-    private long id;
     private Pessoa pessoa;
     private String tipoUsuario;
     private String login;
     private String senha;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public Pessoa getPessoa() {
         return pessoa;

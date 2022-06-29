@@ -9,6 +9,10 @@ public class Pessoa implements Serializable {
     private String email;
     private String imagem;
 
+
+    public Pessoa(String nome, String usuario, String email, String imagem) {
+    }
+
     public String getNome() {
         return nome;
     }
@@ -41,10 +45,4 @@ public class Pessoa implements Serializable {
         this.imagem = imagem;
     }
 
-    public Pessoa(String nome, String usuario, String email, String imagem) {
-        this.nome = nome;
-        this.usuario = usuario;
-        this.email = email;
-        this.imagem = imagem;
-    }
 }
