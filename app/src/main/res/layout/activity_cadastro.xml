@@ -25,14 +25,14 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imagemPerfil"
-        android:layout_width="85dp"
-        android:layout_height="82dp"
+        android:layout_width="124dp"
+        android:layout_height="111dp"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toStartOf="@+id/buttonSelecionImagem"
-        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:riv_oval="true" />

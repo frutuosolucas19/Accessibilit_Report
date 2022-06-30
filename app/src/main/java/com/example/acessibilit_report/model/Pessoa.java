@@ -11,6 +11,10 @@ public class Pessoa implements Serializable {
 
 
     public Pessoa(String nome, String usuario, String email, String imagem) {
+        this.nome=nome;
+        this.usuario=usuario;
+        this.email=email;
+        this.imagem=imagem;
     }
 
     public String getNome() {

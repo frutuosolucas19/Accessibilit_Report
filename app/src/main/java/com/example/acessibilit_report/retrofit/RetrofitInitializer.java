@@ -1,6 +1,7 @@
 package com.example.acessibilit_report.retrofit;
 
 import com.example.acessibilit_report.services.PessoaService;
+import com.example.acessibilit_report.services.UsuarioService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -24,8 +25,12 @@ public class RetrofitInitializer {
                 .build();
     }
 
-    public PessoaService getPessoa()     {
+   /* public PessoaService getPessoa()     {
         return retrofit.create(PessoaService.class);
+    }*/
+
+    public UsuarioService getUsuario()     {
+        return retrofit.create(UsuarioService.class);
     }
 
 

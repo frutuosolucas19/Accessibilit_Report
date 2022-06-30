@@ -7,6 +7,13 @@ public class Usuario {
     private String login;
     private String senha;
 
+    public Usuario(Pessoa pessoa, String tipoUsuario, String login, String senha) {
+        this.pessoa = pessoa;
+        this.tipoUsuario = tipoUsuario;
+        this.login = login;
+        this.senha = senha;
+    }
+
     public Pessoa getPessoa() {
         return pessoa;
     }
