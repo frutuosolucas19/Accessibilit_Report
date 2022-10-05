@@ -1,12 +1,24 @@
 package com.example.acessibilit_report;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,42 +35,72 @@ public class CadastroDenunciaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    public CadastroDenunciaFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CadastroDenunciaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CadastroDenunciaFragment newInstance(String param1, String param2) {
-        CadastroDenunciaFragment fragment = new CadastroDenunciaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private EditText txtNomeLocal;
+    private EditText txtEndereco;
+    private EditText txtProblema;
+    private EditText txtSugestao;
+    private String imagem;
+    private Button btnLocalizacao;
+    private Button btnCadastrar;
+    private Button btnImagem;
+    private static final int PEGA_FOTO = 1;
+    private static final int CODIGO_CAMERA = 2;
+    private ImageView imgDenuncia;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cadastro_denuncia, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        final View view = inflater.inflate(R.layout.fragment_cadastro_denuncia, container, false);
+
+
+        txtNomeLocal = (EditText) view.findViewById(R.id.editTextNomeLocal);
+        txtProblema = (EditText) view.findViewById(R.id.editTextProblema);
+        txtSugestao = (EditText) view.findViewById(R.id.editTextSugestão);
+        btnCadastrar = (Button) view.findViewById(R.id.bt_cadastrar);
+        btnImagem = (Button) view.findViewById(R.id.bt_imagem);
+        imgDenuncia = (ImageView) view.findViewById(R.id.imagemPerfil);
+
+
+
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnImagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentPegaFoto = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(intentPegaFoto, "Selecione uma imagem"), PEGA_FOTO);
+                intentPegaFoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                intentPegaFoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+        });
+
+        ActivityResultLauncher<Intent> exampleActivityResult= registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                                Intent data = new Intent();
+                                Uri imagemSelecionada = data.getData();
+                                imgDenuncia.setImageURI(imagemSelecionada);
+                                imagem = imagemSelecionada.toString();
+
+                        }
+                    }
+                });
+        return view;
     }
+
 }

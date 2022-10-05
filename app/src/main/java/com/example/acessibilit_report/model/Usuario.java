@@ -14,6 +14,13 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario() {
+    }
+
+    public Usuario(String login) {
+        this.login = login;
+    }
+
     public Pessoa getPessoa() {
         return pessoa;
     }

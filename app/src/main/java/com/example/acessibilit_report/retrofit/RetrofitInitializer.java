@@ -25,11 +25,11 @@ public class RetrofitInitializer {
                 .build();
     }
 
-   /* public PessoaService getPessoa()     {
-        return retrofit.create(PessoaService.class);
-    }*/
-
     public UsuarioService getUsuario()     {
+        return retrofit.create(UsuarioService.class);
+    }
+
+    public UsuarioService autenticaUsuario()     {
         return retrofit.create(UsuarioService.class);
     }
 
