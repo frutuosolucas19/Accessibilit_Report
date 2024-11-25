@@ -5,32 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.model.Pessoa;
 import com.example.acessibilit_report.model.Usuario;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
-import com.example.acessibilit_report.services.PessoaService;
-import com.example.acessibilit_report.services.UsuarioService;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
-public class CadastroActivity extends AppCompatActivity {
+public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private ImageView imgPerfil;
     private EditText txtNome;
@@ -85,11 +81,17 @@ public class CadastroActivity extends AppCompatActivity {
                     Toast.makeText(context, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                postUsuario(txtNome.getText().toString(),
-                        txtUsuario.getText().toString(),
-                        txtEmail.getText().toString(),
-                        imagem,
-                        txtSenha.getText().toString());
+                try {
+                    postUsuario(txtNome.getText().toString(),
+                            txtUsuario.getText().toString(),
+                            txtEmail.getText().toString(),
+                            imagem,
+                            txtSenha.getText().toString());
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
@@ -118,7 +120,7 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
-    private void postUsuario(String nome, String nomeUsuario, String email, String imagem, String senha) {
+    private void postUsuario(String nome, String nomeUsuario, String email, String imagem, String senha) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         Pessoa pessoa = new Pessoa(nome, nomeUsuario, email, imagem);
 
@@ -139,6 +141,15 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String criptografarSenha(String senha) throws NoSuchAlgorithmException,
+            UnsupportedEncodingException {
+
+        MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+        byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+
+        return messageDigest.toString();
     }
 }
 

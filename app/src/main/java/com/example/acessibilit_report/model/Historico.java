@@ -14,4 +14,8 @@ public class Historico implements Serializable {
     public void setStatusHistoricoDenuncias(List<StatusHistoricoDenuncia> statusHistoricoDenuncias) {
         this.statusHistoricoDenuncias = statusHistoricoDenuncias;
     }
+
+    public Historico(List<StatusHistoricoDenuncia> statusHistoricoDenuncias) {
+        this.statusHistoricoDenuncias = statusHistoricoDenuncias;
+    }
 }

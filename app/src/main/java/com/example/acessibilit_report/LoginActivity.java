@@ -1,23 +1,19 @@
 package com.example.acessibilit_report;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.acessibilit_report.model.Usuario;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import com.example.acessibilit_report.services.UsuarioService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +30,11 @@ public class LoginActivity extends AppCompatActivity {
     private String email, senha;
     private Context context = this;
 
+    private RetrofitInitializer retrofitInitializer;
+
+    private UsuarioService usuarioService;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar = (Button) findViewById(R.id.buttonCadastro);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
 
+        //RetrofitInitializer retrofitInitializer = new RetrofitInitializer();
+        //usuarioService = retrofitInitializer.getUsuario();
+
         txvCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                Intent intent = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
                 startActivity(intent);
             }
         });
@@ -58,35 +62,50 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                validaUsuario(txtLogin.getText().toString(), txtSenha.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                startActivity(intent);
+                //Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                //startActivity(intent);
+                //retrofitInitializer = new RetrofitInitializer();
+                //validaUsuario(txtLogin.getText().toString(), txtSenha.getText().toString());
+
+                //String login = txtLogin.getText().toString();
+                //String senha = txtSenha.getText().toString();
+
+                //Usuario usuario = new Usuario();
+                //usuario.setLogin(txtLogin.getText().toString());
+                //usuario.setSenha(txtSenha.getText().toString());
+                //validaUsuario(usuario);
             }
         });
     }
+    private void validaUsuario(Usuario usuario) {
 
-    public void validaUsuario(final String login, final String senha) {
+        //Pessoa pessoa = new Pessoa(nome, nomeUsuario, email, imagem);
 
+        //Usuario usuario = new Usuario(pessoa, "normal", email, senha);
 
-        Usuario usuario = new Usuario(login);
-        Call<Usuario> call = new RetrofitInitializer().autenticaUsuario().reposUsuario(usuario);
+        Call<String> call = new RetrofitInitializer().getUsuario().login("joao123@gmail.com", "joao123");
 
-        call.enqueue(new Callback<Usuario>() {
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Usuario acesso = response.body();
-                if (acesso.getLogin().equals(login) && acesso.getSenha().equals(senha)) {
-                    Toast.makeText(context, "Login Realizado com Sucesso!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(context, "Falha no Login!", Toast.LENGTH_SHORT).show();
-                }
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful() && response.code() == 200) {
+                           // Login bem-sucedido, iniciar a MenuActivity
+                          Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                         startActivity(intent);
+                    //     finish();
+                     } else {
+                        // Exibir mensagem de erro
+                        Toast.makeText(LoginActivity.this, "Credenciais inválidas", Toast.LENGTH_SHORT).show();
+                    }
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(context, "Erro ao estabelecer conexão", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
-    }
 
+    }
 }

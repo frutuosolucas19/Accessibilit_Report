@@ -13,4 +13,8 @@ public class Status implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public Status(String nome) {
+        this.nome = nome;
+    }
 }

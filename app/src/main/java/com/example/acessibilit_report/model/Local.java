@@ -8,6 +8,9 @@ public class Local implements Serializable {
     private Localizacao localizacao;
     private Endereco endereco;
 
+    public Local() {
+    }
+
     public String getNome() {
         return nome;
     }

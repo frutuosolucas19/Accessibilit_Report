@@ -20,4 +20,29 @@
         android:name="com.example.acessibilit_report.MinhasDenunciasFragment"
         android:label="fragment_minhas_denuncias"
         tools:layout="@layout/fragment_minhas_denuncias" />
+    <fragment
+        android:id="@+id/locaisDenunciados"
+        android:name="com.example.acessibilit_report.LocaisDenunciadosFragment"
+        android:label="fragment_locais_denunciados"
+        tools:layout="@layout/fragment_locais_denunciados" />
+    <fragment
+        android:id="@+id/locaisAdaptados"
+        android:name="com.example.acessibilit_report.LocaisAdaptadosFragment"
+        android:label="fragment_locais_adaptados"
+        tools:layout="@layout/fragment_locais_adaptados" />
+    <fragment
+        android:id="@+id/forumAcessibilidade"
+        android:name="com.example.acessibilit_report.ForumAcessibilidadeFragment"
+        android:label="fragment_forum_acessibilidade"
+        tools:layout="@layout/fragment_forum_acessibilidade" />
+    <fragment
+        android:id="@+id/direitosAcessibilidade"
+        android:name="com.example.acessibilit_report.DireitosAcessibilidadeFragment"
+        android:label="fragment_direitos_acessibilidade"
+        tools:layout="@layout/fragment_direitos_acessibilidade" />
+    <fragment
+        android:id="@+id/suporte"
+        android:name="com.example.acessibilit_report.SuporteFragment"
+        android:label="fragment_suporte"
+        tools:layout="@layout/fragment_suporte" />
 </navigation>

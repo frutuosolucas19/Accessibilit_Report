@@ -12,6 +12,15 @@ public class Denuncia implements Serializable {
     private Status statusAtual;
     private Historico historico;
 
+    public Denuncia(Local local, String problema, String sugestao, Usuario usuario, String imagem, Status statusAtual) {
+        this.local = local;
+        this.problema = problema;
+        this.sugestao = sugestao;
+        this.usuario = usuario;
+        this.imagem = imagem;
+        this.statusAtual=statusAtual;
+    }
+
     public Local getLocal() {
         return local;
     }
