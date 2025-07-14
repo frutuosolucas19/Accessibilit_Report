@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.acessibilit_report.dto.LoginRequest;
+import com.example.acessibilit_report.dto.LoginResponse;
 import com.example.acessibilit_report.model.Usuario;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UsuarioService;
@@ -61,49 +63,51 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = txtLogin.getText().toString().trim();
+                String senha = txtSenha.getText().toString().trim();
 
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                startActivity(intent);
-                //Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                //startActivity(intent);
-                //retrofitInitializer = new RetrofitInitializer();
-                //validaUsuario(txtLogin.getText().toString(), txtSenha.getText().toString());
+                if (email.isEmpty() || senha.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                //String login = txtLogin.getText().toString();
-                //String senha = txtSenha.getText().toString();
+                LoginRequest loginRequest = new LoginRequest(email, senha);
 
-                //Usuario usuario = new Usuario();
-                //usuario.setLogin(txtLogin.getText().toString());
-                //usuario.setSenha(txtSenha.getText().toString());
-                //validaUsuario(usuario);
-            }
-        });
-    }
-    private void validaUsuario(Usuario usuario) {
+                RetrofitInitializer retrofitInitializer = new RetrofitInitializer();
+                UsuarioService service = retrofitInitializer.getUsuario();
 
-        //Pessoa pessoa = new Pessoa(nome, nomeUsuario, email, imagem);
+                Call<LoginResponse> call = service.login(loginRequest);
 
-        //Usuario usuario = new Usuario(pessoa, "normal", email, senha);
+                call.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            LoginResponse loginResponse = response.body();
 
-        Call<String> call = new RetrofitInitializer().getUsuario().login("joao123@gmail.com", "joao123");
+                            // Aqui você pode salvar os dados em SharedPreferences, se quiser
+                            Toast.makeText(LoginActivity.this,
+                                    "Bem-vindo, " + loginResponse.getNome() + " (" + loginResponse.getTipoUsuario() + ")",
+                                    Toast.LENGTH_LONG).show();
 
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.code() == 200) {
-                           // Login bem-sucedido, iniciar a MenuActivity
-                          Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                         startActivity(intent);
-                    //     finish();
-                     } else {
-                        // Exibir mensagem de erro
-                        Toast.makeText(LoginActivity.this, "Credenciais inválidas", Toast.LENGTH_SHORT).show();
+                            // Ir para a próxima tela (MenuActivity)
+                            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+                            Toast.makeText(LoginActivity.this,
+                                    "Email ou senha inválidos",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this,
+                                "Erro ao conectar: " + t.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

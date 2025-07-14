@@ -4,21 +4,21 @@ public class Usuario {
 
     private Pessoa pessoa;
     private String tipoUsuario;
-    private String login;
+    private String email;
     private String senha;
 
-    public Usuario(Pessoa pessoa, String tipoUsuario, String login, String senha) {
+    public Usuario(Pessoa pessoa, String tipoUsuario, String email, String senha) {
         this.pessoa = pessoa;
         this.tipoUsuario = tipoUsuario;
-        this.login = login;
+        this.email = email;
         this.senha = senha;
     }
 
     public Usuario() {
     }
 
-    public Usuario(String login) {
-        this.login = login;
+    public Usuario(String email) {
+        this.email = email;
     }
 
     public Pessoa getPessoa() {
@@ -37,12 +37,12 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
