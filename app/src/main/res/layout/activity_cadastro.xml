@@ -7,32 +7,15 @@
     android:background="@color/azul_login"
     tools:context=".CadastroUsuarioActivity">
 
-    <EditText
-        android:id="@+id/editTextUsuario"
-        style="@style/Edit_text"
-        android:layout_width="323dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Usuário"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="10dp"
-        android:paddingEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
-
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imagemPerfil"
         android:layout_width="124dp"
         android:layout_height="111dp"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toStartOf="@+id/buttonSelecionImagem"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:riv_oval="true" />
@@ -42,8 +25,8 @@
         style="@style/Button_Login"
         android:layout_width="69dp"
         android:layout_height="53dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="100dp"
         android:drawableTop="@drawable/ic_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,14 +36,13 @@
         style="@style/Edit_text"
         android:layout_width="323dp"
         android:layout_height="57dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="212dp"
         android:ems="10"
         android:hint="Nome"
         android:inputType="textEmailAddress"
         android:paddingLeft="10dp"
         android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,7 +66,7 @@
         style="@style/Edit_text"
         android:layout_width="323dp"
         android:layout_height="57dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="21dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -93,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
 
     <EditText
         android:id="@+id/editTextSenha"

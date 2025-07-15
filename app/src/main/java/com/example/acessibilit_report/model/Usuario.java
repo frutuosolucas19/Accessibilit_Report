@@ -2,23 +2,28 @@ package com.example.acessibilit_report.model;
 
 public class Usuario {
 
+    private Long id;
     private Pessoa pessoa;
-    private String tipoUsuario;
     private String email;
     private String senha;
+    private String tipoUsuario;
 
-    public Usuario(Pessoa pessoa, String tipoUsuario, String email, String senha) {
+    public Usuario(Pessoa pessoa, String email, String senha, String tipoUsuario) {
         this.pessoa = pessoa;
-        this.tipoUsuario = tipoUsuario;
         this.email = email;
         this.senha = senha;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public Usuario() {
     }
 
-    public Usuario(String email) {
-        this.email = email;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Pessoa getPessoa() {
@@ -27,14 +32,6 @@ public class Usuario {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
 
     public String getEmail() {
@@ -51,5 +48,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }

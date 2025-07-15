@@ -2,6 +2,7 @@ package com.example.acessibilit_report;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.dto.LoginRequest;
 import com.example.acessibilit_report.dto.LoginResponse;
-import com.example.acessibilit_report.model.Usuario;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UsuarioService;
 
@@ -29,12 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnEntrar;
     private TextView txvEsqueceuSenha;
     private TextView txvCadastrar;
-    private String email, senha;
     private Context context = this;
-
-    private RetrofitInitializer retrofitInitializer;
-
-    private UsuarioService usuarioService;
 
 
     @Override
@@ -48,9 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         txtSenha = (EditText) findViewById(R.id.editTextSenha);
         btnEntrar = (Button) findViewById(R.id.buttonCadastro);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
-
-        //RetrofitInitializer retrofitInitializer = new RetrofitInitializer();
-        //usuarioService = retrofitInitializer.getUsuario();
 
         txvCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 LoginRequest loginRequest = new LoginRequest(email, senha);
-
                 RetrofitInitializer retrofitInitializer = new RetrofitInitializer();
                 UsuarioService service = retrofitInitializer.getUsuario();
-
                 Call<LoginResponse> call = service.login(loginRequest);
 
                 call.enqueue(new Callback<LoginResponse>() {
@@ -84,12 +74,18 @@ public class LoginActivity extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             LoginResponse loginResponse = response.body();
 
-                            // Aqui você pode salvar os dados em SharedPreferences, se quiser
+                            // Salvar em SharedPreferences
+                            SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("nome", loginResponse.getNome());
+                            editor.putString("email", loginResponse.getEmail());
+                            editor.putString("tipoUsuario", loginResponse.getTipoUsuario());
+                            editor.apply();
+
                             Toast.makeText(LoginActivity.this,
-                                    "Bem-vindo, " + loginResponse.getNome() + " (" + loginResponse.getTipoUsuario() + ")",
+                                    "Bem-vindo, " + loginResponse.getNome(),
                                     Toast.LENGTH_LONG).show();
 
-                            // Ir para a próxima tela (MenuActivity)
                             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                             startActivity(intent);
                             finish();

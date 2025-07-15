@@ -52,6 +52,54 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/main"/>
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="393dp"
+            android:layout_height="483dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutToolBar"
+            app:srcCompat="@drawable/menulogo" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="186dp"
+            android:layout_height="55dp"
+            android:background="@color/azul_login"
+            android:text="@string/criarDenuncia"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/Button_Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/azul_login"
+            android:text="@string/minhasDenuncias"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/Button_Login"
+            android:layout_width="195dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="21dp"
+            android:background="@color/azul_login"
+            android:text="Ver Locais"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button4" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

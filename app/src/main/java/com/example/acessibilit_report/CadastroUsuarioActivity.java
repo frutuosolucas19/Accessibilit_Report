@@ -30,7 +30,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private ImageView imgPerfil;
     private EditText txtNome;
-    private EditText txtUsuario;
     private EditText txtEmail;
     private EditText txtSenha;
     private EditText txtConfirmaSenha;
@@ -53,7 +52,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
         imgPerfil = (ImageView) findViewById(R.id.imagemPerfil);
         txtNome = (EditText) findViewById(R.id.editTextNome);
-        txtUsuario = (EditText) findViewById(R.id.editTextUsuario);
         txtEmail = (EditText) findViewById(R.id.editTextEmail);
         txtSenha = (EditText) findViewById(R.id.editTextSenha);
         txtConfirmaSenha = (EditText) findViewById(R.id.editTextConfirmaSenha);
@@ -61,14 +59,19 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         btnImagem = (Button) findViewById(R.id.buttonSelecionImagem);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
 
-
+        txvCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (txtNome.getText().toString().isEmpty() &&
-                        txtUsuario.getText().toString().isEmpty() &&
                         txtEmail.getText().toString().isEmpty() &&
                         txtSenha.getText().toString().isEmpty() &&
                         txtConfirmaSenha.getText().toString().isEmpty()) {
@@ -83,16 +86,15 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 }
                 try {
                     postUsuario(txtNome.getText().toString(),
-                            txtUsuario.getText().toString(),
-                            txtEmail.getText().toString(),
-                            imagem,
-                            txtSenha.getText().toString());
+                                txtEmail.getText().toString(),
+                                imagem,
+                                txtSenha.getText().toString(),
+                                "normal");
                 } catch (UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 } catch (NoSuchAlgorithmException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         });
 
@@ -113,27 +115,33 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 Uri imagemSelecionada = data.getData();
 
                 imgPerfil.setImageURI(imagemSelecionada);
-
                 imagem = imagemSelecionada.toString();
-
             }
         }
     }
 
-    private void postUsuario(String nome, String nomeUsuario, String email, String imagem, String senha) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    private void postUsuario(String nome, String email, String imagem, String senha, String tipoUsuario) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        Pessoa pessoa = new Pessoa(nome, nomeUsuario, email, imagem);
-
-        Usuario usuario = new Usuario(pessoa, "normal", email, senha);
+        Pessoa pessoa = new Pessoa(nome, imagem);
+        Usuario usuario = new Usuario(pessoa, email, senha, tipoUsuario );
 
         Call<Usuario> call = new RetrofitInitializer().getUsuario().createPost(usuario);
-        
+
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Toast.makeText(context, "Data add na API", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
 
-        }
+                // Delay de 2 segundos
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 2000);
+            }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
