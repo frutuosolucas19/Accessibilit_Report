@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         txtLogin = (EditText) findViewById(R.id.editTextEmail);
         txtSenha = (EditText) findViewById(R.id.editTextSenha);
-        btnEntrar = (Button) findViewById(R.id.buttonCadastro);
+        btnEntrar = (Button) findViewById(R.id.buttonLogin);
         txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
 
         txvCadastrar.setOnClickListener(new View.OnClickListener() {

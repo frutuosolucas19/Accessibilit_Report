@@ -32,6 +32,10 @@ public class RetrofitInitializer {
     }
 
     public DenunciaService getDenuncia() { return  retrofit.create(DenunciaService.class);}
+
+    public DenunciaService getDenunciaService() {
+        return this.retrofit.create(DenunciaService.class);
+    }
 }
 
 

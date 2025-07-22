@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.acessibilit_report"
-        minSdk 21
-        targetSdk 31
+        minSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -26,6 +26,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.example.acessibilit_report'
+    buildToolsVersion '34.0.0'
 }
 
 dependencies {

@@ -3,6 +3,7 @@ package com.example.acessibilit_report;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.acessibilit_report.dto.DenunciaRequest;
 import com.example.acessibilit_report.model.Denuncia;
 import com.example.acessibilit_report.model.Historico;
 import com.example.acessibilit_report.model.Local;
@@ -87,8 +89,9 @@ public class CadastroDenunciaFragment extends Fragment {
                Usuario usuario = new Usuario();
 
 
-                postDenuncia(local, usuario, txtProblema.getText().toString(),
-                             txtSugestao.getText().toString(), imagem);
+                postDenuncia(local, txtProblema.getText().toString(),
+                        txtSugestao.getText().toString(), imagem);
+
             }
         });
 
@@ -117,27 +120,39 @@ public class CadastroDenunciaFragment extends Fragment {
             }
         }
     }
-    private void postDenuncia(Local local, Usuario usuario, String problema, String sugestao, String imagem) {
+    private void postDenuncia(Local local, String problema, String sugestao, String imagem) {
 
-        Status statusAtual = new Status("Criada");
+        Status status = new Status("Criada");
 
-        Denuncia denuncia = new Denuncia(local, problema, sugestao, usuario, imagem, statusAtual);
+        SharedPreferences prefs = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        String emailUsuario = prefs.getString("email", null);
 
-        Call<Usuario> call = new RetrofitInitializer().getUsuario().createPost(usuario);
+        if (emailUsuario == null || emailUsuario.isEmpty()) {
+            Toast.makeText(context, "Usuário não logado", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        call.enqueue(new Callback<Usuario>() {
+        DenunciaRequest request = new DenunciaRequest(local, problema, sugestao, imagem, status, emailUsuario);
+
+        Call<Denuncia> call = new RetrofitInitializer()
+                .getDenunciaService()
+                .criarDenuncia(request);
+
+        call.enqueue(new Callback<Denuncia>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Toast.makeText(context, "Data add na API", Toast.LENGTH_SHORT).show();
-
+            public void onResponse(Call<Denuncia> call, Response<Denuncia> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Denúncia enviada com sucesso!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Erro ao enviar denúncia: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(context, "Falha na requisição", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<Denuncia> call, Throwable t) {
+                Toast.makeText(context, "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
 }

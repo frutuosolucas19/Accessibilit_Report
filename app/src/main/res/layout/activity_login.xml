@@ -5,112 +5,122 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/azul_login"
-    android:backgroundTint="@color/azul_login"
     tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        style="@style/Edit_text"
-        android:layout_width="323dp"
-        android:layout_height="57dp"
+    <!-- Logo do app -->
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="36dp"
-        android:drawableRight="@drawable/ic_email"
-        android:ems="10"
-        android:hint="Email ou Usuário"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="10dp"
-        android:paddingEnd="10dp"
-        app:layout_constraintCircleRadius="20dp"
+        android:contentDescription="@string/logo_do_acessibilit_report"
+        android:src="@drawable/novalogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextSenha"
-        style="@style/Edit_text"
-        android:layout_width="323dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="32dp"
-        android:drawableRight="@drawable/ic_eye"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:paddingEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonCadastro"
-        style="@style/Button_Login"
-        android:layout_width="251dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="48dp"
-        android:text="Login"
+    <TextView
+        android:id="@+id/textViewTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:importantForAccessibility="yes"
+        android:text="@string/accessibility_report"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEsqueceuSenha" />
+        app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        style="@style/Edit_text"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="72dp"
+        android:autofillHints=""
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/campo_para_digitar_email_ou_nome_de_usu_rio"
+        android:drawableEnd="@drawable/ic_email"
+        android:hint="@string/email_ou_usu_rio"
+        android:inputType="textEmailAddress"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitulo"
+        app:layout_constraintWidth_percent="0.85"
+        tools:ignore="ContentDescription" />
+
+    <EditText
+        android:id="@+id/editTextSenha"
+        style="@style/Edit_text"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="36dp"
+        android:autofillHints=""
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/campo_para_digitar_a_senha"
+        android:drawableEnd="@drawable/ic_eye"
+        android:hint="@string/senha"
+        android:inputType="textPassword"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+        app:layout_constraintWidth_percent="0.85"
+        tools:ignore="ContentDescription" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogin"
+        style="@style/Button_Login"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/button_white_rounded"
+        android:contentDescription="@string/bot_o_para_fazer_login"
+        android:text="@string/entrar"
+        android:textColor="@color/azul_login"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/editTextSenha"
+        app:layout_constraintStart_toStartOf="@id/editTextSenha"
+        app:layout_constraintTop_toBottomOf="@id/textViewEsqueceuSenha" />
+
+    <TextView
+        android:id="@+id/textViewTelaCadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@string/bot_o_para_criar_uma_nova_conta"
+        android:text="@string/criar_conta"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
 
     <TextView
         android:id="@+id/textViewEsqueceuSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Esqueceu sua senha?"
+        android:contentDescription="@string/link_para_recuperar_senha"
+        android:text="@string/esqueceu_sua_senha"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSenha" />
-
-    <TextView
-        android:id="@+id/textViewTelaCadastro"
-        android:layout_width="101dp"
-        android:layout_height="44dp"
-        android:minHeight="48dp"
-        android:text="Criar conta"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCadastro"
-        app:layout_constraintVertical_bias="0.213"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="168dp"
-        android:layout_height="173dp"
-        android:layout_marginTop="36dp"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="ACESSIBILIT REPORT"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/editTextSenha"
+        app:layout_constraintTop_toBottomOf="@id/editTextSenha" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

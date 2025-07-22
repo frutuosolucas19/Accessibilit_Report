@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Acessibilit Report</string>
+    <string name="app_name">Accessibility Report</string>
     <string name="criarDenuncia">Criar Denúncia</string>
     <string name="minhasDenuncias">Minhas Denúncias</string>
     <string name="locaisDenunciados">Locais Denunciados</string>
@@ -9,4 +9,30 @@
     <string name="suporte">Suporte</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="campo_nome_completo">Campo para digitar o nome completo</string>
+    <string name="nome_completo">Nome completo</string>
+    <string name="imagem_do_perfil_do_usu_rio">Imagem do perfil do usuário</string>
+    <string name="alterar">Alterar</string>
+    <string name="selecionar_imagem_de_perfil">Selecionar imagem de perfil</string>
+    <string name="email">Email</string>
+    <string name="campo_para_digitar_o_email">Campo para digitar o email</string>
+    <string name="senha">Senha</string>
+    <string name="campo_para_digitar_a_senha">Campo para digitar a senha</string>
+    <string name="confirme_a_senha">Confirme a senha</string>
+    <string name="campo_para_confirmar_a_senha">Campo para confirmar a senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="bot_o_para_criar_conta">Botão para criar conta</string>
+    <string name="j_possui_login_entrar">Já possui login? Entrar</string>
+    <string name="texto_para_ir_para_a_tela_de_login">Texto para ir para a tela de login</string>
+    <string name="logo_do_acessibilit_report">Logo do Acessibilit Report</string>
+    <string name="accessibility_report">ACCESSIBILITY REPORT</string>
+    <string name="campo_para_digitar_email_ou_nome_de_usu_rio">Campo para digitar email ou nome de usuário</string>
+    <string name="email_ou_usu_rio">Email ou Usuário</string>
+    <string name="campo_para_digitar_a_senha2">Campo para digitar a senha</string>
+    <string name="bot_o_para_fazer_login">Botão para fazer login</string>
+    <string name="entrar">Entrar</string>
+    <string name="bot_o_para_criar_uma_nova_conta">Botão para criar uma nova conta</string>
+    <string name="criar_conta">Criar conta</string>
+    <string name="link_para_recuperar_senha">Link para recuperar senha</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
 </resources>
