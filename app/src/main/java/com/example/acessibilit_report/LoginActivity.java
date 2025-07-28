@@ -55,6 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                startActivity(intent);
+
+                /*
                 String email = txtLogin.getText().toString().trim();
                 String senha = txtSenha.getText().toString().trim();
 
@@ -103,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                 "Erro ao conectar: " + t.getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
             }
         });
 

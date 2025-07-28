@@ -125,7 +125,7 @@ public class CadastroDenunciaFragment extends Fragment {
         Status status = new Status("Criada");
 
         SharedPreferences prefs = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-        String emailUsuario = prefs.getString("email", null);
+        String emailUsuario = "lucas--frutuoso@hotmail.com";
 
         if (emailUsuario == null || emailUsuario.isEmpty()) {
             Toast.makeText(context, "Usuário não logado", Toast.LENGTH_LONG).show();

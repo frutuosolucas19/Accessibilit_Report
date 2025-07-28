@@ -57,4 +57,13 @@
         <item name="android:background">@color/black</item>
     </style>
 
+    <style name="Button_Cadastro">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:background">@color/black</item>
+    </style>
+
 </resources>

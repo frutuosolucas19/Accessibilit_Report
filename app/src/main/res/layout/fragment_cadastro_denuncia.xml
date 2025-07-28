@@ -9,131 +9,140 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:padding="16dp"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="729dp"
-            tools:layout_editor_absoluteY="1dp">
-
-            <EditText
-                android:id="@+id/editTextSugestão"
-                style="@style/Edit_text"
-                android:layout_width="323dp"
-                android:layout_height="57dp"
-                android:layout_marginTop="24dp"
-                android:ems="10"
-                android:hint="Sugestão"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.545"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextProblema" />
-
-            <EditText
-                android:id="@+id/editTextProblema"
-                style="@style/Edit_text"
-                android:layout_width="323dp"
-                android:layout_height="57dp"
-                android:layout_marginTop="28dp"
-                android:ems="10"
-                android:hint="Problema"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.545"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEndereco" />
-
-            <EditText
-                android:id="@+id/editTextEndereco"
-                style="@style/Edit_text"
-                android:layout_width="323dp"
-                android:layout_height="57dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="Endereço"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNomeLocal" />
-
-            <EditText
-                android:id="@+id/editTextNomeLocal"
-                style="@style/Edit_text"
-                android:layout_width="323dp"
-                android:layout_height="57dp"
-                android:layout_marginTop="48dp"
-                android:ems="10"
-                android:hint="Nome do Local"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textViewTitulo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="Cadastro de Denuncia"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="20sp"
+                android:accessibilityHeading="true"
+                android:importantForAccessibility="yes"
+                android:text="@string/cadastro_de_denuncia"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <EditText
+                android:id="@+id/editTextNomeLocal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:autofillHints=""
+                android:background="@drawable/edittext_background"
+                android:hint="@string/nome_do_local"
+                android:inputType="textCapWords"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
+
+            <EditText
+                android:id="@+id/editTextEndereco"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/endereco"
+                android:inputType="textPostalAddress"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                app:layout_constraintTop_toBottomOf="@id/editTextNomeLocal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:id="@+id/editTextProblema"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/descreva_o_problema"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:gravity="top|start"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                app:layout_constraintTop_toBottomOf="@id/editTextEndereco"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:id="@+id/editTextSugestão"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/alguma_sugestao"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top|start"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                app:layout_constraintTop_toBottomOf="@id/editTextProblema"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
             <ImageView
                 android:id="@+id/imagemDenuncia"
-                android:layout_width="113dp"
-                android:layout_height="117dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="16dp"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintEnd_toStartOf="@+id/bt_imagem"
-                app:layout_constraintHorizontal_bias="0.444"
+                android:contentDescription="@string/imagem_selecionada_para_den_ncia"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toBottomOf="@id/editTextSugestão"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSugestão" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_imagem"
-                style="@style/Button_seleciona_imagem"
-                android:layout_width="122dp"
-                android:layout_height="75dp"
-                android:layout_marginEnd="68dp"
-                android:layout_marginBottom="44dp"
-                android:text="Selecionar Imagem"
-                app:layout_constraintBottom_toTopOf="@+id/bt_maps"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_maps"
-                style="@style/Button_maps"
-                android:layout_marginTop="4dp"
-                android:text="Marcar Localização"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.412"
+            <Button
+                android:id="@+id/bt_imagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/selecionar_imagem"
+                android:textColor="@android:color/white"
+                android:background="@color/azul_login"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/imagemDenuncia"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imagemDenuncia" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_cadastrar"
-                style="@style/Button"
-                android:layout_marginTop="8dp"
-                android:text="Cadastrar"
-                app:layout_constraintEnd_toEndOf="parent"
+            <Button
+                android:id="@+id/bt_maps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/marcar_localiza_o"
+                android:textColor="@android:color/white"
+                android:background="@color/azul_login"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/bt_imagem"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bt_maps" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/bt_cadastrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cadastrar_den_ncia"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@color/azul_login"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@id/bt_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 </FrameLayout>
