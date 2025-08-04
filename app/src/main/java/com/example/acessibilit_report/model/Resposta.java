@@ -7,6 +7,13 @@ public class Resposta implements Serializable {
     private String resposta;
     private Pergunta pergunta;
 
+    public Resposta() {
+    }
+
+    public Resposta(String resposta) {
+        this.resposta = resposta;
+    }
+
     public String getResposta() {
         return resposta;
     }

@@ -6,6 +6,13 @@ public class Forum implements Serializable {
 
     private Usuario usuario;
 
+    public Forum() {
+    }
+
+    public Forum(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }

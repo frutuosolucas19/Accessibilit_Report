@@ -12,10 +12,11 @@ public class Pessoa implements Serializable {
     }
 
     public Pessoa(String nome, String imagem) {
-        this.nome=nome;
-        this.imagem=imagem;
+        this.nome = nome;
+        this.imagem = imagem;
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -39,5 +40,4 @@ public class Pessoa implements Serializable {
     public void setImagem(String imagem) {
         this.imagem = imagem;
     }
-
 }

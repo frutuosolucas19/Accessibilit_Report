@@ -47,13 +47,13 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="visible"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main"
-            app:layout_constraintTop_toBottomOf="@id/layoutToolBar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="visible" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutToolBar"
+            app:navGraph="@navigation/main" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,6 +64,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/layout_navigation_header"
         app:menu="@menu/navigation_menu"
-        android:contentDescription="Menu de navegação" />
+        android:contentDescription="@string/menu_de_navega_o" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

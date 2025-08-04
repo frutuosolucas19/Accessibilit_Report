@@ -1,12 +1,17 @@
 package com.example.acessibilit_report.model;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
 
     private Long id;
     private Pessoa pessoa;
     private String email;
     private String senha;
     private String tipoUsuario;
+
+    public Usuario() {
+    }
 
     public Usuario(Pessoa pessoa, String email, String senha, String tipoUsuario) {
         this.pessoa = pessoa;
@@ -15,9 +20,7 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public Usuario() {
-    }
-
+    // Getters e Setters
     public Long getId() {
         return id;
     }

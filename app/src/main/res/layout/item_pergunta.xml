@@ -1,0 +1,75 @@
+<!-- res/layout/item_pergunta.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:background="@drawable/borda"
+    android:layout_marginBottom="12dp"
+    android:accessibilityLiveRegion="polite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/imgFotoUsuario"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_person_24"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Foto do usuário" />
+
+        <TextView
+            android:id="@+id/textNomeUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome do Usuário"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:importantForAccessibility="yes" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textPergunta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pergunta"
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Pergunta feita" />
+
+    <LinearLayout
+        android:id="@+id/layoutRespostas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:contentDescription="Respostas" />
+
+    <EditText
+        android:id="@+id/editResposta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escreva uma resposta"
+        android:layout_marginTop="8dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Campo para escrever resposta" />
+
+    <Button
+        android:id="@+id/btnResponder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Responder"
+        android:layout_gravity="end"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/azul_login"
+        android:textColor="@android:color/white"
+        android:contentDescription="Botão para enviar resposta" />
+</LinearLayout>
