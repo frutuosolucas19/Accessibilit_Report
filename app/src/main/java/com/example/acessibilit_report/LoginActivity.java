@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,94 +22,83 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String PREFS_USER = "Preferencia";
+    public static final String PREFS_NAME = "user_data";
+    public static final String KEY_NOME  = "nome";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_TIPO  = "tipoUsuario";
+    public static final String KEY_TOKEN = "access_token";
+
     private EditText txtLogin;
     private EditText txtSenha;
     private Button btnEntrar;
-    private TextView txvEsqueceuSenha;
     private TextView txvCadastrar;
-    private Context context = this;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
 
-        txtLogin = (EditText) findViewById(R.id.editTextEmail);
-        txtSenha = (EditText) findViewById(R.id.editTextSenha);
-        btnEntrar = (Button) findViewById(R.id.buttonLogin);
-        txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
+        txtLogin     = findViewById(R.id.editTextEmail);
+        txtSenha     = findViewById(R.id.editTextSenha);
+        btnEntrar    = findViewById(R.id.buttonLogin);
+        txvCadastrar = findViewById(R.id.textViewTelaCadastro);
 
-        txvCadastrar.setOnClickListener(new View.OnClickListener() {
+        txvCadastrar.setOnClickListener(v ->
+                startActivity(new Intent(LoginActivity.this, CadastroUsuarioActivity.class)));
+
+        btnEntrar.setOnClickListener(v -> doLogin());
+    }
+
+    private void doLogin() {
+        String email = txtLogin.getText().toString().trim().toLowerCase();
+        String senha = txtSenha.getText().toString();
+
+        if (email.isEmpty() || senha.isEmpty()) {
+            Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        btnEntrar.setEnabled(false);
+
+        LoginRequest body = new LoginRequest(email, senha);
+        UsuarioService service = RetrofitInitializer.getUsuarioService(this);
+
+        service.login(body).enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
-                startActivity(intent);
-            }
-        });
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> resp) {
+                btnEntrar.setEnabled(true);
 
-        btnEntrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                startActivity(intent);
-
-                /*
-                String email = txtLogin.getText().toString().trim();
-                String senha = txtSenha.getText().toString().trim();
-
-                if (email.isEmpty() || senha.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                if (!resp.isSuccessful() || resp.body() == null) {
+                    Toast.makeText(LoginActivity.this, "Email ou senha inválidos", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                LoginRequest loginRequest = new LoginRequest(email, senha);
-                RetrofitInitializer retrofitInitializer = new RetrofitInitializer();
-                UsuarioService service = retrofitInitializer.getUsuario();
-                Call<LoginResponse> call = service.login(loginRequest);
+                LoginResponse lr = resp.body();
 
-                call.enqueue(new Callback<LoginResponse>() {
-                    @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            LoginResponse loginResponse = response.body();
+                SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                prefs.edit()
+                        .putString(KEY_NOME,  safe(lr.getNome()))
+                        .putString(KEY_EMAIL, safe(lr.getEmail()))
+                        .putString(KEY_TIPO,  safe(lr.getTipoUsuario()))
+                        .putString(KEY_TOKEN, safe(lr.getAccessToken()))
+                        .apply();
 
-                            // Salvar em SharedPreferences
-                            SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("nome", loginResponse.getNome());
-                            editor.putString("email", loginResponse.getEmail());
-                            editor.putString("tipoUsuario", loginResponse.getTipoUsuario());
-                            editor.apply();
+                Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
 
-                            Toast.makeText(LoginActivity.this,
-                                    "Bem-vindo, " + loginResponse.getNome(),
-                                    Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
-                            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            Toast.makeText(LoginActivity.this,
-                                    "Email ou senha inválidos",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
-                        Toast.makeText(LoginActivity.this,
-                                "Erro ao conectar: " + t.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });*/
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                btnEntrar.setEnabled(true);
+                Toast.makeText(LoginActivity.this, "Erro ao conectar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+    private String safe(String s) { return s == null ? "" : s; }
 }

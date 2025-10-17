@@ -57,7 +57,6 @@ public class PerguntaAdapter extends RecyclerView.Adapter<PerguntaAdapter.ViewHo
         Pergunta pergunta = lista.get(position);
         holder.textPergunta.setText(pergunta.getPergunta());
 
-        // Nome e imagem do usuário
         if (pergunta.getForum() != null && pergunta.getForum().getUsuario() != null &&
                 pergunta.getForum().getUsuario().getPessoa() != null) {
 
@@ -76,7 +75,6 @@ public class PerguntaAdapter extends RecyclerView.Adapter<PerguntaAdapter.ViewHo
             }
         }
 
-        // Respostas
         holder.layoutRespostas.removeAllViews();
         for (Resposta resposta : pergunta.getRespostas()) {
             TextView respostaTxt = new TextView(holder.itemView.getContext());
@@ -86,7 +84,6 @@ public class PerguntaAdapter extends RecyclerView.Adapter<PerguntaAdapter.ViewHo
             holder.layoutRespostas.addView(respostaTxt);
         }
 
-        // Adicionar nova resposta
         holder.btnResponder.setOnClickListener(v -> {
             String texto = holder.editResposta.getText().toString().trim();
             if (!texto.isEmpty()) {

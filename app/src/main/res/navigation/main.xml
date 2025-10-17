@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_cadastro_denuncia" />
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.acessibilit_report.MenuFragment"
-        android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        android:name="com.example.acessibilit_report.MenuInicialFragment"
+        android:label="Menu Inicial"
+        tools:layout="@layout/fragment_menu_inicial" />
     <fragment
         android:id="@+id/minhasDenuncias"
         android:name="com.example.acessibilit_report.MinhasDenunciasFragment"

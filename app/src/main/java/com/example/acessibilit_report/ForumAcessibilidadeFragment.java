@@ -1,6 +1,8 @@
 package com.example.acessibilit_report;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,12 @@ public class ForumAcessibilidadeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum_acessibilidade, container, false);
 
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+
+        String nome = prefs.getString(LoginActivity.KEY_NOME, "Usuário");
+
+
         edtPergunta = view.findViewById(R.id.edtPergunta);
         btnEnviarPergunta = view.findViewById(R.id.btnEnviarPergunta);
         recyclerPerguntas = view.findViewById(R.id.recyclerPerguntas);
@@ -51,7 +59,7 @@ public class ForumAcessibilidadeFragment extends Fragment {
             if (!perguntaText.isEmpty()) {
                 Pergunta nova = new Pergunta();
                 nova.setPergunta(perguntaText);
-                listaPerguntas.add(0, nova); // adicionar no topo
+                listaPerguntas.add(0, nova);
                 adapter.notifyItemInserted(0);
                 edtPergunta.setText("");
                 recyclerPerguntas.scrollToPosition(0);

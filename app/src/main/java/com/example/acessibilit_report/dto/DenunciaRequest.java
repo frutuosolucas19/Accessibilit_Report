@@ -31,6 +31,7 @@ public class DenunciaRequest {
     }
 
     public String getProblema() {
+
         return problema;
     }
 

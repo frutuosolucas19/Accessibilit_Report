@@ -13,6 +13,17 @@
         android:padding="16dp"
         android:gravity="center_horizontal">
 
+        <!-- Nome do usuário (SharedPreferences) no topo -->
+        <TextView
+            android:id="@+id/tvNomeUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Usuário"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:paddingBottom="12dp" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300dp"
@@ -23,7 +34,7 @@
             android:scaleType="fitCenter" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonCriarDenunciaMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -33,17 +44,17 @@
             android:contentDescription="@string/criar_nova_den_ncia" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/buttonMinhasDenunciasMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@color/azul_login"
+            android:contentDescription="@string/acessar_minhas_den_ncias"
             android:text="@string/minhasDenuncias"
-            android:textStyle="bold"
-            android:contentDescription="@string/acessar_minhas_den_ncias" />
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/buttonVerLocaisMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

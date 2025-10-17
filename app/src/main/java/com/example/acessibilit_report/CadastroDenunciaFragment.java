@@ -89,8 +89,8 @@ public class CadastroDenunciaFragment extends Fragment {
                Usuario usuario = new Usuario();
 
 
-                postDenuncia(local, txtProblema.getText().toString(),
-                        txtSugestao.getText().toString(), imagem);
+                //postDenuncia(local, txtProblema.getText().toString(),
+                  //      txtSugestao.getText().toString(), imagem);
 
             }
         });
@@ -120,19 +120,22 @@ public class CadastroDenunciaFragment extends Fragment {
             }
         }
     }
+    /*
     private void postDenuncia(Local local, String problema, String sugestao, String imagem) {
 
         Status status = new Status("Criada");
 
-        SharedPreferences prefs = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-        String emailUsuario = "lucas--frutuoso@hotmail.com";
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
 
-        if (emailUsuario == null || emailUsuario.isEmpty()) {
+        String email = prefs.getString(LoginActivity.KEY_EMAIL, "Email");
+
+        if (email.isEmpty()) {
             Toast.makeText(context, "Usuário não logado", Toast.LENGTH_LONG).show();
             return;
         }
 
-        DenunciaRequest request = new DenunciaRequest(local, problema, sugestao, imagem, status, emailUsuario);
+        DenunciaRequest request = new DenunciaRequest(local, problema, sugestao, imagem, status, email);
 
         Call<Denuncia> call = new RetrofitInitializer()
                 .getDenunciaService()
@@ -153,6 +156,6 @@ public class CadastroDenunciaFragment extends Fragment {
                 Toast.makeText(context, "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
+    } */
 
 }

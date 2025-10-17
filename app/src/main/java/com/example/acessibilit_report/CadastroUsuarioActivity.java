@@ -5,26 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.model.Pessoa;
 import com.example.acessibilit_report.model.Usuario;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
+import com.example.acessibilit_report.services.UsuarioService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
@@ -35,130 +32,118 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText txtConfirmaSenha;
     private Button btnCadastro;
     private Button btnImagem;
-    private TextView txvEsqueceuSenha;
-    private TextView txvCadastrar;
-    private static final int PEGA_FOTO = 1;
-    private static final int CODIGO_CAMERA = 2;
-    private Context context = this;
-    private String imagem;
+    private TextView txvJaTenhoConta;
 
+    private static final int REQ_PEGA_FOTO = 1;
+
+    private Context context;
+    private String imagemUriStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+        context = this;
 
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
 
-        imgPerfil = (ImageView) findViewById(R.id.imagemPerfil);
-        txtNome = (EditText) findViewById(R.id.editTextNome);
-        txtEmail = (EditText) findViewById(R.id.editTextEmail);
-        txtSenha = (EditText) findViewById(R.id.editTextSenha);
-        txtConfirmaSenha = (EditText) findViewById(R.id.editTextConfirmaSenha);
-        btnCadastro = (Button) findViewById(R.id.buttonCadastro);
-        btnImagem = (Button) findViewById(R.id.buttonSelecionImagem);
-        txvCadastrar = (TextView) findViewById(R.id.textViewTelaCadastro);
+        imgPerfil        = findViewById(R.id.imagemPerfil);
+        txtNome          = findViewById(R.id.editTextNome);
+        txtEmail         = findViewById(R.id.editTextEmail);
+        txtSenha         = findViewById(R.id.editTextSenha);
+        txtConfirmaSenha = findViewById(R.id.editTextConfirmaSenha);
+        btnCadastro      = findViewById(R.id.buttonCadastro);
+        btnImagem        = findViewById(R.id.buttonSelecionImagem);
+        txvJaTenhoConta  = findViewById(R.id.textViewTelaCadastro);
 
-        txvCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        txvJaTenhoConta.setOnClickListener(v ->
+                startActivity(new Intent(CadastroUsuarioActivity.this, LoginActivity.class)));
+
+        btnImagem.setOnClickListener(v -> {
+            Intent intentPegaFoto = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intentPegaFoto.setType("image/*");
+            intentPegaFoto.addCategory(Intent.CATEGORY_OPENABLE);
+            // pedir leitura (e escrita se precisar editar a imagem depois)
+            intentPegaFoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intentPegaFoto.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intentPegaFoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(Intent.createChooser(intentPegaFoto, "Selecione uma imagem"), REQ_PEGA_FOTO);
         });
 
-        btnCadastro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnCadastro.setOnClickListener(v -> {
+            String nome     = txtNome.getText().toString().trim();
+            String email    = txtEmail.getText().toString().trim().toLowerCase();
+            String senha    = txtSenha.getText().toString();
+            String confirma = txtConfirmaSenha.getText().toString();
 
-                if (txtNome.getText().toString().isEmpty() &&
-                        txtEmail.getText().toString().isEmpty() &&
-                        txtSenha.getText().toString().isEmpty() &&
-                        txtConfirmaSenha.getText().toString().isEmpty()) {
-
-                    Toast.makeText(context, "Por favor, informe todos os campos", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (txtSenha.getText().equals(txtConfirmaSenha.getText())) {
-
-                    Toast.makeText(context, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                try {
-                    postUsuario(txtNome.getText().toString(),
-                                txtEmail.getText().toString(),
-                                imagem,
-                                txtSenha.getText().toString(),
-                                "normal");
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                } catch (NoSuchAlgorithmException e) {
-                    throw new RuntimeException(e);
-                }
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirma.isEmpty()) {
+                Toast.makeText(context, "Por favor, informe todos os campos", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
-
-        btnImagem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentPegaFoto = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(Intent.createChooser(intentPegaFoto, "Selecione uma imagem"), PEGA_FOTO);
-                intentPegaFoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                intentPegaFoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if (!senha.equals(confirma)) {
+                Toast.makeText(context, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            btnCadastro.setEnabled(false);
+            postUsuario(nome, email, imagemUriStr, senha, "normal");
         });
     }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PEGA_FOTO) {
-                Uri imagemSelecionada = data.getData();
+        if (resultCode != Activity.RESULT_OK) return;
+        if (requestCode != REQ_PEGA_FOTO || data == null) return;
 
-                imgPerfil.setImageURI(imagemSelecionada);
-                imagem = imagemSelecionada.toString();
-            }
+        Uri uri = data.getData();
+        if (uri == null) return;
+
+        try {
+            getContentResolver().takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+            );
+        } catch (SecurityException ignored) {
         }
+
+        imgPerfil.setImageURI(uri);
+        imagemUriStr = uri.toString();
     }
 
-    private void postUsuario(String nome, String email, String imagem, String senha, String tipoUsuario) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    private void postUsuario(String nome, String email, String imagemUri, String senha, String tipoUsuario) {
+        Pessoa pessoa   = new Pessoa(nome, imagemUri);
+        Usuario usuario = new Usuario(pessoa, email, senha, tipoUsuario);
 
-        Pessoa pessoa = new Pessoa(nome, imagem);
-        Usuario usuario = new Usuario(pessoa, email, senha, tipoUsuario );
-
-        Call<Usuario> call = new RetrofitInitializer().getUsuario().createPost(usuario);
+        UsuarioService api = RetrofitInitializer.getUsuarioService(this);
+        Call<Usuario> call = api.create(usuario);
 
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                btnCadastro.setEnabled(true);
 
-                // Delay de 2 segundos
-                new android.os.Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                    new Handler().postDelayed(() -> {
+                        startActivity(new Intent(CadastroUsuarioActivity.this, LoginActivity.class));
                         finish();
-                    }
-                }, 2000);
+                    }, 1200);
+                } else {
+                    String msg = "Erro ao cadastrar";
+                    if (response.code() == 409) msg = "E-mail já cadastrado";
+                    else if (response.code() == 400) msg = "Dados inválidos";
+                    else msg = "Falha (" + response.code() + ")";
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(context, "Falha na requisição", Toast.LENGTH_LONG).show();
+                btnCadastro.setEnabled(true);
+                Toast.makeText(context, "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-    }
-
-    private String criptografarSenha(String senha) throws NoSuchAlgorithmException,
-            UnsupportedEncodingException {
-
-        MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-        byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
-
-        return messageDigest.toString();
     }
 }
-
-
