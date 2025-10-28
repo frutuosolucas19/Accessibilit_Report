@@ -1,79 +1,35 @@
+// com.example.acessibilit_report.model.Denuncia.java
 package com.example.acessibilit_report.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Denuncia implements Serializable {
-
-    private Local local;
+    private Long id;
+    private String nomeLocal;
+    private Endereco endereco;
     private String problema;
     private String sugestao;
-    private Usuario usuario;
-    private String imagem;
-    private Status statusAtual;
-    private Historico historico;
+    private String emailUsuario;
+    private String criadoEm;
+    private List<Imagem> imagens;
 
-    public Denuncia(Local local, String problema, String sugestao, Usuario usuario, String imagem, Status statusAtual) {
-        this.local = local;
-        this.problema = problema;
-        this.sugestao = sugestao;
-        this.usuario = usuario;
-        this.imagem = imagem;
-        this.statusAtual=statusAtual;
-    }
+    public Denuncia() {}
 
-    public Local getLocal() {
-        return local;
-    }
-
-    public void setLocal(Local local) {
-        this.local = local;
-    }
-
-    public String getProblema() {
-        return problema;
-    }
-
-    public void setProblema(String problema) {
-        this.problema = problema;
-    }
-
-    public String getSugestao() {
-        return sugestao;
-    }
-
-    public void setSugestao(String sugestao) {
-        this.sugestao = sugestao;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(String imagem) {
-        this.imagem = imagem;
-    }
-
-    public Status getStatusAtual() {
-        return statusAtual;
-    }
-
-    public void setStatusAtual(Status statusAtual) {
-        this.statusAtual = statusAtual;
-    }
-
-    public Historico getHistorico() {
-        return historico;
-    }
-
-    public void setHistorico(Historico historico) {
-        this.historico = historico;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNomeLocal() { return nomeLocal; }
+    public void setNomeLocal(String nomeLocal) { this.nomeLocal = nomeLocal; }
+    public Endereco getEndereco() { return endereco; }
+    public void setEndereco(Endereco endereco) { this.endereco = endereco; }
+    public String getProblema() { return problema; }
+    public void setProblema(String problema) { this.problema = problema; }
+    public String getSugestao() { return sugestao; }
+    public void setSugestao(String sugestao) { this.sugestao = sugestao; }
+    public String getEmailUsuario() { return emailUsuario; }
+    public void setEmailUsuario(String emailUsuario) { this.emailUsuario = emailUsuario; }
+    public String getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(String criadoEm) { this.criadoEm = criadoEm; }
+    public List<Imagem> getImagens() { return imagens; }
+    public void setImagens(List<Imagem> imagens) { this.imagens = imagens; }
 }

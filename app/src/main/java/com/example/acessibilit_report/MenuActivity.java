@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,25 +19,32 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        getSupportActionBar().hide();
+
+        // Evita NPE quando o tema não tiver ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
-
-        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        View btnMenu = findViewById(R.id.imageMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+        }
 
         NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.setItemIconTintList(null);
+        if (navigationView != null) {
+            navigationView.setItemIconTintList(null);
+        }
 
-        // Correção aqui
-        NavHostFragment navHostFragment = (NavHostFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+
+        if (navHostFragment == null) {
+            Toast.makeText(this, "NavHostFragment não encontrado (verifique activity_menu.xml)", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         NavController navController = navHostFragment.getNavController();
-
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 }

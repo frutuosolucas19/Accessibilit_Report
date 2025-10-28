@@ -4,21 +4,18 @@ import java.io.Serializable;
 
 public class Endereco implements Serializable {
 
-    private String cep;
     private String logradouro;
-    private int numero;
-    private String complemento;
+
+    private Integer numero;
     private String bairro;
-    private String localidade;
+
+    private String cidade;
+
     private String uf;
 
-    public String getCep() {
-        return cep;
-    }
+    private String cep;
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
+    private String complemento;
 
     public String getLogradouro() {
         return logradouro;
@@ -28,20 +25,12 @@ public class Endereco implements Serializable {
         this.logradouro = logradouro;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
     }
 
     public String getBairro() {
@@ -52,12 +41,12 @@ public class Endereco implements Serializable {
         this.bairro = bairro;
     }
 
-    public String getLocalidade() {
-        return localidade;
+    public String getCidade() {
+        return cidade;
     }
 
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getUf() {
@@ -66,5 +55,21 @@ public class Endereco implements Serializable {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

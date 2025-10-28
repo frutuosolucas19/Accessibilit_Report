@@ -37,4 +37,14 @@ public class LoginResponse {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    public LoginResponse() {
+    }
+
+    public LoginResponse(String nome, String email, String tipoUsuario, String accessToken) {
+        this.nome = nome;
+        this.email = email;
+        this.tipoUsuario = tipoUsuario;
+        this.accessToken = accessToken;
+    }
 }

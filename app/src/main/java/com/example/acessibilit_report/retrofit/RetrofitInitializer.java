@@ -3,6 +3,7 @@ package com.example.acessibilit_report.retrofit;
 import android.content.Context;
 
 import com.example.acessibilit_report.network.AuthInterceptor;
+import com.example.acessibilit_report.services.DenunciaService;
 import com.example.acessibilit_report.services.UsuarioService;
 
 import java.util.concurrent.TimeUnit;
@@ -39,5 +40,9 @@ public class RetrofitInitializer {
 
     public static UsuarioService getUsuarioService(Context ctx){
         return getInstance(ctx).create(UsuarioService.class);
+    }
+
+    public static DenunciaService getDenunciaService(Context ctx) {
+        return getInstance(ctx).create(DenunciaService.class);
     }
 }

@@ -14,6 +14,10 @@
         android:theme="@style/Theme.Acessibilit_Report"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AdminActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Acessibilit_Report" />
+        <activity
             android:name=".CadastroPerguntaActivity"
             android:exported="false">
             <meta-data
