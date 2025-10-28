@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@color/azul_login"
+            android:backgroundTint="@color/azul_login"
             android:text="@string/criarDenuncia"
             android:textStyle="bold"
             android:contentDescription="@string/criar_nova_den_ncia" />
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@color/azul_login"
+            android:backgroundTint="@color/azul_login"
             android:contentDescription="@string/acessar_minhas_den_ncias"
             android:text="@string/minhasDenuncias"
             android:textStyle="bold" />
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@color/azul_login"
+            android:backgroundTint="@color/azul_login"
             android:text="@string/ver_locais"
             android:textStyle="bold"
             android:contentDescription="@string/ver_locais_acess_veis" />

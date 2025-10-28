@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".AdminActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/azul_login"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/titulo_admin"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonGerenciarDenuncias"
+        android:layout_width="311dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="88dp"
+        android:background="@color/azul_login"
+        android:text="@string/gerenciar_den_ncias"
+        android:textStyle="bold"
+        app:backgroundTint="@color/azul_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
+
+    <Button
+        android:id="@+id/buttonGerenciarForum"
+        android:layout_width="311dp"
+        android:layout_height="51dp"
+        android:background="@color/azul_login"
+        android:text="@string/gerenciar_f_rum"
+        android:textStyle="bold"
+        app:backgroundTint="@color/azul_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGerenciarUsuarios"
+        app:layout_constraintVertical_bias="0.116" />
+
+    <Button
+        android:id="@+id/buttonGerenciarUsuarios"
+        android:layout_width="311dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="56dp"
+        android:background="@color/azul_login"
+        android:text="@string/gerenciar_usu_rios"
+        app:backgroundTint="@color/azul_login"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGerenciarDenuncias" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

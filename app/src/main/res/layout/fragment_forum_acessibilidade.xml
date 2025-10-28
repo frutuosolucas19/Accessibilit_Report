@@ -27,27 +27,28 @@
             android:id="@+id/edtPergunta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/borda"
             android:hint="Escreva sua pergunta"
             android:inputType="textMultiLine"
             android:minLines="2"
-            android:padding="8dp"
-            android:background="@drawable/borda" />
+            android:padding="8dp" />
 
         <Button
             android:id="@+id/btnEnviarPergunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enviar"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/azul_login"
+            android:text="Enviar" />
 
         <TextView
             android:id="@+id/txtTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Perguntas de outros usuários"
-            android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="20dp" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPerguntas"
