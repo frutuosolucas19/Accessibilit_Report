@@ -1,4 +1,4 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 
 import android.content.Context;

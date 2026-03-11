@@ -2,6 +2,7 @@ package com.example.acessibilit_report.retrofit;
 
 import android.content.Context;
 
+import com.example.acessibilit_report.BuildConfig;
 import com.example.acessibilit_report.network.AuthInterceptor;
 import com.example.acessibilit_report.services.DenunciaService;
 import com.example.acessibilit_report.services.UsuarioService;
@@ -18,6 +19,13 @@ public class RetrofitInitializer {
 
     public static Retrofit getInstance(Context ctx){
         if (retrofit == null){
+            String baseUrl = BuildConfig.BASE_URL;
+            if (!BuildConfig.DEBUG) {
+                if (!baseUrl.startsWith("https://")) {
+                    throw new IllegalStateException("Release build requires HTTPS base URL.");
+                }
+            }
+
             HttpLoggingInterceptor log = new HttpLoggingInterceptor();
             log.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -30,7 +38,7 @@ public class RetrofitInitializer {
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8080/") // emulador -> host
+                    .baseUrl(baseUrl)
                     .addConverterFactory(JacksonConverterFactory.create())
                     .client(client)
                     .build();

@@ -1,8 +1,10 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.acessibilit_report.R;
 
 public class CadastroPerguntaActivity extends AppCompatActivity {
 

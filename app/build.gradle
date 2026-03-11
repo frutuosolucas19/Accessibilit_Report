@@ -3,32 +3,41 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk = 34
+    def releaseApiBaseUrl = (project.findProperty("API_BASE_URL_RELEASE") ?: "").toString()
+    def isReleaseBuildRequested = gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }
+    if (isReleaseBuildRequested && releaseApiBaseUrl.trim().isEmpty()) {
+        throw new GradleException("Set API_BASE_URL_RELEASE in gradle.properties for release builds.")
+    }
 
     defaultConfig {
-        applicationId "com.example.acessibilit_report"
-        minSdk 33
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.acessibilit_report"
+        minSdk = 33
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:8080/\""
+        }
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", "\"${releaseApiBaseUrl}\""
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    namespace 'com.example.acessibilit_report'
-    buildToolsVersion '34.0.0'
+    namespace = 'com.example.acessibilit_report'
     buildFeatures {
-        viewBinding true
+        buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -49,12 +58,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
-
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'

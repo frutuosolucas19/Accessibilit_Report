@@ -1,4 +1,4 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.adapter.DireitoAdapter;
 import com.example.acessibilit_report.model.DireitoAcessibilidade;
 

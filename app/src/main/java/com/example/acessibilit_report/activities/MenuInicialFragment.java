@@ -1,4 +1,4 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import com.example.acessibilit_report.R;
 
 public class MenuInicialFragment extends Fragment {
 

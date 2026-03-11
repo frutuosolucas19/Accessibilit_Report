@@ -1,4 +1,4 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.LoginRequest;
 import com.example.acessibilit_report.dto.LoginResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;

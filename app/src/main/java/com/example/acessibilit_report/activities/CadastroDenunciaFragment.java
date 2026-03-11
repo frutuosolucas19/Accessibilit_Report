@@ -1,8 +1,7 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.DenunciaRequest;
 import com.example.acessibilit_report.dto.DenunciaResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;

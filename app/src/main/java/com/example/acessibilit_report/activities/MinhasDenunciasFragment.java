@@ -1,4 +1,4 @@
-package com.example.acessibilit_report;
+package com.example.acessibilit_report.activities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.adapter.DenunciaAdapter;
 import com.example.acessibilit_report.dto.DenunciaResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
