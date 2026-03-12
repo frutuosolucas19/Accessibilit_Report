@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Local tooling/cache
+.gradle-local/
+.vscode/
+.idea/deviceManager.xml
+.idea/studiobot.xml
