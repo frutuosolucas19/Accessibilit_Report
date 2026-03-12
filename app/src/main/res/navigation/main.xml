@@ -7,42 +7,43 @@
 
     <fragment
         android:id="@+id/criarDenuncia"
-        android:name="com.example.acessibilit_report.activities.CadastroDenunciaFragment"
+        android:name="com.example.acessibilit_report.activities.ReportRegistrationFragment"
         android:label="Cadastro de Denúncias"
         tools:layout="@layout/fragment_cadastro_denuncia" />
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.acessibilit_report.activities.MenuInicialFragment"
+        android:name="com.example.acessibilit_report.activities.HomeMenuFragment"
         android:label="Menu Inicial"
         tools:layout="@layout/fragment_menu_inicial" />
     <fragment
         android:id="@+id/minhasDenuncias"
-        android:name="com.example.acessibilit_report.activities.MinhasDenunciasFragment"
+        android:name="com.example.acessibilit_report.activities.MyReportsFragment"
         android:label="fragment_minhas_denuncias"
         tools:layout="@layout/fragment_minhas_denuncias" />
     <fragment
         android:id="@+id/locaisDenunciados"
-        android:name="com.example.acessibilit_report.activities.LocaisDenunciadosFragment"
+        android:name="com.example.acessibilit_report.activities.ReportedPlacesFragment"
         android:label="fragment_locais_denunciados"
         tools:layout="@layout/fragment_locais_denunciados" />
     <fragment
         android:id="@+id/locaisAdaptados"
-        android:name="com.example.acessibilit_report.activities.LocaisAdaptadosFragment"
+        android:name="com.example.acessibilit_report.activities.AccessiblePlacesFragment"
         android:label="fragment_locais_adaptados"
         tools:layout="@layout/fragment_locais_adaptados" />
     <fragment
         android:id="@+id/forumAcessibilidade"
-        android:name="com.example.acessibilit_report.activities.ForumAcessibilidadeFragment"
+        android:name="com.example.acessibilit_report.activities.AccessibilityForumFragment"
         android:label="fragment_forum_acessibilidade"
         tools:layout="@layout/fragment_forum_acessibilidade" />
     <fragment
         android:id="@+id/direitosAcessibilidade"
-        android:name="com.example.acessibilit_report.activities.DireitosAcessibilidadeFragment"
+        android:name="com.example.acessibilit_report.activities.AccessibilityRightsFragment"
         android:label="fragment_direitos_acessibilidade"
         tools:layout="@layout/fragment_direitos_acessibilidade" />
     <fragment
         android:id="@+id/suporte"
-        android:name="com.example.acessibilit_report.activities.SuporteFragment"
+        android:name="com.example.acessibilit_report.activities.SupportFragment"
         android:label="fragment_suporte"
         tools:layout="@layout/fragment_suporte" />
 </navigation>
+

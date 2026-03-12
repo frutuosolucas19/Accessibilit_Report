@@ -3,7 +3,11 @@ package com.example.acessibilit_report.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,8 +19,9 @@ import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.LoginRequest;
 import com.example.acessibilit_report.dto.LoginResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
-import com.example.acessibilit_report.services.UsuarioService;
+import com.example.acessibilit_report.services.UserService;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -35,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtSenha;
     private Button btnEntrar;
     private TextView txvCadastrar;
+    private TextView txvEsqueceuSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +49,45 @@ public class LoginActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
-        txtLogin     = findViewById(R.id.editTextEmail);
-        txtSenha     = findViewById(R.id.editTextSenha);
-        btnEntrar    = findViewById(R.id.buttonLogin);
+        txtLogin = findViewById(R.id.editTextEmail);
+        txtSenha = findViewById(R.id.editTextSenha);
+        btnEntrar = findViewById(R.id.buttonLogin);
         txvCadastrar = findViewById(R.id.textViewTelaCadastro);
+        txvEsqueceuSenha = findViewById(R.id.textViewEsqueceuSenha);
 
         txvCadastrar.setOnClickListener(v ->
-                startActivity(new Intent(LoginActivity.this, CadastroUsuarioActivity.class)));
+                startActivity(new Intent(LoginActivity.this, UserRegistrationActivity.class)));
+        txvEsqueceuSenha.setOnClickListener(v ->
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
 
+        setupPasswordToggle();
         btnEntrar.setOnClickListener(v -> doLogin());
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void setupPasswordToggle() {
+        txtSenha.setOnTouchListener((v, event) -> {
+            if (event.getAction() != MotionEvent.ACTION_UP) return false;
+            if (txtSenha.getCompoundDrawablesRelative()[2] == null) return false;
+
+            int drawableWidth = txtSenha.getCompoundDrawablesRelative()[2].getIntrinsicWidth();
+            int touchAreaStart = txtSenha.getWidth() - txtSenha.getPaddingEnd() - drawableWidth;
+            if (event.getX() < touchAreaStart) return false;
+
+            boolean isHidden = txtSenha.getTransformationMethod() instanceof PasswordTransformationMethod;
+            txtSenha.setTransformationMethod(
+                    isHidden
+                            ? HideReturnsTransformationMethod.getInstance()
+                            : PasswordTransformationMethod.getInstance()
+            );
+            txtSenha.setSelection(txtSenha.getText().length());
+            v.performClick();
+            return true;
+        });
+    }
+
     private void doLogin() {
-        String email = txtLogin.getText().toString().trim().toLowerCase();
+        String email = txtLogin.getText().toString().trim().toLowerCase(Locale.ROOT);
         String senha = txtSenha.getText().toString();
 
         if (email.isEmpty() || senha.isEmpty()) {
@@ -66,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar.setEnabled(false);
 
         LoginRequest body = new LoginRequest(email, senha);
-        UsuarioService service = RetrofitInitializer.getUsuarioService(this);
+        UserService service = RetrofitInitializer.getUsuarioService(this);
 
         service.login(body).enqueue(new Callback<LoginResponse>() {
             @Override
@@ -82,20 +114,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
                 prefs.edit()
-                        .putString(KEY_NOME,  safe(lr.getNome()))
+                        .putString(KEY_NOME, safe(lr.getNome()))
                         .putString(KEY_EMAIL, safe(lr.getEmail()))
-                        .putString(KEY_TIPO,  safe(lr.getTipoUsuario()))
+                        .putString(KEY_TIPO, safe(lr.getTipoUsuario()))
                         .putString(KEY_TOKEN, safe(lr.getAccessToken()))
                         .apply();
 
                 Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
 
-                if(Objects.equals(lr.getTipoUsuario(), "normal")){
+                if (Objects.equals(lr.getTipoUsuario(), "normal")) {
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
                     finish();
                 }
-                if(Objects.equals(lr.getTipoUsuario(), "admin")){
+                if (Objects.equals(lr.getTipoUsuario(), "admin")) {
                     Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                     startActivity(intent);
                     finish();
@@ -110,5 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private String safe(String s) { return s == null ? "" : s; }
+    private String safe(String s) {
+        return s == null ? "" : s;
+    }
 }

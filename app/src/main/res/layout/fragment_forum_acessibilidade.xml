@@ -12,13 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Título no topo -->
         <TextView
             android:id="@+id/txtTituloTopo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="12dp"
-            android:text="Fórum de Acessibilidade"
+            android:text="@string/forumAcessibilidade"
             android:textColor="#0F0E0E"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -28,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/borda"
-            android:hint="Escreva sua pergunta"
+            android:hint="@string/forum_hint_pergunta"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:minLines="2"
             android:padding="8dp" />
@@ -39,14 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/azul_login"
-            android:text="Enviar" />
+            android:text="@string/forum_enviar" />
 
         <TextView
             android:id="@+id/txtTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Perguntas de outros usuários"
+            android:text="@string/forum_perguntas_outros"
             android:textSize="16sp"
             android:textStyle="bold" />
 

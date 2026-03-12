@@ -24,21 +24,21 @@ public class AdminActivity extends AppCompatActivity {
 
         btnGerenciarDenuncias.setOnClickListener(v ->
                 abrirOuAvisar(
-                        AdminGerenciarDenunciasActivity.class,
+                        AdminManageReportsActivity.class,
                         getString(R.string.admin_msg_gerenciar_denuncias)
                 )
         );
 
         btnGerenciarUsuarios.setOnClickListener(v ->
                 abrirOuAvisar(
-                        AdminGerenciarUsuariosActivity.class,
+                        AdminManageUsersActivity.class,
                         getString(R.string.admin_msg_gerenciar_usuarios)
                 )
         );
 
         btnGerenciarForum.setOnClickListener(v ->
                 abrirOuAvisar(
-                        CadastroPerguntaActivity.class,
+                        QuestionRegistrationActivity.class,
                         getString(R.string.admin_msg_gerenciar_forum)
                 )
         );
@@ -54,3 +54,4 @@ public class AdminActivity extends AppCompatActivity {
         }
     }
 }
+

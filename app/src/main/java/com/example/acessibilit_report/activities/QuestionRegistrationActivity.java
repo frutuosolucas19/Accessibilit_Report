@@ -1,0 +1,16 @@
+package com.example.acessibilit_report.activities;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import com.example.acessibilit_report.R;
+
+public class QuestionRegistrationActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cadastro_pergunta);
+    }
+}

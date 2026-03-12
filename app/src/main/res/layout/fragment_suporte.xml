@@ -1,54 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:padding="24dp"
-    android:background="@android:color/white">
+    tools:ignore="Overdraw">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tituloSuporte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Suporte ao Usuário"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:text="@string/suporte_titulo"
             android:textColor="@android:color/black"
-            android:contentDescription="Título da tela de suporte"
-            android:layout_marginBottom="24dp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descricaoSuporte"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Caso tenha dúvidas, sugestões ou precise de ajuda, entre em contato:"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
             android:layout_marginBottom="16dp"
-            android:contentDescription="Descrição de como entrar em contato com o suporte" />
+            android:text="@string/suporte_descricao"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/emailContato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📧 E-mail: lucas--frutuoso@hotmail.com"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
             android:layout_marginBottom="12dp"
-            android:contentDescription="Endereço de e-mail para contato com o suporte: lucas--frutuoso arroba hotmail ponto com" />
+            android:text="@string/suporte_email"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/telefoneContato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📞 Telefone: (47) 9338-903"
-            android:textSize="16sp"
+            android:text="@string/suporte_telefone"
             android:textColor="@android:color/black"
-            android:contentDescription="Número de telefone para contato com o suporte: quarenta e sete, nove três três oito, nove zero três" />
+            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>

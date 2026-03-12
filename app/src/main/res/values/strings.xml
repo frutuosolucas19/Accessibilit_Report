@@ -1,168 +1,125 @@
 <resources>
     <string name="app_name">Accessibility Report</string>
-    <string name="criarDenuncia">Criar DenÃºncia</string>
-    <string name="minhasDenuncias">Minhas DenÃºncias</string>
+    <string name="accessibility_report">ACCESSIBILITY REPORT</string>
+
+    <string name="criarDenuncia">Criar Denúncia</string>
+    <string name="minhasDenuncias">Minhas Denúncias</string>
     <string name="locaisDenunciados">Locais Denunciados</string>
     <string name="locaisAdaptados">Locais Adaptados</string>
-    <string name="forumAcessibilidade">FÃ³rum de Acessibilidade</string>
+    <string name="forumAcessibilidade">Fórum de Acessibilidade</string>
     <string name="direitosAcessibilidade">Direitos sobre Acessibilidade</string>
     <string name="suporte">Suporte</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="campo_nome_completo">Campo para digitar o nome completo</string>
+
     <string name="nome_completo">Nome completo</string>
-    <string name="imagem_do_perfil_do_usu_rio">Imagem do perfil do usuÃ¡rio</string>
+    <string name="imagem_do_perfil_do_usu_rio">Imagem do perfil do usuário</string>
     <string name="alterar">Alterar</string>
     <string name="selecionar_imagem_de_perfil">Selecionar imagem de perfil</string>
     <string name="email">Email</string>
-    <string name="campo_para_digitar_o_email">Campo para digitar o email</string>
     <string name="senha">Senha</string>
     <string name="campo_para_digitar_a_senha">Campo para digitar a senha</string>
     <string name="confirme_a_senha">Confirme a senha</string>
-    <string name="campo_para_confirmar_a_senha">Campo para confirmar a senha</string>
     <string name="cadastrar">Cadastrar</string>
-    <string name="bot_o_para_criar_conta">BotÃ£o para criar conta</string>
-    <string name="j_possui_login_entrar">JÃ¡ possui login? Entrar</string>
-    <string name="texto_para_ir_para_a_tela_de_login">Texto para ir para a tela de login</string>
+
+    <string name="bot_o_para_criar_conta">Botão para criar conta</string>
+    <string name="j_possui_login_entrar">Já possui login? Entrar</string>
     <string name="logo_do_acessibilit_report">Logo do Acessibilit Report</string>
-    <string name="accessibility_report">ACCESSIBILITY REPORT</string>
-    <string name="campo_para_digitar_email_ou_nome_de_usu_rio">Campo para digitar email ou nome de usuÃ¡rio</string>
-    <string name="email_ou_usu_rio">Email ou UsuÃ¡rio</string>
-    <string name="campo_para_digitar_a_senha2">Campo para digitar a senha</string>
-    <string name="bot_o_para_fazer_login">BotÃ£o para fazer login</string>
+    <string name="campo_para_digitar_email_ou_nome_de_usu_rio">Campo para digitar email ou nome de usuário</string>
+    <string name="email_ou_usu_rio">Email ou Usuário</string>
+    <string name="bot_o_para_fazer_login">Botão para fazer login</string>
     <string name="entrar">Entrar</string>
-    <string name="bot_o_para_criar_uma_nova_conta">BotÃ£o para criar uma nova conta</string>
+    <string name="bot_o_para_criar_uma_nova_conta">Botão para criar uma nova conta</string>
     <string name="criar_conta">Criar conta</string>
     <string name="link_para_recuperar_senha">Link para recuperar senha</string>
     <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
-    <string name="cadastro_de_denuncia">Cadastro de DenÃºncia</string>
-    <string name="nome_do_local">Nome do Local</string>
-    <string name="endereco">EndereÃ§o</string>
+
+    <string name="recuperar_senha_titulo">Recuperar senha</string>
+    <string name="enviar_troca_senha">Enviar troca de senha</string>
+    <string name="redefinir_senha_titulo">Redefinir senha</string>
+    <string name="token_aws">Token AWS</string>
+    <string name="nova_senha">Nova senha</string>
+    <string name="repetir_senha">Repetir senha</string>
+    <string name="salvar_nova_senha">Salvar nova senha</string>
+
+    <string name="cadastro_de_denuncia">Cadastro de Denúncia</string>
+    <string name="nome_do_local">Nome do local</string>
     <string name="descreva_o_problema">Problema</string>
-    <string name="alguma_sugestao">SugestÃ£o Melhoria</string>
-    <string name="imagem_selecionada_para_den_ncia">Imagem selecionada para denÃºncia</string>
-    <string name="selecionar_imagem">Selecionar Imagem</string>
-    <string name="marcar_localiza_o">Marcar LocalizaÃ§Ã£o</string>
-    <string name="cadastrar_den_ncia">Cadastrar DenÃºncia</string>
+    <string name="alguma_sugestao">Sugestão de melhoria</string>
     <string name="imagem_ilustrativa_da_tela_principal">Imagem ilustrativa da tela principal</string>
-    <string name="criar_nova_den_ncia">Criar nova denÃºncia</string>
-    <string name="acessar_minhas_den_ncias">Acessar minhas denÃºncias</string>
-    <string name="ver_locais">Ver Locais</string>
-    <string name="ver_locais_acess_veis">Ver locais acessÃ­veis</string>
-    <string name="abrir_menu_de_navega_o">Abrir menu de navegaÃ§Ã£o</string>
-    <string name="acessar_minhas_den_nc">Acessar minhas denÃºncias</string>
-    <string name="ver_locais_acess_veiss">Ver locais acessÃ­veis</string>
-    <string name="ver_locais2">Ver Locais</string>
-    <string name="criar_nova_den_ncia2">Criar nova denÃºncia</string>
     <string name="imagem_ilustrativa_da_tela_principal2">Imagem ilustrativa da tela principal</string>
-    <string name="foto_de_perfil_do_usu_rio">Foto de perfil do usuÃ¡rio</string>
-    <string name="nome_do_usu_rio">Nome do UsuÃ¡rio</string>
-    <string name="editar_perfil">Editar Perfil</string>
-    <string name="bot_o_para_editar_perfil">BotÃ£o para editar perfil</string>
-    <string name="menu_de_navega_o">Menu de navegaÃ§Ã£o</string>
-    <string name="title_minhas_denuncias">Minhas denÃºncias</string>
-    <string name="cd_voltar">Voltar</string>
-    <string name="cd_lista_minhas_denuncias">Lista com suas denÃºncias</string>
-    <string name="cd_ilustracao_sem_conteudo">IlustraÃ§Ã£o de estado vazio</string>
-    <string name="empty_minhas_denuncias">VocÃª ainda nÃ£o possui denÃºncias.</string>
-    <string name="cd_carregando">Carregando</string>
-    <string name="cd_nova_denuncia">Nova denÃºncia</string>
-    <string name="cd_item_denuncia">Item de denÃºncia</string>
-    <string name="cd_imagem_da_denuncia">Imagem da denÃºncia</string>
-    <string name="recarregar">Recarregar</string>
-    <string name="voc_ainda_n_o_possui_den_ncias">VocÃª ainda nÃ£o possui denÃºncias.</string>
-    <string name="t_tulo_minhas_den_ncias">TÃ­tulo: Minhas denÃºncias</string>
-    <string name="minhas_den_ncias">Minhas denÃºncias</string>
+    <string name="criar_nova_den_ncia">Criar nova denúncia</string>
+    <string name="criar_nova_den_ncia2">Criar nova denúncia</string>
+    <string name="acessar_minhas_den_ncias">Acessar minhas denúncias</string>
+    <string name="acessar_minhas_den_nc">Acessar minhas denúncias</string>
+    <string name="ver_locais">Ver Locais</string>
+    <string name="ver_locais2">Ver Locais</string>
+    <string name="ver_locais_acess_veis">Ver locais acessíveis</string>
+    <string name="ver_locais_acess_veiss">Ver locais acessíveis</string>
+    <string name="abrir_menu_de_navega_o">Abrir menu de navegação</string>
+
+    <string name="foto_de_perfil_do_usu_rio">Foto de perfil do usuário</string>
+    <string name="nome_do_usu_rio">Nome do usuário</string>
+    <string name="editar_perfil">Editar perfil</string>
+    <string name="bot_o_para_editar_perfil">Botão para editar perfil</string>
+    <string name="menu_de_navega_o">Menu de navegação</string>
+
+    <string name="voc_ainda_n_o_possui_den_ncias">Você ainda não possui denúncias.</string>
+    <string name="t_tulo_minhas_den_ncias">Título: Minhas denúncias</string>
+    <string name="minhas_den_ncias">Minhas denúncias</string>
     <string name="criado_em">Criado em</string>
     <string name="problema">Problema</string>
-    <string name="endere_o">EndereÃ§o</string>
-    <string name="t_tulo">TÃ­tulo</string>
-    <string name="denuncia_titulo">Cadastrar DenÃºncia</string>
-    <string name="campo_nome_local_hint">Nome do local</string>
-    <string name="campo_obrigatorio_helper">Campo obrigatÃ³rio</string>
-    <string name="section_endereco">EndereÃ§o</string>
-    <string name="campo_logradouro">Logradouro (rua/avenida)</string>
-    <string name="campo_numero">NÃºmero</string>
+    <string name="endere_o">Endereço</string>
+    <string name="t_tulo">Título</string>
+    <string name="recarregar">Recarregar</string>
+
+    <string name="section_endereco">Endereço</string>
+    <string name="campo_logradouro">Logradouro</string>
+    <string name="campo_numero">Número</string>
     <string name="campo_complemento">Complemento</string>
-    <string name="campo_bairro">Bairro</string>
     <string name="campo_cidade">Cidade</string>
     <string name="campo_uf">UF</string>
+    <string name="campo_bairro">Bairro</string>
     <string name="campo_cep">CEP</string>
-    <string name="campo_descricao">DescriÃ§Ã£o do problema</string>
-    <string name="campo_descricao_helper">Explique o que aconteceu, quando e se hÃ¡ riscos</string>
-    <string name="campo_sugestao">SugestÃ£o de melhoria (opcional)</string>
-    <string name="campo_sugestao_helper">Ex.: rampa, piso tÃ¡til, sinalizaÃ§Ã£o, etc.</string>
+    <string name="campo_descricao">Descrição</string>
+
     <string name="btn_adicionar_imagens">Adicionar imagens</string>
     <string name="btn_adicionar_imagens_cd">Adicionar imagens que mostram o problema</string>
-    <string name="btn_marcar_local">Marcar localizaÃ§Ã£o</string>
-    <string name="btn_marcar_local_cd">Abrir mapa para marcar a localizaÃ§Ã£o exata</string>
-    <string name="btn_criar_denuncia">CRIAR DENÃšNCIA</string>
-    <string name="btn_criar_denuncia_cd">Enviar a denÃºncia com os dados preenchidos</string>
-    <string name="rv_imagens_cd">Lista de imagens selecionadas para a denÃºncia</string>
-    <string name="erro_campo_obrigatorio">Preencha este campo</string>
-    <string name="erro_cep_invalido">CEP invÃ¡lido (use 8 dÃ­gitos)</string>
-    <string name="erro_uf_invalida">UF invÃ¡lida (ex.: SC, SP, RJ)</string>
-    <string name="denuncia_criada_sucesso">DenÃºncia criada com sucesso</string>
-    <string name="titulo_admin">AdministraÃ§Ã£o</string>
-    <string name="titulo_admin_home">Menu do Administrador</string>
-    <string name="gerenciar_usuarios">Gerenciar UsuÃ¡rios</string>
-    <string name="gerenciar_denuncias">Gerenciar DenÃºncias</string>
-    <string name="gerenciar_perguntas">Gerenciar Perguntas</string>
-    <string name="cd_gerenciar_usuarios">Ir para gerenciar usuÃ¡rios</string>
-    <string name="cd_gerenciar_denuncias">Ir para gerenciar denÃºncias</string>
-    <string name="cd_gerenciar_perguntas">Ir para gerenciar perguntas do fÃ³rum</string>
-    <string name="empty_usuarios">Nenhum usuÃ¡rio encontrado.</string>
-    <string name="empty_denuncias">Nenhuma denÃºncia encontrada.</string>
-    <string name="empty_perguntas">Nenhuma pergunta encontrada.</string>
-    <string name="cd_lista_usuarios">Lista de usuÃ¡rios</string>
-    <string name="cd_lista_denuncias">Lista de denÃºncias</string>
-    <string name="cd_lista_perguntas">Lista de perguntas</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="btn_marcar_local">Marcar localização</string>
+    <string name="btn_marcar_local_cd">Abrir mapa para marcar a localização exata</string>
+    <string name="btn_criar_denuncia">CRIAR DENÚNCIA</string>
+    <string name="btn_criar_denuncia_cd">Enviar a denúncia com os dados preenchidos</string>
 
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-    </string>
-    <string name="gerenciar_usu_rios">Gerenciar UsuÃ¡rios</string>
-    <string name="gerenciar_f_rum">Gerenciar FÃ³rum</string>
-    <string name="gerenciar_den_ncias">Gerenciar DenÃºncias</string>
-    <string name="admin_msg_gerenciar_denuncias">Tela de Gerenciar Denuncias ainda nao implementada.</string>
-    <string name="admin_msg_gerenciar_usuarios">Tela de Gerenciar Usuarios ainda nao implementada.</string>
-    <string name="admin_msg_gerenciar_forum">Tela de Gerenciar Forum ainda nao implementada.</string>
-    <string name="admin_msg_erro_abrir_tela">Nao foi possivel abrir a tela.</string>
+    <string name="titulo_admin">Administração</string>
+    <string name="gerenciar_usu_rios">Gerenciar Usuários</string>
+    <string name="gerenciar_den_ncias">Gerenciar Denúncias</string>
+    <string name="gerenciar_f_rum">Gerenciar Fórum</string>
+    <string name="admin_msg_gerenciar_usuarios">Tela de Gerenciar Usuários ainda não implementada.</string>
+    <string name="admin_msg_gerenciar_denuncias">Tela de Gerenciar Denúncias ainda não implementada.</string>
+    <string name="admin_msg_gerenciar_forum">Tela de Gerenciar Fórum ainda não implementada.</string>
+    <string name="admin_msg_erro_abrir_tela">Não foi possível abrir a tela.</string>
+    <string name="admin_text_gerenciar_denuncias">Tela de gerenciamento de denúncias.</string>
+    <string name="admin_text_gerenciar_usuarios">Tela de gerenciamento de usuários.</string>
+    <string name="direitos_titulo">Direitos de Acessibilidade</string>
+
+    <string name="forum_hint_pergunta">Escreva sua pergunta</string>
+    <string name="forum_enviar">Enviar</string>
+    <string name="forum_perguntas_outros">Perguntas de outros usuários</string>
+
+    <string name="item_pergunta_foto">Foto do usuário</string>
+    <string name="item_pergunta_nome">Nome do usuário</string>
+    <string name="item_pergunta_titulo">Pergunta</string>
+    <string name="item_respostas_titulo">Respostas</string>
+    <string name="item_resposta_hint">Escreva uma resposta</string>
+    <string name="item_responder">Responder</string>
+    <string name="item_responder_cd">Botão para enviar resposta</string>
+    <string name="usuario_padrao">Usuário</string>
+    <string name="resposta_bullet">• %1$s</string>
+    <string name="item_denuncia_imagem">Imagem da denúncia</string>
+    <string name="direito_titulo_placeholder">Título do direito</string>
+    <string name="direito_descricao_placeholder">Descrição do direito</string>
+
+    <string name="suporte_titulo">Suporte ao usuário</string>
+    <string name="suporte_descricao">Caso tenha dúvidas, sugestões ou precise de ajuda, entre em contato:</string>
+    <string name="suporte_email">E-mail: lucas—frutuoso@hotmail.com</string>
+    <string name="suporte_telefone">Telefone: (47) 9338–903</string>
 </resources>

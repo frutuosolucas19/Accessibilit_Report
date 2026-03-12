@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CadastroDenunciaFragment">
+    tools:context=".activities.ReportRegistrationFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -16,7 +16,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <TextView
                 android:id="@+id/textViewTitulo"
@@ -31,7 +30,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,7 +45,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextNomeLocal" />
 
@@ -57,13 +54,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:accessibilityHeading="true"
-                android:text="Descrição"
+                android:text="@string/campo_descricao"
                 android:textAlignment="textStart"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextBairro" />
 
@@ -80,7 +76,6 @@
                 android:maxLines="1"
                 android:padding="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
 
@@ -91,13 +86,12 @@
                 android:layout_marginTop="8dp"
                 android:autofillHints="streetAddress"
                 android:background="@drawable/edittext_background"
-                android:hint="Logradouro"
+                android:hint="@string/campo_logradouro"
                 android:importantForAutofill="yes"
                 android:inputType="textCapWords|textPostalAddress"
                 android:maxLines="1"
                 android:padding="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEndereco" />
 
@@ -107,7 +101,7 @@
                 android:layout_height="56dp"
                 android:autofillHints="postalAddress"
                 android:background="@drawable/edittext_background"
-                android:hint="Número"
+                android:hint="@string/campo_numero"
                 android:importantForAutofill="yes"
                 android:inputType="number"
                 android:maxLines="1"
@@ -123,7 +117,7 @@
                 android:layout_height="56dp"
                 android:autofillHints="extendedAddress"
                 android:background="@drawable/edittext_background"
-                android:hint="Complemento"
+                android:hint="@string/campo_complemento"
                 android:importantForAutofill="yes"
                 android:inputType="textCapWords|textPostalAddress"
                 android:maxLines="1"
@@ -133,15 +127,13 @@
                 app:layout_constraintStart_toEndOf="@id/editTextNumero"
                 app:layout_constraintTop_toBottomOf="@id/editTextLogradouro" />
 
-            <!-- CIDADE + UF (chain) -->
-
             <EditText
                 android:id="@+id/editTextCidade"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:autofillHints="locality"
                 android:background="@drawable/edittext_background"
-                android:hint="Cidade"
+                android:hint="@string/campo_cidade"
                 android:importantForAutofill="yes"
                 android:inputType="textCapWords"
                 android:maxLines="1"
@@ -157,7 +149,7 @@
                 android:layout_height="56dp"
                 android:autofillHints="addressRegion"
                 android:background="@drawable/edittext_background"
-                android:hint="UF"
+                android:hint="@string/campo_uf"
                 android:importantForAutofill="yes"
                 android:inputType="textCapCharacters"
                 android:maxLength="2"
@@ -168,13 +160,13 @@
                 app:layout_constraintStart_toEndOf="@id/editTextCidade"
                 app:layout_constraintTop_toBottomOf="@id/editTextComplemento" />
 
-            <!-- BAIRRO + CEP (chain) -->
             <EditText
                 android:id="@+id/editTextBairro"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
+                android:autofillHints="postalAddress"
                 android:background="@drawable/edittext_background"
-                android:hint="Bairro"
+                android:hint="@string/campo_bairro"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:padding="12dp"
@@ -189,7 +181,7 @@
                 android:layout_height="56dp"
                 android:autofillHints="postalCode"
                 android:background="@drawable/edittext_background"
-                android:hint="CEP"
+                android:hint="@string/campo_cep"
                 android:importantForAutofill="yes"
                 android:inputType="number"
                 android:maxLines="1"
@@ -199,13 +191,6 @@
                 app:layout_constraintStart_toEndOf="@id/editTextBairro"
                 app:layout_constraintTop_toBottomOf="@id/editTextUF" />
 
-            <!-- PROBLEMA -->
-
-            <!-- SUGESTÃO -->
-
-            <!-- Pré-visualização das imagens selecionadas -->
-
-
             <EditText
                 android:id="@+id/editTextProblema"
                 android:layout_width="0dp"
@@ -214,30 +199,30 @@
                 android:background="@drawable/edittext_background"
                 android:gravity="top|start"
                 android:hint="@string/descreva_o_problema"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:maxLength="1500"
                 android:minHeight="120dp"
                 android:padding="12dp"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvdDescricao" />
 
             <EditText
-                android:id="@+id/editTextSugestão"
+                android:id="@+id/editTextSugestao"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:background="@drawable/edittext_background"
                 android:gravity="top|start"
                 android:hint="@string/alguma_sugestao"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:maxLength="1000"
                 android:minHeight="96dp"
                 android:padding="12dp"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextProblema" />
 
@@ -248,9 +233,8 @@
                 android:layout_marginTop="32dp"
                 android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextSugestão">
+                app:layout_constraintTop_toBottomOf="@id/editTextSugestao">
 
                 <LinearLayout
                     android:id="@+id/containerPreviews"
@@ -271,13 +255,12 @@
                 android:minHeight="48dp"
                 android:text="@string/btn_adicionar_imagens"
                 android:textAlignment="textStart"
-                android:textSize="18sp"
                 android:textColor="@color/azul_login"
-                app:iconTint="@color/azul_login"
+                android:textSize="18sp"
                 app:icon="@drawable/add_a_photo_24"
                 app:iconGravity="textStart"
+                app:iconTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/hsPreviews"
                 app:strokeColor="@android:color/transparent"
@@ -292,13 +275,12 @@
                 android:minHeight="48dp"
                 android:text="@string/btn_marcar_local"
                 android:textAlignment="textStart"
-                android:textSize="18sp"
                 android:textColor="@color/azul_login"
-                app:iconTint="@color/azul_login"
+                android:textSize="18sp"
                 app:icon="@drawable/ic_pin_drop"
                 app:iconGravity="textStart"
+                app:iconTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnAdicionarImagens"
                 app:strokeColor="@android:color/transparent"
@@ -316,7 +298,6 @@
                 android:textSize="18sp"
                 app:backgroundTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnMarcarLocal" />
 
