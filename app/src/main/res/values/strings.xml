@@ -9,7 +9,6 @@
     <string name="forumAcessibilidade">Fórum de Acessibilidade</string>
     <string name="direitosAcessibilidade">Direitos sobre Acessibilidade</string>
     <string name="suporte">Suporte</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="nome_completo">Nome completo</string>
     <string name="imagem_do_perfil_do_usu_rio">Imagem do perfil do usuário</string>
@@ -93,9 +92,9 @@
     <string name="gerenciar_usu_rios">Gerenciar Usuários</string>
     <string name="gerenciar_den_ncias">Gerenciar Denúncias</string>
     <string name="gerenciar_f_rum">Gerenciar Fórum</string>
-    <string name="admin_msg_gerenciar_usuarios">Tela de Gerenciar Usuários ainda não implementada.</string>
-    <string name="admin_msg_gerenciar_denuncias">Tela de Gerenciar Denúncias ainda não implementada.</string>
-    <string name="admin_msg_gerenciar_forum">Tela de Gerenciar Fórum ainda não implementada.</string>
+    <string name="admin_msg_gerenciar_usuarios">Nao foi possivel abrir Gerenciar Usuarios.</string>
+    <string name="admin_msg_gerenciar_denuncias">Nao foi possivel abrir Gerenciar Denuncias.</string>
+    <string name="admin_msg_gerenciar_forum">Nao foi possivel abrir Gerenciar Forum.</string>
     <string name="admin_msg_erro_abrir_tela">Não foi possível abrir a tela.</string>
     <string name="admin_text_gerenciar_denuncias">Tela de gerenciamento de denúncias.</string>
     <string name="admin_text_gerenciar_usuarios">Tela de gerenciamento de usuários.</string>

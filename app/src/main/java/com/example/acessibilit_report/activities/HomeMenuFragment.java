@@ -30,8 +30,6 @@ public class HomeMenuFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        super.onViewCreated(view, savedInstanceState);
-
         TextView tvNome = view.findViewById(R.id.tvNomeUsuario);
 
         SharedPreferences prefs = requireContext()

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.acessibilit_report.BuildConfig;
 import com.example.acessibilit_report.network.AuthInterceptor;
+import com.example.acessibilit_report.services.ProtectedApiService;
+import com.example.acessibilit_report.services.PublicApiService;
 import com.example.acessibilit_report.services.ReportService;
 import com.example.acessibilit_report.services.UserService;
 
@@ -52,6 +54,14 @@ public class RetrofitInitializer {
 
     public static ReportService getDenunciaService(Context ctx) {
         return getInstance(ctx).create(ReportService.class);
+    }
+
+    public static PublicApiService getPublicApiService(Context ctx) {
+        return getInstance(ctx).create(PublicApiService.class);
+    }
+
+    public static ProtectedApiService getProtectedApiService(Context ctx) {
+        return getInstance(ctx).create(ProtectedApiService.class);
     }
 }
 

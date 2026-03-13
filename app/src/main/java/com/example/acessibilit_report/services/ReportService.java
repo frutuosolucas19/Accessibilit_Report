@@ -2,20 +2,26 @@ package com.example.acessibilit_report.services;
 
 import com.example.acessibilit_report.dto.ReportRequest;
 import com.example.acessibilit_report.dto.ReportResponse;
-import com.example.acessibilit_report.model.Report;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ReportService {
 
-    // Service
+    @GET("denuncia")
+    Call<List<ReportResponse>> denuncia();
+
+    @GET("denuncia/denuncias")
+    Call<List<ReportResponse>> denuncias();
+
     @POST("denuncia")
     Call<ReportResponse> criarDenuncia(@Body ReportRequest body);
 
@@ -24,5 +30,14 @@ public interface ReportService {
 
     @GET("denuncia/{id}")
     Call<ReportResponse> obter(@Path("id") Long id);
+
+    @PUT("denuncia/{id}")
+    Call<ReportResponse> atualizar(@Path("id") Long id, @Body ReportRequest body);
+
+    @DELETE("denuncia/{id}")
+    Call<Void> deletar(@Path("id") Long id);
+
+    @GET("denuncia/{id}/imagens/{imgId}")
+    Call<ResponseBody> imagem(@Path("id") Long id, @Path("imgId") Long imgId);
 }
 

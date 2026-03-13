@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,9 +98,7 @@ public class ReportRegistrationFragment extends Fragment {
 
         btnImagem.setOnClickListener(v -> selecionarImagens());
         btnCadastrar.setOnClickListener(v -> enviarDenuncia());
-        btnLocalizacao.setOnClickListener(v ->
-                Toast.makeText(context, "Abrir mapa para marcar localizaçãoâ€¦", Toast.LENGTH_SHORT).show()
-        );
+        btnLocalizacao.setOnClickListener(v -> abrirMapaComEndereco());
 
         return view;
     }
@@ -326,6 +325,35 @@ public class ReportRegistrationFragment extends Fragment {
         } catch (Exception ignored) {}
         return result;
     }
+
+    private void abrirMapaComEndereco() {
+        StringBuilder query = new StringBuilder();
+        appendPart(query, s(txtLogradouro));
+        appendPart(query, s(txtNumero));
+        appendPart(query, s(txtBairro));
+        appendPart(query, s(txtCidade));
+        appendPart(query, s(txtUF));
+
+        if (query.length() == 0) {
+            Toast.makeText(context, "Preencha endereco/cidade para abrir no mapa.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(query.toString()));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        if (mapIntent.resolveActivity(requireContext().getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(context, "Nenhum app de mapa encontrado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void appendPart(StringBuilder sb, String value) {
+        if (TextUtils.isEmpty(value)) return;
+        if (sb.length() > 0) sb.append(", ");
+        sb.append(value);
+    }
 }
+
 
 
