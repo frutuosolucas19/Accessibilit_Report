@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.ReportResponse;
-import com.example.acessibilit_report.model.Address;
 import com.example.acessibilit_report.model.Image;
+import com.example.acessibilit_report.util.AddressFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.VH> {
         h.titulo.setText(safe(d.nomeLocal));
         h.problema.setText(safe(d.problema));
         h.data.setText(safe(d.criadoEm));
-        h.endereco.setText(formatEndereco(d.endereco));
+        h.endereco.setText(AddressFormatter.format(d.endereco));
 
         String thumbUrl = firstImageUrl(d.imagens);
         if (!TextUtils.isEmpty(thumbUrl)) {
@@ -75,33 +75,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.VH> {
 
     private static String safe(String s) {
         return s == null ? "" : s;
-    }
-
-    private static String formatEndereco(Address e) {
-        if (e == null) return "";
-        StringBuilder sb = new StringBuilder();
-        if (!isBlank(e.getLogradouro())) sb.append(e.getLogradouro());
-        if (e.getNumero() != null) {
-            if (sb.length() > 0) sb.append(", ");
-            sb.append(e.getNumero());
-        }
-        if (!isBlank(e.getBairro())) {
-            if (sb.length() > 0) sb.append(" - ");
-            sb.append(e.getBairro());
-        }
-        if (!isBlank(e.getCidade())) {
-            if (sb.length() > 0) sb.append(" • ");
-            sb.append(e.getCidade());
-        }
-        if (!isBlank(e.getUf())) {
-            if (!isBlank(e.getCidade())) sb.append("/");
-            sb.append(e.getUf());
-        }
-        return sb.toString();
-    }
-
-    private static boolean isBlank(String s) {
-        return s == null || s.trim().isEmpty();
     }
 
     private static String firstImageUrl(List<Image> imagens) {

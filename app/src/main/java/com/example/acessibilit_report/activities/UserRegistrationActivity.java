@@ -1,17 +1,19 @@
 package com.example.acessibilit_report.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.R;
@@ -37,16 +39,25 @@ public class UserRegistrationActivity extends AppCompatActivity {
     private Button btnImagem;
     private TextView txvJaTenhoConta;
 
-    private static final int REQ_PEGA_FOTO = 1;
-
-    private Context context;
     private String imagemUriStr;
+
+    private final ActivityResultLauncher<Intent> pickImageLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() != Activity.RESULT_OK || result.getData() == null) return;
+                Uri uri = result.getData().getData();
+                if (uri == null) return;
+                try {
+                    getContentResolver().takePersistableUriPermission(
+                            uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } catch (SecurityException ignored) {}
+                imgPerfil.setImageURI(uri);
+                imagemUriStr = uri.toString();
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-        context = this;
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
@@ -66,11 +77,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
             Intent intentPegaFoto = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intentPegaFoto.setType("image/*");
             intentPegaFoto.addCategory(Intent.CATEGORY_OPENABLE);
-            // pedir leitura (e escrita se precisar editar a imagem depois)
             intentPegaFoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intentPegaFoto.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intentPegaFoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            startActivityForResult(Intent.createChooser(intentPegaFoto, "Selecione uma imagem"), REQ_PEGA_FOTO);
+            pickImageLauncher.launch(Intent.createChooser(intentPegaFoto, "Selecione uma imagem"));
         });
 
         btnCadastro.setOnClickListener(v -> {
@@ -80,11 +89,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
             String confirma = txtConfirmaSenha.getText().toString();
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirma.isEmpty()) {
-                Toast.makeText(context, "Por favor, informe todos os campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Por favor, informe todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (!senha.equals(confirma)) {
-                Toast.makeText(context, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -93,61 +102,39 @@ public class UserRegistrationActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) return;
-        if (requestCode != REQ_PEGA_FOTO || data == null) return;
-
-        Uri uri = data.getData();
-        if (uri == null) return;
-
-        try {
-            getContentResolver().takePersistableUriPermission(
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-            );
-        } catch (SecurityException ignored) {
-        }
-
-        imgPerfil.setImageURI(uri);
-        imagemUriStr = uri.toString();
-    }
-
     private void postUsuario(String nome, String email, String imagemUri, String senha, String tipoUsuario) {
         Person pessoa   = new Person(nome, imagemUri);
-        User usuario = new User(pessoa, email, senha, tipoUsuario);
+        User usuario    = new User(pessoa, email, senha, tipoUsuario);
 
         UserService api = RetrofitInitializer.getUsuarioService(this);
-        Call<User> call = api.create(usuario);
 
-        call.enqueue(new Callback<User>() {
+        api.create(usuario).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 btnCadastro.setEnabled(true);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
-
-                    new Handler().postDelayed(() -> {
+                    Toast.makeText(UserRegistrationActivity.this,
+                            "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
                         startActivity(new Intent(UserRegistrationActivity.this, LoginActivity.class));
                         finish();
                     }, 1200);
                 } else {
-                    String msg = "Erro ao cadastrar";
-                    if (response.code() == 409) msg = "E-mail já cadastrado";
+                    String msg;
+                    if (response.code() == 409)      msg = "E-mail já cadastrado";
                     else if (response.code() == 400) msg = "Dados inválidos";
-                    else msg = "Falha (" + response.code() + ")";
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    else                             msg = "Falha (" + response.code() + ")";
+                    Toast.makeText(UserRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 btnCadastro.setEnabled(true);
-                Toast.makeText(context, "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(UserRegistrationActivity.this,
+                        "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 }
-
