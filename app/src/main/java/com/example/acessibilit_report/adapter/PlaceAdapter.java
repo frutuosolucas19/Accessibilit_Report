@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acessibilit_report.R;
-import com.example.acessibilit_report.model.Address;
 import com.example.acessibilit_report.model.Place;
+import com.example.acessibilit_report.util.AddressFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,39 +41,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.VH> {
     public void onBindViewHolder(@NonNull VH holder, int position) {
         Place place = data.get(position);
         holder.nome.setText(safe(place.getNome()));
-        holder.endereco.setText(formatEndereco(place.getEndereco()));
+        holder.endereco.setText(AddressFormatter.format(place.getEndereco()));
     }
 
     @Override
     public int getItemCount() {
         return data != null ? data.size() : 0;
-    }
-
-    private String formatEndereco(Address e) {
-        if (e == null) return "";
-        StringBuilder sb = new StringBuilder();
-        if (!isBlank(e.getLogradouro())) sb.append(e.getLogradouro());
-        if (e.getNumero() != null) {
-            if (sb.length() > 0) sb.append(", ");
-            sb.append(e.getNumero());
-        }
-        if (!isBlank(e.getBairro())) {
-            if (sb.length() > 0) sb.append(" - ");
-            sb.append(e.getBairro());
-        }
-        if (!isBlank(e.getCidade())) {
-            if (sb.length() > 0) sb.append(" • ");
-            sb.append(e.getCidade());
-        }
-        if (!isBlank(e.getUf())) {
-            if (!isBlank(e.getCidade())) sb.append("/");
-            sb.append(e.getUf());
-        }
-        return sb.toString();
-    }
-
-    private boolean isBlank(String s) {
-        return s == null || s.trim().isEmpty();
     }
 
     private String safe(String s) {

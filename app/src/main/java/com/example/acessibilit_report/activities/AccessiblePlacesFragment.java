@@ -68,7 +68,7 @@ public class AccessiblePlacesFragment extends Fragment {
                 showLoading(false);
                 if (!response.isSuccessful() || response.body() == null) {
                     if (response.code() == 401) {
-                        Toast.makeText(requireContext(), "Sessao expirada. Faca login novamente.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(requireContext(), "Falha (" + response.code() + ")", Toast.LENGTH_LONG).show();
                     }

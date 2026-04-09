@@ -1,9 +1,7 @@
 package com.example.acessibilit_report.activities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -16,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.R;
+import com.example.acessibilit_report.auth.TokenStore;
 import com.example.acessibilit_report.dto.LoginRequest;
 import com.example.acessibilit_report.dto.LoginResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
@@ -29,12 +28,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
-    public static final String PREFS_NAME = "user_data";
-    public static final String KEY_NOME  = "nome";
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_TIPO  = "tipoUsuario";
-    public static final String KEY_TOKEN = "access_token";
 
     private EditText txtLogin;
     private EditText txtSenha;
@@ -112,25 +105,24 @@ public class LoginActivity extends AppCompatActivity {
 
                 LoginResponse lr = resp.body();
 
-                SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-                prefs.edit()
-                        .putString(KEY_NOME, safe(lr.getNome()))
-                        .putString(KEY_EMAIL, safe(lr.getEmail()))
-                        .putString(KEY_TIPO, safe(lr.getTipoUsuario()))
-                        .putString(KEY_TOKEN, safe(lr.getAccessToken()))
-                        .apply();
+                new TokenStore(LoginActivity.this).saveSession(
+                        safe(lr.getAccessToken()),
+                        safe(lr.getNome()),
+                        safe(lr.getEmail()),
+                        safe(lr.getTipoUsuario())
+                );
 
                 Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
 
-                if (Objects.equals(lr.getTipoUsuario(), "normal")) {
-                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                    startActivity(intent);
+                String tipo = lr.getTipoUsuario();
+                if (Objects.equals(tipo, "normal")) {
+                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                     finish();
-                }
-                if (Objects.equals(lr.getTipoUsuario(), "admin")) {
-                    Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                    startActivity(intent);
+                } else if (Objects.equals(tipo, "admin")) {
+                    startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Tipo de conta desconhecido. Contate o suporte.", Toast.LENGTH_LONG).show();
                 }
             }
 

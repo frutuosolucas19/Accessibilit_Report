@@ -29,7 +29,9 @@ public class RetrofitInitializer {
             }
 
             HttpLoggingInterceptor log = new HttpLoggingInterceptor();
-            log.setLevel(HttpLoggingInterceptor.Level.BODY);
+            log.setLevel(BuildConfig.DEBUG
+                    ? HttpLoggingInterceptor.Level.BODY
+                    : HttpLoggingInterceptor.Level.NONE);
 
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new AuthInterceptor(ctx))   // <-- aqui
