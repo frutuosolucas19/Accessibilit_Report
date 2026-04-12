@@ -1,7 +1,10 @@
 package com.example.acessibilit_report.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
 
     private Long id;
