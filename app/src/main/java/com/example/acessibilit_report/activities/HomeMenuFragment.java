@@ -1,7 +1,5 @@
 package com.example.acessibilit_report.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.acessibilit_report.R;
+import com.example.acessibilit_report.auth.TokenStore;
 
 public class HomeMenuFragment extends Fragment {
 
@@ -32,10 +31,7 @@ public class HomeMenuFragment extends Fragment {
 
         TextView tvNome = view.findViewById(R.id.tvNomeUsuario);
 
-        SharedPreferences prefs = requireContext()
-                .getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-
-        String nome = prefs.getString(LoginActivity.KEY_NOME, "Usuário");
+        String nome = new TokenStore(requireContext()).getNome();
 
         if (tvNome != null) {
             tvNome.setText(nome.isEmpty() ? "Usuário" : nome);
