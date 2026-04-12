@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +31,8 @@ import retrofit2.Response;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
+    private static final String TAG = "UserRegistration";
+
     private ImageView imgPerfil;
     private EditText txtNome;
     private EditText txtEmail;
@@ -38,8 +41,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
     private Button btnCadastro;
     private Button btnImagem;
     private TextView txvJaTenhoConta;
-
-    private String imagemUriStr;
 
     private final ActivityResultLauncher<Intent> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -51,7 +52,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                             uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 } catch (SecurityException ignored) {}
                 imgPerfil.setImageURI(uri);
-                imagemUriStr = uri.toString();
+                // URI local não é enviada ao servidor — apenas exibida localmente
             });
 
     @Override
@@ -98,13 +99,16 @@ public class UserRegistrationActivity extends AppCompatActivity {
             }
 
             btnCadastro.setEnabled(false);
-            postUsuario(nome, email, imagemUriStr, senha, "normal");
+            postUsuario(nome, email, senha);
         });
     }
 
-    private void postUsuario(String nome, String email, String imagemUri, String senha, String tipoUsuario) {
-        Person pessoa   = new Person(nome, imagemUri);
-        User usuario    = new User(pessoa, email, senha, tipoUsuario);
+    private void postUsuario(String nome, String email, String senha) {
+        // imagem não é enviada no cadastro (upload separado via endpoint específico)
+        Person pessoa = new Person(nome, null);
+        User usuario  = new User(pessoa, email, senha, "normal");
+
+        Log.d(TAG, "Enviando cadastro: nome=" + nome + " email=" + email);
 
         UserService api = RetrofitInitializer.getUsuarioService(this);
 
@@ -121,17 +125,37 @@ public class UserRegistrationActivity extends AppCompatActivity {
                         finish();
                     }, 1200);
                 } else {
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "Erro ao ler errorBody", e);
+                    }
+                    Log.e(TAG, "Falha no cadastro: HTTP " + response.code() + " | " + errorBody);
+
                     String msg;
-                    if (response.code() == 409)      msg = "E-mail já cadastrado";
-                    else if (response.code() == 400) msg = "Dados inválidos";
-                    else                             msg = "Falha (" + response.code() + ")";
-                    Toast.makeText(UserRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    if (response.code() == 409) {
+                        msg = "E-mail já cadastrado";
+                    } else if (response.code() == 400) {
+                        msg = errorBody.isEmpty()
+                                ? "Dados inválidos (400)"
+                                : "Erro: " + (errorBody.length() > 120
+                                        ? errorBody.substring(0, 120) + "…"
+                                        : errorBody);
+                    } else {
+                        msg = "Falha (" + response.code() + ")"
+                                + (errorBody.isEmpty() ? "" : ": " + errorBody.substring(0, Math.min(80, errorBody.length())));
+                    }
+                    Toast.makeText(UserRegistrationActivity.this, msg, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 btnCadastro.setEnabled(true);
+                Log.e(TAG, "Falha de rede no cadastro", t);
                 Toast.makeText(UserRegistrationActivity.this,
                         "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
