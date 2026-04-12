@@ -12,6 +12,7 @@
         android:paddingTop="12dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
+        android:accessibilityHeading="true"
         android:text="@string/locaisDenunciados"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -28,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:importantForAccessibility="no"
             android:visibility="gone" />
 
         <TextView
@@ -35,7 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/voc_ainda_n_o_possui_den_ncias"
+            android:accessibilityLiveRegion="polite"
+            android:text="@string/sem_locais_denunciados"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView

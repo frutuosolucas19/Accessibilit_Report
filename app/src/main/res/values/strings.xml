@@ -121,4 +121,15 @@
     <string name="suporte_descricao">Caso tenha dúvidas, sugestões ou precise de ajuda, entre em contato:</string>
     <string name="suporte_email">E-mail: lucas—frutuoso@hotmail.com</string>
     <string name="suporte_telefone">Telefone: (47) 9338–903</string>
+
+    <!-- Acessibilidade: strings adicionais -->
+    <string name="heading_cadastro">Criar conta</string>
+    <string name="cd_gerenciar_denuncias_admin">Acessar gerenciamento de denúncias</string>
+    <string name="cd_gerenciar_usuarios_admin">Acessar gerenciamento de usuários</string>
+    <string name="cd_gerenciar_forum_admin">Acessar gerenciamento do fórum</string>
+    <string name="sem_locais_adaptados">Nenhum local adaptado encontrado.</string>
+    <string name="sem_locais_denunciados">Nenhum local denunciado encontrado.</string>
+    <string name="cd_ja_tenho_conta_link">Já tenho uma conta — tocar para fazer login</string>
+    <string name="cd_criar_conta_link">Ainda não tenho conta — tocar para criar uma</string>
+    <string name="cd_esqueceu_senha_link">Esqueceu a senha — tocar para recuperar</string>
 </resources>

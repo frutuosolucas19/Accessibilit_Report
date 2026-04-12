@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:accessibilityHeading="true"
             android:text="@string/suporte_titulo"
             android:textColor="@android:color/black"
             android:textSize="24sp"
@@ -37,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
+            android:textIsSelectable="true"
             android:text="@string/suporte_email"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -45,6 +47,7 @@
             android:id="@+id/telefoneContato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             android:text="@string/suporte_telefone"
             android:textColor="@android:color/black"
             android:textSize="16sp" />

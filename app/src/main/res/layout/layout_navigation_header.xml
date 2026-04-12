@@ -41,6 +41,8 @@
         android:textSize="16sp"
         android:background="?attr/selectableItemBackground"
         android:padding="8dp"
+        android:focusable="true"
+        android:clickable="true"
         android:contentDescription="@string/bot_o_para_editar_perfil"
         app:layout_constraintTop_toBottomOf="@+id/txtNomeUsuario"
         app:layout_constraintStart_toStartOf="@+id/txtNomeUsuario" />

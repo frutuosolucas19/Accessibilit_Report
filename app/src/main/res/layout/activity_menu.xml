@@ -25,8 +25,9 @@
 
             <ImageView
                 android:id="@+id/imageMenu"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="9dp"
                 android:contentDescription="@string/abrir_menu_de_navega_o"
                 android:src="@drawable/ic_menu"
                 app:tint="@color/black" />

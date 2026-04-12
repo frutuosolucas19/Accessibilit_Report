@@ -15,7 +15,7 @@
         android:padding="16dp"
         android:gravity="center_horizontal">
 
-        <!-- Nome do usuÃ¡rio (SharedPreferences) no topo -->
+        <!-- Nome do usuário (TokenStore) no topo -->
         <TextView
             android:id="@+id/tvNomeUsuario"
             android:layout_width="match_parent"
@@ -24,13 +24,14 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center"
+            android:accessibilityHeading="true"
             android:paddingBottom="12dp" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/imagem_ilustrativa_da_tela_principal"
+            android:importantForAccessibility="no"
             android:src="@drawable/menulogo"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />

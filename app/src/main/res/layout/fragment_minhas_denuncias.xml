@@ -15,7 +15,7 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textAlignment="center"
-        android:contentDescription="@string/t_tulo_minhas_den_ncias"
+        android:accessibilityHeading="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -27,6 +27,7 @@
             android:id="@+id/pb_loading"
             style="?android:attr/progressBarStyleLarge"
             android:layout_gravity="center"
+            android:importantForAccessibility="no"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -35,6 +36,7 @@
             android:id="@+id/tv_empty"
             android:text="@string/voc_ainda_n_o_possui_den_ncias"
             android:gravity="center"
+            android:accessibilityLiveRegion="polite"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

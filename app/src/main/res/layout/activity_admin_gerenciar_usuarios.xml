@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:accessibilityHeading="true"
             android:text="@string/gerenciar_usu_rios"
             android:textColor="@color/white"
             android:textSize="18sp"

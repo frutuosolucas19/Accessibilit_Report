@@ -12,6 +12,7 @@
         android:paddingTop="12dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
+        android:accessibilityHeading="true"
         android:text="@string/direitos_titulo"
         android:textColor="#090909"
         android:textSize="20sp"
