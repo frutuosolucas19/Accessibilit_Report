@@ -35,6 +35,7 @@ public class MyReportsFragment extends Fragment {
     private ProgressBar progress;
     private TextView empty;
     private ReportAdapter adapter;
+    private Call<List<ReportResponse>> pendingCall;
 
     public MyReportsFragment() { }
 
@@ -56,7 +57,6 @@ public class MyReportsFragment extends Fragment {
         recycler.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         recycler.setAdapter(adapter);
 
-        // opcional: botão para recarregar
         FloatingActionButton fab = v.findViewById(R.id.fab_refresh);
         if (fab != null) fab.setOnClickListener(view -> loadData());
 
@@ -64,11 +64,23 @@ public class MyReportsFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingCall != null) {
+            pendingCall.cancel();
+            pendingCall = null;
+        }
+    }
+
     private void loadData() {
+        if (pendingCall != null) pendingCall.cancel();
         showLoading(true);
         ReportService api = RetrofitInitializer.getInstance(requireContext()).create(ReportService.class);
-        api.minhas().enqueue(new Callback<List<ReportResponse>>() {
+        pendingCall = api.minhas();
+        pendingCall.enqueue(new Callback<List<ReportResponse>>() {
             @Override public void onResponse(Call<List<ReportResponse>> call, Response<List<ReportResponse>> resp) {
+                if (!isAdded()) return;
                 showLoading(false);
                 if (!resp.isSuccessful() || resp.body() == null) {
                     if (resp.code() == 401) {
@@ -84,6 +96,7 @@ public class MyReportsFragment extends Fragment {
                 showEmpty(lista.isEmpty());
             }
             @Override public void onFailure(Call<List<ReportResponse>> call, Throwable t) {
+                if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
                 Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -102,4 +115,3 @@ public class MyReportsFragment extends Fragment {
         recycler.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
-

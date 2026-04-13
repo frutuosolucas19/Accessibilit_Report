@@ -19,7 +19,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitInitializer {
     private static Retrofit retrofit;
 
-    public static Retrofit getInstance(Context ctx){
+    public static synchronized Retrofit getInstance(Context ctx){
         if (retrofit == null){
             String baseUrl = BuildConfig.BASE_URL;
             if (!BuildConfig.DEBUG) {

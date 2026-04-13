@@ -90,7 +90,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 novaResposta.setResposta(texto);
                 pergunta.adicionarResposta(novaResposta);
 
-                notifyItemChanged(position);
+                notifyItemChanged(holder.getAdapterPosition());
                 holder.editResposta.setText("");
             }
         });

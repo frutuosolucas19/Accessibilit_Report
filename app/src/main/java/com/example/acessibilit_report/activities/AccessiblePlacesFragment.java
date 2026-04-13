@@ -35,6 +35,7 @@ public class AccessiblePlacesFragment extends Fragment {
     private ProgressBar progress;
     private TextView empty;
     private PlaceAdapter adapter;
+    private Call<List<Place>> pendingCall;
 
     public AccessiblePlacesFragment() {}
 
@@ -45,7 +46,7 @@ public class AccessiblePlacesFragment extends Fragment {
 
         recycler = v.findViewById(R.id.rv_locais);
         progress = v.findViewById(R.id.pb_loading_locais);
-        empty = v.findViewById(R.id.tv_empty_locais);
+        empty    = v.findViewById(R.id.tv_empty_locais);
 
         adapter = new PlaceAdapter(new ArrayList<>());
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -59,12 +60,24 @@ public class AccessiblePlacesFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingCall != null) {
+            pendingCall.cancel();
+            pendingCall = null;
+        }
+    }
+
     private void loadData() {
+        if (pendingCall != null) pendingCall.cancel();
         showLoading(true);
         ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        api.locais().enqueue(new Callback<List<Place>>() {
+        pendingCall = api.locais();
+        pendingCall.enqueue(new Callback<List<Place>>() {
             @Override
             public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
+                if (!isAdded()) return;
                 showLoading(false);
                 if (!response.isSuccessful() || response.body() == null) {
                     if (response.code() == 401) {
@@ -82,6 +95,7 @@ public class AccessiblePlacesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Place>> call, Throwable t) {
+                if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
                 Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -100,4 +114,3 @@ public class AccessiblePlacesFragment extends Fragment {
         recycler.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
-

@@ -3,7 +3,6 @@ package com.example.acessibilit_report.activities;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -64,7 +63,7 @@ public class ReportRegistrationFragment extends Fragment {
     private Button btnCadastrar;
     private Button btnLocalizacao;
 
-    private Context context;
+    private Call<ReportResponse> pendingCall;
 
     private final ActivityResultLauncher<Intent> pickImagesLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -75,7 +74,7 @@ public class ReportRegistrationFragment extends Fragment {
 
                 int espacoRestante = MAX_IMAGENS - imagensSelecionadas.size();
                 if (espacoRestante <= 0) {
-                    Toast.makeText(context, "Máximo de " + MAX_IMAGENS + " imagens.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Máximo de " + MAX_IMAGENS + " imagens.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -93,15 +92,9 @@ public class ReportRegistrationFragment extends Fragment {
                 if (adicionadas > 0) {
                     renderizarMiniaturas();
                 } else {
-                    Toast.makeText(context, "Nenhuma imagem adicionada (limite atingido).", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Nenhuma imagem adicionada (limite atingido).", Toast.LENGTH_SHORT).show();
                 }
             });
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context = requireContext();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,6 +124,15 @@ public class ReportRegistrationFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingCall != null) {
+            pendingCall.cancel();
+            pendingCall = null;
+        }
+    }
+
     private void enviarDenuncia() {
         String nomeLocal = s(txtNomeLocal);
         String problema  = s(txtProblema);
@@ -138,7 +140,7 @@ public class ReportRegistrationFragment extends Fragment {
         String uf        = s(txtUF);
 
         if (nomeLocal.isEmpty() || problema.isEmpty() || cidade.isEmpty() || uf.isEmpty()) {
-            Toast.makeText(context, "Informe nome do local, problema, cidade e UF.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Informe nome do local, problema, cidade e UF.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -160,7 +162,7 @@ public class ReportRegistrationFragment extends Fragment {
             try {
                 er.numero = Integer.valueOf(numeroStr);
             } catch (NumberFormatException e) {
-                Toast.makeText(context, "Número inválido.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Número inválido.", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -172,7 +174,7 @@ public class ReportRegistrationFragment extends Fragment {
             for (Uri uri : imagensSelecionadas) {
                 String base64 = uriToBase64Jpeg(uri, 80);
                 if (base64 == null) {
-                    Toast.makeText(context, "Falha ao processar imagem.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Falha ao processar imagem.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ReportRequest.ImageRequest im = new ReportRequest.ImageRequest();
@@ -185,27 +187,31 @@ public class ReportRegistrationFragment extends Fragment {
         }
 
         btnCadastrar.setEnabled(false);
+        if (pendingCall != null) pendingCall.cancel();
 
-        ReportService api = RetrofitInitializer.getDenunciaService(context);
-        api.criarDenuncia(req).enqueue(new Callback<ReportResponse>() {
+        ReportService api = RetrofitInitializer.getDenunciaService(requireContext());
+        pendingCall = api.criarDenuncia(req);
+        pendingCall.enqueue(new Callback<ReportResponse>() {
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> resp) {
+                if (!isAdded()) return;
                 btnCadastrar.setEnabled(true);
                 if (resp.isSuccessful()) {
-                    Toast.makeText(context, "Denúncia enviada!", Toast.LENGTH_LONG).show();
-                    if (getActivity() != null) getActivity().onBackPressed();
+                    Toast.makeText(requireContext(), "Denúncia enviada!", Toast.LENGTH_LONG).show();
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 } else if (resp.code() == 401) {
-                    Toast.makeText(context, "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(context, LoginActivity.class));
+                    Toast.makeText(requireContext(), "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(requireContext(), LoginActivity.class));
                 } else {
-                    Toast.makeText(context, "Falha (" + resp.code() + ")", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(), "Falha (" + resp.code() + ")", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ReportResponse> call, Throwable t) {
+                if (!isAdded()) return;
                 btnCadastrar.setEnabled(true);
-                Toast.makeText(context, "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -243,19 +249,19 @@ public class ReportRegistrationFragment extends Fragment {
         for (int i = 0; i < imagensSelecionadas.size(); i++) {
             final Uri uri = imagensSelecionadas.get(i);
 
-            android.widget.FrameLayout frame = new android.widget.FrameLayout(context);
+            android.widget.FrameLayout frame = new android.widget.FrameLayout(requireContext());
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(sizePx, sizePx);
             lp.setMargins(marginPx, marginPx, marginPx, marginPx);
             frame.setLayoutParams(lp);
 
-            ImageView thumb = new ImageView(context);
+            ImageView thumb = new ImageView(requireContext());
             thumb.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             thumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
             thumb.setImageURI(uri);
             thumb.setContentDescription("Imagem " + (i + 1) + " de " + imagensSelecionadas.size());
             frame.addView(thumb);
 
-            ImageButton btnX = new ImageButton(context);
+            ImageButton btnX = new ImageButton(requireContext());
             android.widget.FrameLayout.LayoutParams blp =
                     new android.widget.FrameLayout.LayoutParams(btnSizePx, btnSizePx);
             blp.gravity = android.view.Gravity.END | android.view.Gravity.TOP;
@@ -272,7 +278,7 @@ public class ReportRegistrationFragment extends Fragment {
             containerPreviews.addView(frame);
         }
 
-        Toast.makeText(context,
+        Toast.makeText(requireContext(),
                 imagensSelecionadas.size() + " / " + MAX_IMAGENS + " imagem(ns)",
                 Toast.LENGTH_SHORT).show();
     }
@@ -313,7 +319,7 @@ public class ReportRegistrationFragment extends Fragment {
         appendPart(query, s(txtUF));
 
         if (query.length() == 0) {
-            Toast.makeText(context, "Preencha endereço/cidade para abrir no mapa.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Preencha endereço/cidade para abrir no mapa.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -322,7 +328,7 @@ public class ReportRegistrationFragment extends Fragment {
         if (mapIntent.resolveActivity(requireContext().getPackageManager()) != null) {
             startActivity(mapIntent);
         } else {
-            Toast.makeText(context, "Nenhum app de mapa encontrado.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Nenhum app de mapa encontrado.", Toast.LENGTH_SHORT).show();
         }
     }
 

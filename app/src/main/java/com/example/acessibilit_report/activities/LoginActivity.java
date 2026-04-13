@@ -115,10 +115,10 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
 
                 String tipo = lr.getTipoUsuario();
-                if (Objects.equals(tipo, "normal")) {
+                if ("CLIENTE".equalsIgnoreCase(tipo)) {
                     startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                     finish();
-                } else if (Objects.equals(tipo, "admin")) {
+                } else if ("MEDIADOR".equalsIgnoreCase(tipo)) {
                     startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     finish();
                 } else {

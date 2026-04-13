@@ -35,6 +35,7 @@ public class ReportedPlacesFragment extends Fragment {
     private ProgressBar progress;
     private TextView empty;
     private ReportAdapter adapter;
+    private Call<List<ReportResponse>> pendingCall;
 
     public ReportedPlacesFragment() {}
 
@@ -45,7 +46,7 @@ public class ReportedPlacesFragment extends Fragment {
 
         recycler = v.findViewById(R.id.rv_denuncias_todas);
         progress = v.findViewById(R.id.pb_loading_denunciados);
-        empty = v.findViewById(R.id.tv_empty_denunciados);
+        empty    = v.findViewById(R.id.tv_empty_denunciados);
 
         adapter = new ReportAdapter(new ArrayList<>());
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -59,12 +60,24 @@ public class ReportedPlacesFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingCall != null) {
+            pendingCall.cancel();
+            pendingCall = null;
+        }
+    }
+
     private void loadData() {
+        if (pendingCall != null) pendingCall.cancel();
         showLoading(true);
         ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        api.denuncias().enqueue(new Callback<List<ReportResponse>>() {
+        pendingCall = api.denuncias();
+        pendingCall.enqueue(new Callback<List<ReportResponse>>() {
             @Override
             public void onResponse(Call<List<ReportResponse>> call, Response<List<ReportResponse>> response) {
+                if (!isAdded()) return;
                 showLoading(false);
                 if (!response.isSuccessful() || response.body() == null) {
                     if (response.code() == 401) {
@@ -82,6 +95,7 @@ public class ReportedPlacesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ReportResponse>> call, Throwable t) {
+                if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
                 Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -100,4 +114,3 @@ public class ReportedPlacesFragment extends Fragment {
         recycler.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
-

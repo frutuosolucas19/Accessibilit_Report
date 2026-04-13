@@ -56,7 +56,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             return;
         }
         if (!novaSenha.equals(repetirSenha)) {
-            Toast.makeText(this, "As senhas informadas nao sao iguais", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -67,7 +67,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 btnSalvar.setEnabled(true);
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ResetPasswordActivity.this, "Nao foi possivel redefinir a senha", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, "Não foi possível redefinir a senha", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

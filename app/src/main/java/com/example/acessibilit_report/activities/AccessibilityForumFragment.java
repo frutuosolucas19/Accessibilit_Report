@@ -40,6 +40,9 @@ public class AccessibilityForumFragment extends Fragment {
     private QuestionAdapter adapter;
     private final List<Question> listaPerguntas = new ArrayList<>();
 
+    private Call<List<Question>> pendingLoad;
+    private Call<Question> pendingSend;
+
     private String nomeUsuario;
 
     @Nullable
@@ -66,6 +69,13 @@ public class AccessibilityForumFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
+        if (pendingSend != null) { pendingSend.cancel(); pendingSend = null; }
+    }
+
     private void enviarPergunta() {
         String texto = edtPergunta.getText().toString().trim();
         if (texto.isEmpty()) return;
@@ -81,9 +91,11 @@ public class AccessibilityForumFragment extends Fragment {
 
         btnEnviarPergunta.setEnabled(false);
         ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        api.criarPergunta(nova).enqueue(new Callback<Question>() {
+        pendingSend = api.criarPergunta(nova);
+        pendingSend.enqueue(new Callback<Question>() {
             @Override
             public void onResponse(Call<Question> call, Response<Question> response) {
+                if (!isAdded()) return;
                 btnEnviarPergunta.setEnabled(true);
                 if (response.isSuccessful() && response.body() != null) {
                     listaPerguntas.add(0, response.body());
@@ -101,6 +113,7 @@ public class AccessibilityForumFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Question> call, Throwable t) {
+                if (!isAdded()) return;
                 btnEnviarPergunta.setEnabled(true);
                 Toast.makeText(requireContext(), "Erro ao enviar pergunta: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
@@ -109,12 +122,15 @@ public class AccessibilityForumFragment extends Fragment {
     }
 
     private void carregarPerguntas() {
+        if (pendingLoad != null) pendingLoad.cancel();
         if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
 
         ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        api.perguntas().enqueue(new Callback<List<Question>>() {
+        pendingLoad = api.perguntas();
+        pendingLoad.enqueue(new Callback<List<Question>>() {
             @Override
             public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                if (!isAdded()) return;
                 if (progressBar != null) progressBar.setVisibility(View.GONE);
 
                 if (!response.isSuccessful() || response.body() == null) {
@@ -134,6 +150,7 @@ public class AccessibilityForumFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
+                if (!isAdded()) return;
                 if (progressBar != null) progressBar.setVisibility(View.GONE);
                 Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();

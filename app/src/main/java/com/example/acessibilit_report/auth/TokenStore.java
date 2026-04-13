@@ -35,7 +35,7 @@ public class TokenStore {
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
         } catch (GeneralSecurityException | IOException e) {
-            Log.e(TAG, "EncryptedSharedPreferences nao disponivel, usando SharedPreferences padrao", e);
+            Log.e(TAG, "EncryptedSharedPreferences não disponível, usando SharedPreferences padrão", e);
             p = ctx.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         }
         this.prefs = p;
