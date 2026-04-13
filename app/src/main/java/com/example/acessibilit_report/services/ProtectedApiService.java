@@ -6,7 +6,6 @@ import com.example.acessibilit_report.model.Address;
 import com.example.acessibilit_report.model.Answer;
 import com.example.acessibilit_report.model.Forum;
 import com.example.acessibilit_report.model.GeoLocation;
-import com.example.acessibilit_report.model.Person;
 import com.example.acessibilit_report.model.Place;
 import com.example.acessibilit_report.model.Question;
 import com.example.acessibilit_report.model.User;
@@ -63,24 +62,6 @@ public interface ProtectedApiService {
     @GET("denuncia/{id}/imagens/{imgId}")
     Call<ResponseBody> imagemDenuncia(@Path("id") Long id, @Path("imgId") Long imgId);
 
-    @GET("pessoa")
-    Call<Person> pessoa();
-
-    @GET("pessoa/pessoas")
-    Call<List<Person>> pessoas();
-
-    @GET("pessoa/{id}")
-    Call<Person> pessoaPorId(@Path("id") Long id);
-
-    @POST("pessoa")
-    Call<Person> criarPessoa(@Body Person pessoa);
-
-    @PUT("pessoa/{id}")
-    Call<Person> atualizarPessoa(@Path("id") Long id, @Body Person pessoa);
-
-    @DELETE("pessoa/{id}")
-    Call<Void> deletarPessoa(@Path("id") Long id);
-
     @GET("endereco")
     Call<Address> endereco();
 
@@ -119,9 +100,6 @@ public interface ProtectedApiService {
 
     @GET("local")
     Call<Place> local();
-
-    @GET("local/pessoas")
-    Call<List<Person>> localPessoas();
 
     @GET("local/locais")
     Call<List<Place>> locais();

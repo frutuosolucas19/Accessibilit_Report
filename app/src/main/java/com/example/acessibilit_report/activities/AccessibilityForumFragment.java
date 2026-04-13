@@ -19,7 +19,6 @@ import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.adapter.QuestionAdapter;
 import com.example.acessibilit_report.auth.TokenStore;
 import com.example.acessibilit_report.model.Forum;
-import com.example.acessibilit_report.model.Person;
 import com.example.acessibilit_report.model.Question;
 import com.example.acessibilit_report.model.User;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
@@ -74,10 +73,8 @@ public class AccessibilityForumFragment extends Fragment {
         Question nova = new Question();
         nova.setPergunta(texto);
 
-        Person person = new Person();
-        person.setNome(nomeUsuario);
         User user = new User();
-        user.setPessoa(person);
+        user.setNome(nomeUsuario);
         Forum forum = new Forum();
         forum.setUsuario(user);
         nova.setForum(forum);

@@ -8,19 +8,16 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private Long id;
-    private Person pessoa;
+    private String nome;
     private String email;
     private String senha;
-    private String tipoUsuario;
+    private String fotoPerfil;
+    private String tipo;
+    private Boolean ativo;
+    private String criadoEm;
+    private String atualizadoEm;
 
     public User() {
-    }
-
-    public User(Person pessoa, String email, String senha, String tipoUsuario) {
-        this.pessoa = pessoa;
-        this.email = email;
-        this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
     }
 
     // Getters e Setters
@@ -32,12 +29,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public Person getPessoa() {
-        return pessoa;
+    public String getNome() {
+        return nome;
     }
 
-    public void setPessoa(Person pessoa) {
-        this.pessoa = pessoa;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -56,12 +53,43 @@ public class User implements Serializable {
         this.senha = senha;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
+    public String getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public String getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(String criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
+    public String getAtualizadoEm() {
+        return atualizadoEm;
+    }
+
+    public void setAtualizadoEm(String atualizadoEm) {
+        this.atualizadoEm = atualizadoEm;
     }
 }
-

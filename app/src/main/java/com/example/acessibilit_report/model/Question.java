@@ -39,15 +39,16 @@ public class Question implements Serializable {
     }
 
     public String getNomeAutor() {
-        if (forum != null && forum.getUsuario() != null && forum.getUsuario().getPessoa() != null) {
-            return forum.getUsuario().getPessoa().getNome();
+        if (forum != null && forum.getUsuario() != null) {
+            String nome = forum.getUsuario().getNome();
+            return nome != null ? nome : "Anônimo";
         }
         return "Anônimo";
     }
 
     public String getFotoAutor() {
-        if (forum != null && forum.getUsuario() != null && forum.getUsuario().getPessoa() != null) {
-            return forum.getUsuario().getPessoa().getImagem();
+        if (forum != null && forum.getUsuario() != null) {
+            return forum.getUsuario().getFotoPerfil();
         }
         return null;
     }

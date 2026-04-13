@@ -1,8 +1,11 @@
 package com.example.acessibilit_report.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LoginResponse {
     public String nome;
     public String email;
+    @JsonProperty("tipo")
     public String tipoUsuario;
     public String accessToken;
 

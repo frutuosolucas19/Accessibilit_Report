@@ -57,11 +57,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         Question pergunta = lista.get(position);
         holder.textPergunta.setText(pergunta.getPergunta());
 
-        if (pergunta.getForum() != null && pergunta.getForum().getUsuario() != null &&
-                pergunta.getForum().getUsuario().getPessoa() != null) {
+        if (pergunta.getForum() != null && pergunta.getForum().getUsuario() != null) {
 
-            String nome = pergunta.getForum().getUsuario().getPessoa().getNome();
-            String fotoUrl = pergunta.getForum().getUsuario().getPessoa().getImagem();
+            String nome = pergunta.getForum().getUsuario().getNome();
+            String fotoUrl = pergunta.getForum().getUsuario().getFotoPerfil();
 
             holder.textNomeUsuario.setText(nome != null ? nome : holder.itemView.getContext().getString(R.string.usuario_padrao));
 

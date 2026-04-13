@@ -1,6 +1,5 @@
 package com.example.acessibilit_report.services;
 
-import com.example.acessibilit_report.model.Person;
 import com.example.acessibilit_report.model.Place;
 
 import java.util.List;
@@ -17,9 +16,6 @@ public interface PlaceService {
 
     @GET("local")
     Call<Place> local();
-
-    @GET("local/pessoas")
-    Call<List<Person>> pessoasRelacionadas();
 
     @GET("local/locais")
     Call<List<Place>> locais();

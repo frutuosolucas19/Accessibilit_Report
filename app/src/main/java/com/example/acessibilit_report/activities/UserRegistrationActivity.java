@@ -18,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.R;
-import com.example.acessibilit_report.model.Person;
 import com.example.acessibilit_report.model.User;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UserService;
@@ -104,9 +103,10 @@ public class UserRegistrationActivity extends AppCompatActivity {
     }
 
     private void postUsuario(String nome, String email, String senha) {
-        // imagem não é enviada no cadastro (upload separado via endpoint específico)
-        Person pessoa = new Person(nome, null);
-        User usuario  = new User(pessoa, email, senha, "normal");
+        User usuario = new User();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
 
         Log.d(TAG, "Enviando cadastro: nome=" + nome + " email=" + email);
 
