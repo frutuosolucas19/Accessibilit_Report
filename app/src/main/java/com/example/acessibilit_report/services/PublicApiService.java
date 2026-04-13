@@ -12,15 +12,15 @@ import retrofit2.http.POST;
 
 public interface PublicApiService {
 
-    @POST("usuario/cadastro")
+    @POST("auth/cadastro")
     Call<User> cadastro(@Body User usuario);
 
-    @POST("usuario/login")
+    @POST("auth/login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
-    @POST("usuario/esqueci-senha")
+    @POST("auth/esqueci-senha")
     Call<Void> esqueciSenha(@Body ForgotPasswordRequest request);
 
-    @POST("usuario/redefinir-senha")
+    @POST("auth/nova-senha")
     Call<Void> redefinirSenha(@Body ResetPasswordRequest request);
 }

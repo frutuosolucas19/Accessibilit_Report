@@ -23,10 +23,10 @@ public class AuthInterceptor implements Interceptor {
         String path = req.url().encodedPath();
 
         boolean isPublic =
-                (path.equals("/usuario/cadastro") && req.method().equals("POST"))
-                        || path.equals("/usuario/login")
-                        || path.equals("/usuario/esqueci-senha")
-                        || path.equals("/usuario/redefinir-senha");
+                (path.equals("/auth/cadastro") && req.method().equals("POST"))
+                        || path.equals("/auth/login")
+                        || path.equals("/auth/esqueci-senha")
+                        || path.equals("/auth/nova-senha");
 
         String token = tokenStore.get();
         if (!isPublic && token != null && !token.isEmpty()) {

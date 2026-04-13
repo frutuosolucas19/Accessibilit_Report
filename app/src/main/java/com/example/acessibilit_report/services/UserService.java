@@ -16,16 +16,16 @@ import retrofit2.http.Path;
 
 public interface UserService {
 
-    @POST("usuario/cadastro")
+    @POST("auth/cadastro")
     Call<User> create(@Body User usuario);
 
-    @POST("usuario/login")
+    @POST("auth/login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
-    @POST("usuario/esqueci-senha")
+    @POST("auth/esqueci-senha")
     Call<Void> forgotPassword(@Body ForgotPasswordRequest request);
 
-    @POST("usuario/redefinir-senha")
+    @POST("auth/nova-senha")
     Call<Void> resetPassword(@Body ResetPasswordRequest request);
 
     @GET("usuario")
