@@ -1,9 +1,12 @@
 // com.example.acessibilit_report.model.Report.java
 package com.example.acessibilit_report.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Report implements Serializable {
     private Long id;
     private String nomeLocal;

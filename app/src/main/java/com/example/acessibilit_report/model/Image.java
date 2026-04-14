@@ -1,8 +1,11 @@
 // com.example.acessibilit_report.model.ImagemMeta.java
 package com.example.acessibilit_report.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Image implements Serializable {
     private Long id;
     private String filename;
