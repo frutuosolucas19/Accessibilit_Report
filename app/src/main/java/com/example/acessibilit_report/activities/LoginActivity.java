@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -115,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
 
                 String tipo = lr.getTipoUsuario();
+                Log.d("LoginActivity", "tipo recebido do backend: [" + tipo + "]");
                 if ("CLIENTE".equalsIgnoreCase(tipo)) {
                     startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                     finish();
