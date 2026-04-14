@@ -27,6 +27,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private EditText txtNovaSenha;
     private EditText txtRepetirSenha;
     private Button btnSalvar;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
+
+        email = getIntent().getStringExtra("email");
 
         txtTokenAws = findViewById(R.id.editTextTokenAws);
         txtNovaSenha = findViewById(R.id.editTextNovaSenha);
@@ -47,11 +50,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
     }
 
     private void redefinirSenha() {
-        String tokenAws = txtTokenAws.getText().toString().trim();
+        String codigo = txtTokenAws.getText().toString().trim();
         String novaSenha = txtNovaSenha.getText().toString();
         String repetirSenha = txtRepetirSenha.getText().toString();
 
-        if (tokenAws.isEmpty() || novaSenha.isEmpty() || repetirSenha.isEmpty()) {
+        if (codigo.isEmpty() || novaSenha.isEmpty() || repetirSenha.isEmpty()) {
             Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -62,7 +65,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         btnSalvar.setEnabled(false);
         UserService service = RetrofitInitializer.getUsuarioService(this);
-        service.resetPassword(new ResetPasswordRequest(tokenAws, novaSenha)).enqueue(new Callback<Void>() {
+        service.resetPassword(new ResetPasswordRequest(email, codigo, novaSenha, repetirSenha)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 btnSalvar.setEnabled(true);

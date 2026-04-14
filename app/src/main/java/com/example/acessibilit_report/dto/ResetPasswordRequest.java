@@ -1,11 +1,15 @@
 package com.example.acessibilit_report.dto;
 
 public class ResetPasswordRequest {
-    public String tokenAws;
+    public String email;
+    public String codigo;
     public String novaSenha;
+    public String confirmacaoNovaSenha;
 
-    public ResetPasswordRequest(String tokenAws, String novaSenha) {
-        this.tokenAws = tokenAws;
+    public ResetPasswordRequest(String email, String codigo, String novaSenha, String confirmacaoNovaSenha) {
+        this.email = email;
+        this.codigo = codigo;
         this.novaSenha = novaSenha;
+        this.confirmacaoNovaSenha = confirmacaoNovaSenha;
     }
 }
