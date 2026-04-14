@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.ForgotPasswordRequest;
+import com.example.acessibilit_report.dto.ForgotPasswordResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UserService;
 
@@ -46,23 +47,28 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         btnEnviar.setEnabled(false);
         UserService service = RetrofitInitializer.getUsuarioService(this);
-        service.forgotPassword(new ForgotPasswordRequest(email)).enqueue(new Callback<Void>() {
+        service.forgotPassword(new ForgotPasswordRequest(email)).enqueue(new Callback<ForgotPasswordResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
                 btnEnviar.setEnabled(true);
                 if (!response.isSuccessful()) {
                     Toast.makeText(ForgotPasswordActivity.this, "Não foi possível enviar a troca de senha", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(ForgotPasswordActivity.this, "Código enviado para o e-mail", Toast.LENGTH_SHORT).show();
+                ForgotPasswordResponse body = response.body();
+                String mensagem = (body != null && body.mensagem != null)
+                        ? body.mensagem
+                        : "Solicitação enviada";
+                Toast.makeText(ForgotPasswordActivity.this, mensagem, Toast.LENGTH_LONG).show();
+
                 Intent intent = new Intent(ForgotPasswordActivity.this, ResetPasswordActivity.class);
                 intent.putExtra("email", email);
                 startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
                 btnEnviar.setEnabled(true);
                 Toast.makeText(ForgotPasswordActivity.this, "Erro ao conectar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }

@@ -1,6 +1,7 @@
 package com.example.acessibilit_report.services;
 
 import com.example.acessibilit_report.dto.ForgotPasswordRequest;
+import com.example.acessibilit_report.dto.ForgotPasswordResponse;
 import com.example.acessibilit_report.dto.LoginRequest;
 import com.example.acessibilit_report.dto.LoginResponse;
 import com.example.acessibilit_report.dto.RegisterRequest;
@@ -24,7 +25,7 @@ public interface UserService {
     Call<LoginResponse> login(@Body LoginRequest request);
 
     @POST("auth/esqueci-senha")
-    Call<Void> forgotPassword(@Body ForgotPasswordRequest request);
+    Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
 
     @POST("auth/nova-senha")
     Call<Void> resetPassword(@Body ResetPasswordRequest request);
