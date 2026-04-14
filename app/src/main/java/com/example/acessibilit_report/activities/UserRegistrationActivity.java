@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.R;
+import com.example.acessibilit_report.dto.RegisterRequest;
 import com.example.acessibilit_report.model.User;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UserService;
@@ -98,21 +99,18 @@ public class UserRegistrationActivity extends AppCompatActivity {
             }
 
             btnCadastro.setEnabled(false);
-            postUsuario(nome, email, senha);
+            postUsuario(nome, email, senha, confirma);
         });
     }
 
-    private void postUsuario(String nome, String email, String senha) {
-        User usuario = new User();
-        usuario.setNome(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
+    private void postUsuario(String nome, String email, String senha, String confirmacaoSenha) {
+        RegisterRequest request = new RegisterRequest(nome, email, senha, confirmacaoSenha);
 
         Log.d(TAG, "Enviando cadastro: nome=" + nome + " email=" + email);
 
         UserService api = RetrofitInitializer.getUsuarioService(this);
 
-        api.create(usuario).enqueue(new Callback<User>() {
+        api.create(request).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 btnCadastro.setEnabled(true);

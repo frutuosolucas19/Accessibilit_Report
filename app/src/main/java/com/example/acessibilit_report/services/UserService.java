@@ -1,8 +1,9 @@
 package com.example.acessibilit_report.services;
 
+import com.example.acessibilit_report.dto.ForgotPasswordRequest;
 import com.example.acessibilit_report.dto.LoginRequest;
 import com.example.acessibilit_report.dto.LoginResponse;
-import com.example.acessibilit_report.dto.ForgotPasswordRequest;
+import com.example.acessibilit_report.dto.RegisterRequest;
 import com.example.acessibilit_report.dto.ResetPasswordRequest;
 import com.example.acessibilit_report.model.User;
 
@@ -17,7 +18,7 @@ import retrofit2.http.Path;
 public interface UserService {
 
     @POST("auth/cadastro")
-    Call<User> create(@Body User usuario);
+    Call<User> create(@Body RegisterRequest request);
 
     @POST("auth/login")
     Call<LoginResponse> login(@Body LoginRequest request);
