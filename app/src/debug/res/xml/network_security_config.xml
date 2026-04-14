@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Override do debug: permite HTTP para qualquer host.
+    Útil para emulador (10.0.2.2) e dispositivo físico (IP da máquina na rede local).
+    Este arquivo NÃO é incluído nos builds de release.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

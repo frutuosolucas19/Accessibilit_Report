@@ -34,7 +34,7 @@ public class RetrofitInitializer {
                     : HttpLoggingInterceptor.Level.NONE);
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(new AuthInterceptor(ctx))   // <-- aqui
+                    .addInterceptor(new AuthInterceptor(ctx.getApplicationContext()))
                     .addNetworkInterceptor(log)
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
