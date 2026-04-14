@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
+import androidx.security.crypto.MasterKeys;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -24,13 +24,11 @@ public class TokenStore {
     public TokenStore(Context ctx) {
         SharedPreferences p;
         try {
-            MasterKey masterKey = new MasterKey.Builder(ctx.getApplicationContext())
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
+            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
             p = EncryptedSharedPreferences.create(
-                    ctx.getApplicationContext(),
                     PREFS_NAME,
-                    masterKey,
+                    masterKeyAlias,
+                    ctx.getApplicationContext(),
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
