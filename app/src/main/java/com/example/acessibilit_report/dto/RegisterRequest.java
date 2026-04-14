@@ -5,6 +5,7 @@ public class RegisterRequest {
     public String email;
     public String senha;
     public String confirmacaoSenha;
+    public String tipoUsuario = "CLIENTE";
 
     public RegisterRequest(String nome, String email, String senha, String confirmacaoSenha) {
         this.nome = nome;
