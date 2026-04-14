@@ -1,58 +1,31 @@
 package com.example.acessibilit_report.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.example.acessibilit_report.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginResponse {
-    public String nome;
-    public String email;
-    @JsonProperty("tipo")
-    @JsonAlias({"tipo", "tipoUsuario"})
-    public String tipoUsuario;
+
     public String accessToken;
     public String refreshToken;
+    public long expiresIn;
+    public User usuario;
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public LoginResponse() {}
 
     public String getAccessToken() {
         return accessToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public String getNome() {
+        return usuario != null ? usuario.getNome() : null;
     }
 
     public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        return usuario != null ? usuario.getEmail() : null;
     }
 
     public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    public LoginResponse() {
-    }
-
-    public LoginResponse(String nome, String email, String tipoUsuario, String accessToken) {
-        this.nome = nome;
-        this.email = email;
-        this.tipoUsuario = tipoUsuario;
-        this.accessToken = accessToken;
+        return usuario != null ? usuario.getTipo() : null;
     }
 }
