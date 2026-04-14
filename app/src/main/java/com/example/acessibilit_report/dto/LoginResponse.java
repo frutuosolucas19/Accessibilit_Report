@@ -1,13 +1,16 @@
 package com.example.acessibilit_report.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginResponse {
     public String nome;
     public String email;
     @JsonProperty("tipo")
     public String tipoUsuario;
     public String accessToken;
+    public String refreshToken;
 
     public String getNome() {
         return nome;
