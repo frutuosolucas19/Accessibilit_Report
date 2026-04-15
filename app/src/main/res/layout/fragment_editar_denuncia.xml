@@ -248,6 +248,45 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextDescricao" />
 
+            <HorizontalScrollView
+                android:id="@+id/hsPreviews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextSugestao">
+
+                <LinearLayout
+                    android:id="@+id/containerPreviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp" />
+            </HorizontalScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdicionarImagens"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="227dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="4dp"
+                android:contentDescription="@string/btn_adicionar_imagens_cd"
+                android:minHeight="48dp"
+                android:text="@string/btn_adicionar_imagens"
+                android:textColor="@color/azul_login"
+                android:textSize="18sp"
+                app:icon="@drawable/add_a_photo_24"
+                app:iconGravity="textStart"
+                app:iconTint="@color/azul_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsPreviews"
+                app:strokeColor="@android:color/transparent"
+                app:strokeWidth="0dp" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSalvarAlteracoes"
                 style="@style/Widget.Material3.Button"
@@ -260,7 +299,7 @@
                 app:backgroundTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextSugestao" />
+                app:layout_constraintTop_toBottomOf="@id/btnAdicionarImagens" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnExcluirDenuncia"

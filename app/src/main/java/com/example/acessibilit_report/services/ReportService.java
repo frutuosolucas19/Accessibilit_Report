@@ -39,5 +39,8 @@ public interface ReportService {
 
     @GET("denuncia/{id}/imagens/{imgId}")
     Call<ResponseBody> imagem(@Path("id") Long id, @Path("imgId") Long imgId);
+
+    @DELETE("denuncia/{id}/imagens/{imgId}")
+    Call<Void> deletarImagem(@Path("id") Long reportId, @Path("imgId") Long imagemId);
 }
 
