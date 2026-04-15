@@ -133,6 +133,17 @@
     <string name="cd_criar_conta_link">Ainda não tenho conta — tocar para criar uma</string>
     <string name="cd_esqueceu_senha_link">Esqueceu a senha — tocar para recuperar</string>
 
+    <!-- Edit / delete report -->
+    <string name="editar_denuncia_titulo">Editar Denúncia</string>
+    <string name="btn_editar">Editar</string>
+    <string name="btn_excluir">Excluir</string>
+    <string name="btn_salvar_alteracoes">SALVAR ALTERAÇÕES</string>
+    <string name="btn_excluir_denuncia">EXCLUIR DENÚNCIA</string>
+    <string name="dialogo_excluir_titulo">Excluir denúncia</string>
+    <string name="dialogo_excluir_mensagem">Tem certeza que deseja excluir "%1$s"?</string>
+    <string name="msg_denuncia_excluida">Denúncia excluída com sucesso.</string>
+    <string name="msg_denuncia_atualizada">Denúncia atualizada com sucesso!</string>
+
     <!-- Maps / report registration -->
     <string name="google_maps_key">YOUR_MAPS_API_KEY_HERE</string>
     <string name="map_picker_titulo">Marcar localização</string>

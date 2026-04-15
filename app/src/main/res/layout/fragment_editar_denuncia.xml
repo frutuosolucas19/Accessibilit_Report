@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ReportEditFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:accessibilityHeading="true"
+                android:importantForAccessibility="yes"
+                android:text="@string/editar_denuncia_titulo"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextTitulo"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints="name"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_titulo"
+                android:importantForAutofill="yes"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvTipoLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tipo_problema"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextTitulo" />
+
+            <Spinner
+                android:id="@+id/spinnerTipo"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTipoLabel" />
+
+            <TextView
+                android:id="@+id/tvEndereco"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:accessibilityHeading="true"
+                android:text="@string/section_endereco"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinnerTipo" />
+
+            <EditText
+                android:id="@+id/editTextLogradouro"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints="streetAddress"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_logradouro"
+                android:importantForAutofill="yes"
+                android:inputType="textCapWords|textPostalAddress"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEndereco" />
+
+            <EditText
+                android:id="@+id/editTextNumero"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:autofillHints="postalAddress"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_numero"
+                android:importantForAutofill="yes"
+                android:inputType="number"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toStartOf="@id/editTextComplemento"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextLogradouro" />
+
+            <EditText
+                android:id="@+id/editTextComplemento"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:autofillHints="extendedAddress"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_complemento"
+                android:importantForAutofill="yes"
+                android:inputType="textCapWords|textPostalAddress"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@id/editTextNumero"
+                app:layout_constraintTop_toBottomOf="@id/editTextLogradouro" />
+
+            <EditText
+                android:id="@+id/editTextCidade"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:autofillHints="locality"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_cidade"
+                android:importantForAutofill="yes"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toStartOf="@id/editTextUF"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextComplemento" />
+
+            <EditText
+                android:id="@+id/editTextUF"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:autofillHints="addressRegion"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_uf"
+                android:importantForAutofill="yes"
+                android:inputType="textCapCharacters"
+                android:maxLength="2"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@id/editTextCidade"
+                app:layout_constraintTop_toBottomOf="@id/editTextComplemento" />
+
+            <EditText
+                android:id="@+id/editTextBairro"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:autofillHints="postalAddress"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_bairro"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toStartOf="@id/editTextCEP"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextUF" />
+
+            <EditText
+                android:id="@+id/editTextCEP"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:autofillHints="postalCode"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_cep"
+                android:importantForAutofill="yes"
+                android:inputType="number"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@id/editTextBairro"
+                app:layout_constraintTop_toBottomOf="@id/editTextUF" />
+
+            <TextView
+                android:id="@+id/tvdDescricao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:accessibilityHeading="true"
+                android:text="@string/campo_descricao"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextBairro" />
+
+            <EditText
+                android:id="@+id/editTextDescricao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:gravity="top|start"
+                android:hint="@string/descreva_o_problema"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="1500"
+                android:minHeight="120dp"
+                android:padding="12dp"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvdDescricao" />
+
+            <EditText
+                android:id="@+id/editTextSugestao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:gravity="top|start"
+                android:hint="@string/alguma_sugestao"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="1000"
+                android:minHeight="96dp"
+                android:padding="12dp"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextDescricao" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSalvarAlteracoes"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="56dp"
+                android:text="@string/btn_salvar_alteracoes"
+                android:textSize="18sp"
+                app:backgroundTint="@color/azul_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextSugestao" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExcluirDenuncia"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="56dp"
+                android:text="@string/btn_excluir_denuncia"
+                android:textColor="#B00020"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnSalvarAlteracoes"
+                app:strokeColor="#B00020" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>
