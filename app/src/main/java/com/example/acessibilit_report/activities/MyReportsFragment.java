@@ -82,11 +82,20 @@ public class MyReportsFragment extends Fragment {
         recycler.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         recycler.setAdapter(adapter);
 
-        FloatingActionButton fab = v.findViewById(R.id.fab_refresh);
-        if (fab != null) fab.setOnClickListener(view -> loadData());
+        FloatingActionButton fab = v.findViewById(R.id.fab_nova_denuncia);
+        if (fab != null) {
+            fab.setOnClickListener(view ->
+                    Navigation.findNavController(requireView())
+                            .navigate(R.id.action_minhasDenuncias_to_criarDenuncia));
+        }
 
-        loadData();
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData(); // recarrega sempre que a tela fica visível (volta de criar/editar)
     }
 
     @Override

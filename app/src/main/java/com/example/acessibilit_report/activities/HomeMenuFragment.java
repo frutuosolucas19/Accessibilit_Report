@@ -42,26 +42,16 @@ public class HomeMenuFragment extends Fragment {
         Button btnMinhasDenuncias = view.findViewById(R.id.buttonMinhasDenunciasMenu);
         Button btnVerLocais = view.findViewById(R.id.buttonVerLocaisMenu);
 
-        if (btnCriarDenuncia != null) {
-            btnCriarDenuncia.setOnClickListener(v -> {
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-                navController.navigate(R.id.criarDenuncia);
-            });
-        }
+        NavController nav = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
 
-        if (btnMinhasDenuncias != null) {
-            btnMinhasDenuncias.setOnClickListener(v -> {
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-                navController.navigate(R.id.minhasDenuncias);
-            });
-        }
+        if (btnCriarDenuncia != null)
+            btnCriarDenuncia.setOnClickListener(v -> nav.navigate(R.id.action_menu_to_criarDenuncia));
 
-        if (btnVerLocais != null) {
-            btnVerLocais.setOnClickListener(v -> {
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-                navController.navigate(R.id.locaisAdaptados);
-            });
-        }
+        if (btnMinhasDenuncias != null)
+            btnMinhasDenuncias.setOnClickListener(v -> nav.navigate(R.id.action_menu_to_minhasDenuncias));
+
+        if (btnVerLocais != null)
+            btnVerLocais.setOnClickListener(v -> nav.navigate(R.id.action_menu_to_locaisAdaptados));
     }
 }
 
