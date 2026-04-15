@@ -18,6 +18,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RetrofitInitializer {
     private static Retrofit retrofit;
+    private static OkHttpClient httpClient;
 
     public static synchronized Retrofit getInstance(Context ctx){
         if (retrofit == null){
@@ -33,21 +34,26 @@ public class RetrofitInitializer {
                     ? HttpLoggingInterceptor.Level.BODY
                     : HttpLoggingInterceptor.Level.NONE);
 
-            OkHttpClient client = new OkHttpClient.Builder()
+            httpClient = new OkHttpClient.Builder()
                     .addInterceptor(new AuthInterceptor(ctx.getApplicationContext()))
                     .addNetworkInterceptor(log)
-                    .connectTimeout(20, TimeUnit.SECONDS)
-                    .readTimeout(20, TimeUnit.SECONDS)
-                    .writeTimeout(20, TimeUnit.SECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
                     .build();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(JacksonConverterFactory.create())
-                    .client(client)
+                    .client(httpClient)
                     .build();
         }
         return retrofit;
+    }
+
+    public static synchronized OkHttpClient getOkHttpClient(Context ctx) {
+        if (httpClient == null) getInstance(ctx);
+        return httpClient;
     }
 
     public static UserService getUsuarioService(Context ctx){

@@ -8,7 +8,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="828dp"
+        android:layout_height="match_parent"
         android:background="@color/white"
         android:fillViewport="true"
         android:padding="16dp">
@@ -33,6 +33,44 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <EditText
+                android:id="@+id/editTextTitulo"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints="name"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/campo_titulo"
+                android:importantForAutofill="yes"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvTipoLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tipo_problema"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextTitulo" />
+
+            <Spinner
+                android:id="@+id/spinnerTipo"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTipoLabel" />
+
             <TextView
                 android:id="@+id/tvEndereco"
                 android:layout_width="0dp"
@@ -46,38 +84,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNomeLocal" />
-
-            <TextView
-                android:id="@+id/tvdDescricao"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:accessibilityHeading="true"
-                android:text="@string/campo_descricao"
-                android:textAlignment="textStart"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextBairro" />
-
-            <EditText
-                android:id="@+id/editTextNomeLocal"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="4dp"
-                android:autofillHints="name"
-                android:background="@drawable/edittext_background"
-                android:hint="@string/nome_do_local"
-                android:importantForAutofill="yes"
-                android:inputType="textCapWords|textPersonName"
-                android:maxLines="1"
-                android:padding="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
+                app:layout_constraintTop_toBottomOf="@id/spinnerTipo" />
 
             <EditText
                 android:id="@+id/editTextLogradouro"
@@ -93,7 +100,7 @@
                 android:padding="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvEndereco" />
+                app:layout_constraintTop_toBottomOf="@id/tvEndereco" />
 
             <EditText
                 android:id="@+id/editTextNumero"
@@ -191,10 +198,25 @@
                 app:layout_constraintStart_toEndOf="@id/editTextBairro"
                 app:layout_constraintTop_toBottomOf="@id/editTextUF" />
 
-            <EditText
-                android:id="@+id/editTextProblema"
+            <TextView
+                android:id="@+id/tvdDescricao"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:accessibilityHeading="true"
+                android:text="@string/campo_descricao"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextBairro" />
+
+            <EditText
+                android:id="@+id/editTextDescricao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_background"
                 android:gravity="top|start"
@@ -207,12 +229,12 @@
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvdDescricao" />
+                app:layout_constraintTop_toBottomOf="@id/tvdDescricao" />
 
             <EditText
                 android:id="@+id/editTextSugestao"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/edittext_background"
                 android:gravity="top|start"
                 android:hint="@string/alguma_sugestao"
@@ -224,13 +246,13 @@
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextProblema" />
+                app:layout_constraintTop_toBottomOf="@id/editTextDescricao" />
 
             <HorizontalScrollView
                 android:id="@+id/hsPreviews"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="12dp"
                 android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -254,7 +276,6 @@
                 android:contentDescription="@string/btn_adicionar_imagens_cd"
                 android:minHeight="48dp"
                 android:text="@string/btn_adicionar_imagens"
-                android:textAlignment="textStart"
                 android:textColor="@color/azul_login"
                 android:textSize="18sp"
                 app:icon="@drawable/add_a_photo_24"
@@ -262,7 +283,7 @@
                 app:iconTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hsPreviews"
+                app:layout_constraintTop_toBottomOf="@id/hsPreviews"
                 app:strokeColor="@android:color/transparent"
                 app:strokeWidth="0dp" />
 
@@ -274,7 +295,6 @@
                 android:contentDescription="@string/btn_marcar_local_cd"
                 android:minHeight="48dp"
                 android:text="@string/btn_marcar_local"
-                android:textAlignment="textStart"
                 android:textColor="@color/azul_login"
                 android:textSize="18sp"
                 app:icon="@drawable/ic_pin_drop"
@@ -282,9 +302,21 @@
                 app:iconTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnAdicionarImagens"
+                app:layout_constraintTop_toBottomOf="@id/btnAdicionarImagens"
                 app:strokeColor="@android:color/transparent"
                 app:strokeWidth="0dp" />
+
+            <TextView
+                android:id="@+id/tvCoordenadas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnMarcarLocal" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCriarDenuncia"
@@ -299,7 +331,7 @@
                 app:backgroundTint="@color/azul_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMarcarLocal" />
+                app:layout_constraintTop_toBottomOf="@id/tvCoordenadas" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

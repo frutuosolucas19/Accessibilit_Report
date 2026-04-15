@@ -1,5 +1,6 @@
 package com.example.acessibilit_report.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -8,16 +9,12 @@ import java.io.Serializable;
 public class Address implements Serializable {
 
     private String logradouro;
-
     private Integer numero;
     private String bairro;
-
     private String cidade;
-
+    @JsonAlias({"uf", "estado"})
     private String uf;
-
     private String cep;
-
     private String complemento;
 
     public String getLogradouro() {

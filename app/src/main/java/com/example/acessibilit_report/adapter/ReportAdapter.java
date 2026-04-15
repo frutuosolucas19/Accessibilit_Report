@@ -51,8 +51,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int pos) {
         ReportResponse d = data.get(pos);
 
-        h.titulo.setText(safe(d.nomeLocal));
-        h.problema.setText(safe(d.problema));
+        h.titulo.setText(safe(d.titulo));
+        h.problema.setText(safe(d.descricao));
         h.data.setText(safe(d.criadoEm));
         h.endereco.setText(AddressFormatter.format(d.endereco));
 
