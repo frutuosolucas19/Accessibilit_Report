@@ -167,6 +167,8 @@
     <string name="forum_cd_nova_pergunta">Criar nova pergunta</string>
     <string name="forum_total_respostas">%1$d resposta(s)</string>
     <string name="forum_sem_respostas">Ainda não há respostas.</string>
+    <string name="forum_ver_respostas">▼ ver respostas</string>
+    <string name="forum_ocultar_respostas">▲ ocultar</string>
     <string name="dialogo_excluir_pergunta_mensagem">Tem certeza que deseja excluir "%1$s"?</string>
     <string name="dialogo_excluir_resposta_mensagem">Tem certeza que deseja excluir esta resposta?</string>
 

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,28 +64,16 @@ public class ForumQuestionsFragment extends Fragment {
         progress = v.findViewById(R.id.pb_perguntas);
         tvEmpty  = v.findViewById(R.id.tv_empty_perguntas);
 
-        adapter = new PerguntaResumidaAdapter(new ArrayList<>());
-        adapter.setListener(new PerguntaResumidaAdapter.OnPerguntaActionsListener() {
-            @Override
-            public void onClick(PerguntaResponse p) {
-                if (!isAdded()) return;
-                Bundle args = new Bundle();
-                args.putLong("forumId", forumId);
-                args.putLong("perguntaId", p.id);
-                Navigation.findNavController(requireView())
-                        .navigate(R.id.action_forumPerguntas_to_perguntaDetalhe, args);
-            }
-
-            @Override
-            public void onDelete(PerguntaResponse p) {
-                if (!isAdded()) return;
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(R.string.dialogo_excluir_titulo)
-                        .setMessage(getString(R.string.dialogo_excluir_pergunta_mensagem, p.titulo))
-                        .setPositiveButton(R.string.btn_excluir, (d, w) -> deletarPergunta(p))
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-            }
+        ForumApiService forumApi = RetrofitInitializer.getForumApiService(requireContext());
+        adapter = new PerguntaResumidaAdapter(new ArrayList<>(), forumApi, forumId);
+        adapter.setOnDeleteListener(p -> {
+            if (!isAdded()) return;
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.dialogo_excluir_titulo)
+                    .setMessage(getString(R.string.dialogo_excluir_pergunta_mensagem, p.titulo))
+                    .setPositiveButton(R.string.btn_excluir, (d, w) -> deletarPergunta(p))
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
         });
 
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -111,6 +98,7 @@ public class ForumQuestionsFragment extends Fragment {
         if (pendingLoad != null)   { pendingLoad.cancel();   pendingLoad = null; }
         if (pendingCreate != null) { pendingCreate.cancel(); pendingCreate = null; }
         if (pendingDelete != null) { pendingDelete.cancel(); pendingDelete = null; }
+        if (adapter != null) adapter.cancelAllCalls();
     }
 
     private void loadData() {
