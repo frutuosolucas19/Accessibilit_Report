@@ -1,15 +1,14 @@
 package com.example.acessibilit_report.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.acessibilit_report.util.PasswordToggle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,26 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar.setOnClickListener(v -> doLogin());
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void setupPasswordToggle() {
-        txtSenha.setOnTouchListener((v, event) -> {
-            if (event.getAction() != MotionEvent.ACTION_UP) return false;
-            if (txtSenha.getCompoundDrawablesRelative()[2] == null) return false;
-
-            int drawableWidth = txtSenha.getCompoundDrawablesRelative()[2].getIntrinsicWidth();
-            int touchAreaStart = txtSenha.getWidth() - txtSenha.getPaddingEnd() - drawableWidth;
-            if (event.getX() < touchAreaStart) return false;
-
-            boolean isHidden = txtSenha.getTransformationMethod() instanceof PasswordTransformationMethod;
-            txtSenha.setTransformationMethod(
-                    isHidden
-                            ? HideReturnsTransformationMethod.getInstance()
-                            : PasswordTransformationMethod.getInstance()
-            );
-            txtSenha.setSelection(txtSenha.getText().length());
-            v.performClick();
-            return true;
-        });
+        PasswordToggle.setup(txtSenha);
     }
 
     private void doLogin() {
@@ -115,10 +96,11 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
 
                 String tipo = lr.getTipoUsuario();
-                if (Objects.equals(tipo, "normal")) {
+                Log.d("LoginActivity", "tipo recebido do backend: [" + tipo + "]");
+                if ("CLIENTE".equalsIgnoreCase(tipo)) {
                     startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                     finish();
-                } else if (Objects.equals(tipo, "admin")) {
+                } else if ("MEDIADOR".equalsIgnoreCase(tipo)) {
                     startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     finish();
                 } else {

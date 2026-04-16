@@ -1,11 +1,7 @@
 package com.example.acessibilit_report.activities;
 
 import android.content.Intent;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +12,7 @@ import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.ResetPasswordRequest;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UserService;
+import com.example.acessibilit_report.util.PasswordToggle;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,8 +37,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
         txtRepetirSenha = findViewById(R.id.editTextRepetirSenha);
         btnSalvar = findViewById(R.id.buttonSalvarNovaSenha);
 
-        setupPasswordToggle(txtNovaSenha);
-        setupPasswordToggle(txtRepetirSenha);
+        PasswordToggle.setup(txtNovaSenha);
+        PasswordToggle.setup(txtRepetirSenha);
 
         btnSalvar.setOnClickListener(v -> redefinirSenha());
     }
@@ -83,28 +80,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 btnSalvar.setEnabled(true);
                 Toast.makeText(ResetPasswordActivity.this, "Erro ao conectar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void setupPasswordToggle(EditText editText) {
-        editText.setOnTouchListener((v, event) -> {
-            if (event.getAction() != MotionEvent.ACTION_UP) return false;
-            if (editText.getCompoundDrawablesRelative()[2] == null) return false;
-
-            int drawableWidth = editText.getCompoundDrawablesRelative()[2].getIntrinsicWidth();
-            int touchAreaStart = editText.getWidth() - editText.getPaddingEnd() - drawableWidth;
-            if (event.getX() < touchAreaStart) return false;
-
-            boolean isHidden = editText.getTransformationMethod() instanceof PasswordTransformationMethod;
-            editText.setTransformationMethod(
-                    isHidden
-                            ? HideReturnsTransformationMethod.getInstance()
-                            : PasswordTransformationMethod.getInstance()
-            );
-            editText.setSelection(editText.getText().length());
-            v.performClick();
-            return true;
         });
     }
 }

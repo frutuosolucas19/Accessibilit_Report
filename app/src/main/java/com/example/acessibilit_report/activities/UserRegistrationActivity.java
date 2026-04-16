@@ -22,6 +22,7 @@ import com.example.acessibilit_report.model.Person;
 import com.example.acessibilit_report.model.User;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UserService;
+import com.example.acessibilit_report.util.PasswordToggle;
 
 import java.util.Locale;
 
@@ -73,6 +74,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
         txvJaTenhoConta.setOnClickListener(v ->
                 startActivity(new Intent(UserRegistrationActivity.this, LoginActivity.class)));
+
+        PasswordToggle.setup(txtSenha);
+        PasswordToggle.setup(txtConfirmaSenha);
 
         btnImagem.setOnClickListener(v -> {
             Intent intentPegaFoto = new Intent(Intent.ACTION_OPEN_DOCUMENT);

@@ -6,44 +6,120 @@
     app:startDestination="@id/menuFragment">
 
     <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.acessibilit_report.activities.HomeMenuFragment"
+        android:label="Menu Inicial"
+        tools:layout="@layout/fragment_menu_inicial">
+        <action
+            android:id="@+id/action_menu_to_criarDenuncia"
+            app:destination="@id/criarDenuncia" />
+        <action
+            android:id="@+id/action_menu_to_minhasDenuncias"
+            app:destination="@id/minhasDenuncias" />
+        <action
+            android:id="@+id/action_menu_to_locaisAdaptados"
+            app:destination="@id/locaisAdaptados" />
+        <action
+            android:id="@+id/action_menu_to_locaisDenunciados"
+            app:destination="@id/locaisDenunciados" />
+        <action
+            android:id="@+id/action_menu_to_forum"
+            app:destination="@id/forumAcessibilidade" />
+        <action
+            android:id="@+id/action_menu_to_direitos"
+            app:destination="@id/direitosAcessibilidade" />
+        <action
+            android:id="@+id/action_menu_to_suporte"
+            app:destination="@id/suporte" />
+    </fragment>
+
+    <fragment
         android:id="@+id/criarDenuncia"
         android:name="com.example.acessibilit_report.activities.ReportRegistrationFragment"
         android:label="Cadastro de Denúncias"
         tools:layout="@layout/fragment_cadastro_denuncia" />
-    <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.example.acessibilit_report.activities.HomeMenuFragment"
-        android:label="Menu Inicial"
-        tools:layout="@layout/fragment_menu_inicial" />
+
     <fragment
         android:id="@+id/minhasDenuncias"
         android:name="com.example.acessibilit_report.activities.MyReportsFragment"
-        android:label="fragment_minhas_denuncias"
-        tools:layout="@layout/fragment_minhas_denuncias" />
+        android:label="Minhas Denúncias"
+        tools:layout="@layout/fragment_minhas_denuncias">
+        <action
+            android:id="@+id/action_minhasDenuncias_to_criarDenuncia"
+            app:destination="@id/criarDenuncia" />
+        <action
+            android:id="@+id/action_minhasDenuncias_to_editarDenuncia"
+            app:destination="@id/editarDenuncia" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editarDenuncia"
+        android:name="com.example.acessibilit_report.activities.ReportEditFragment"
+        android:label="Editar Denúncia"
+        tools:layout="@layout/fragment_editar_denuncia" />
+
     <fragment
         android:id="@+id/locaisDenunciados"
         android:name="com.example.acessibilit_report.activities.ReportedPlacesFragment"
-        android:label="fragment_locais_denunciados"
+        android:label="Locais Denunciados"
         tools:layout="@layout/fragment_locais_denunciados" />
+
     <fragment
         android:id="@+id/locaisAdaptados"
         android:name="com.example.acessibilit_report.activities.AccessiblePlacesFragment"
-        android:label="fragment_locais_adaptados"
+        android:label="Locais Adaptados"
         tools:layout="@layout/fragment_locais_adaptados" />
+
     <fragment
         android:id="@+id/forumAcessibilidade"
         android:name="com.example.acessibilit_report.activities.AccessibilityForumFragment"
-        android:label="fragment_forum_acessibilidade"
-        tools:layout="@layout/fragment_forum_acessibilidade" />
+        android:label="Fórum de Acessibilidade"
+        tools:layout="@layout/fragment_forum_acessibilidade">
+        <action
+            android:id="@+id/action_forumAcessibilidade_to_forumPerguntas"
+            app:destination="@id/forumPerguntas" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forumPerguntas"
+        android:name="com.example.acessibilit_report.activities.ForumQuestionsFragment"
+        android:label="Perguntas do Fórum"
+        tools:layout="@layout/fragment_forum_perguntas">
+        <argument
+            android:name="forumId"
+            app:argType="long" />
+        <argument
+            android:name="forumTitulo"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_forumPerguntas_to_perguntaDetalhe"
+            app:destination="@id/perguntaDetalhe" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/perguntaDetalhe"
+        android:name="com.example.acessibilit_report.activities.QuestionDetailFragment"
+        android:label="Detalhe da Pergunta"
+        tools:layout="@layout/fragment_pergunta_detalhe">
+        <argument
+            android:name="forumId"
+            app:argType="long" />
+        <argument
+            android:name="perguntaId"
+            app:argType="long" />
+    </fragment>
+
     <fragment
         android:id="@+id/direitosAcessibilidade"
         android:name="com.example.acessibilit_report.activities.AccessibilityRightsFragment"
-        android:label="fragment_direitos_acessibilidade"
+        android:label="Direitos de Acessibilidade"
         tools:layout="@layout/fragment_direitos_acessibilidade" />
+
     <fragment
         android:id="@+id/suporte"
         android:name="com.example.acessibilit_report.activities.SupportFragment"
-        android:label="fragment_suporte"
+        android:label="Suporte"
         tools:layout="@layout/fragment_suporte" />
-</navigation>
 
+</navigation>
