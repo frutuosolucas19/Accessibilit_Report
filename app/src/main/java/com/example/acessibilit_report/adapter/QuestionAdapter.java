@@ -76,6 +76,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         holder.layoutRespostas.removeAllViews();
+        if (pergunta.getRespostas() == null) return;
         for (Answer resposta : pergunta.getRespostas()) {
             TextView respostaTxt = new TextView(holder.itemView.getContext());
             respostaTxt.setText(holder.itemView.getContext().getString(R.string.resposta_bullet, resposta.getResposta()));

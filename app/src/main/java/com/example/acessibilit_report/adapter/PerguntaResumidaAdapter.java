@@ -198,6 +198,7 @@ public class PerguntaResumidaAdapter extends RecyclerView.Adapter<PerguntaResumi
             @Override
             public void onResponse(Call<RespostaResponse> c, Response<RespostaResponse> resp) {
                 pendingReplyCalls.remove(perguntaId);
+                if (!holder.itemView.isAttachedToWindow()) return;
                 holder.btnEnviarResposta.setEnabled(true);
                 if (resp.isSuccessful()) {
                     holder.edtNovaResposta.setText("");
@@ -211,6 +212,7 @@ public class PerguntaResumidaAdapter extends RecyclerView.Adapter<PerguntaResumi
             @Override
             public void onFailure(Call<RespostaResponse> c, Throwable t) {
                 pendingReplyCalls.remove(perguntaId);
+                if (!holder.itemView.isAttachedToWindow()) return;
                 holder.btnEnviarResposta.setEnabled(true);
                 Toast.makeText(holder.itemView.getContext(),
                         holder.itemView.getContext().getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();

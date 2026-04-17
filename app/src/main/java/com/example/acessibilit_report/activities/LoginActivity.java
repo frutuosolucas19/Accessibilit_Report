@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         String senha = txtSenha.getText().toString();
 
         if (email.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.login_campos_obrigatorios), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnEntrar.setEnabled(true);
 
                 if (!resp.isSuccessful() || resp.body() == null) {
-                    Toast.makeText(LoginActivity.this, "Email ou senha inválidos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.login_credenciais_invalidas), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                         safe(lr.getTipoUsuario())
                 );
 
-                Toast.makeText(LoginActivity.this, "Bem-vindo, " + safe(lr.getNome()), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.login_bem_vindo, safe(lr.getNome())), Toast.LENGTH_LONG).show();
 
                 String tipo = lr.getTipoUsuario();
                 Log.d("LoginActivity", "tipo recebido do backend: [" + tipo + "]");
@@ -104,14 +104,14 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Tipo de conta desconhecido. Contate o suporte.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.login_tipo_desconhecido), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 btnEntrar.setEnabled(true);
-                Toast.makeText(LoginActivity.this, "Erro ao conectar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }

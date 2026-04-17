@@ -35,6 +35,7 @@ public class AccessiblePlacesFragment extends Fragment {
     private ProgressBar progress;
     private TextView empty;
     private PlaceAdapter adapter;
+    private Call<List<Place>> pendingLoad;
 
     public AccessiblePlacesFragment() {}
 
@@ -59,19 +60,28 @@ public class AccessiblePlacesFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
+    }
+
     private void loadData() {
+        if (pendingLoad != null) pendingLoad.cancel();
         showLoading(true);
         ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        api.locais().enqueue(new Callback<List<Place>>() {
+        pendingLoad = api.locais();
+        pendingLoad.enqueue(new Callback<List<Place>>() {
             @Override
             public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
+                if (!isAdded()) return;
                 showLoading(false);
                 if (!response.isSuccessful() || response.body() == null) {
-                    if (response.code() == 401) {
-                        Toast.makeText(requireContext(), "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(requireContext(), "Falha (" + response.code() + ")", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(requireContext(),
+                            response.code() == 401
+                                    ? getString(R.string.sessao_expirada)
+                                    : getString(R.string.erro_falha_codigo, response.code()),
+                            Toast.LENGTH_LONG).show();
                     showEmpty(true);
                     return;
                 }
@@ -82,9 +92,10 @@ public class AccessiblePlacesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Place>> call, Throwable t) {
+                if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -100,4 +111,3 @@ public class AccessiblePlacesFragment extends Fragment {
         recycler.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
-

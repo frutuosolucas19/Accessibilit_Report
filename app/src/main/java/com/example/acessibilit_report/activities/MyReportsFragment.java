@@ -35,6 +35,7 @@ public class MyReportsFragment extends Fragment {
     private ProgressBar progress;
     private TextView empty;
     private ReportAdapter adapter;
+    private Call<List<ReportResponse>> pendingLoad;
 
     public MyReportsFragment() { }
 
@@ -56,7 +57,6 @@ public class MyReportsFragment extends Fragment {
         recycler.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         recycler.setAdapter(adapter);
 
-        // opcional: botão para recarregar
         FloatingActionButton fab = v.findViewById(R.id.fab_refresh);
         if (fab != null) fab.setOnClickListener(view -> loadData());
 
@@ -64,18 +64,27 @@ public class MyReportsFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
+    }
+
     private void loadData() {
+        if (pendingLoad != null) pendingLoad.cancel();
         showLoading(true);
         ReportService api = RetrofitInitializer.getInstance(requireContext()).create(ReportService.class);
-        api.minhas().enqueue(new Callback<List<ReportResponse>>() {
+        pendingLoad = api.minhas();
+        pendingLoad.enqueue(new Callback<List<ReportResponse>>() {
             @Override public void onResponse(Call<List<ReportResponse>> call, Response<List<ReportResponse>> resp) {
+                if (!isAdded()) return;
                 showLoading(false);
                 if (!resp.isSuccessful() || resp.body() == null) {
-                    if (resp.code() == 401) {
-                        Toast.makeText(requireContext(), "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(requireContext(), "Falha (" + resp.code() + ")", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(requireContext(),
+                            resp.code() == 401
+                                    ? getString(R.string.sessao_expirada)
+                                    : getString(R.string.erro_falha_codigo, resp.code()),
+                            Toast.LENGTH_LONG).show();
                     showEmpty(true);
                     return;
                 }
@@ -84,9 +93,10 @@ public class MyReportsFragment extends Fragment {
                 showEmpty(lista.isEmpty());
             }
             @Override public void onFailure(Call<List<ReportResponse>> call, Throwable t) {
+                if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -102,4 +112,3 @@ public class MyReportsFragment extends Fragment {
         recycler.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
-
