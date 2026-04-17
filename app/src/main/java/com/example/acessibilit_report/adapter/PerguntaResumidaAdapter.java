@@ -205,7 +205,7 @@ public class PerguntaResumidaAdapter extends RecyclerView.Adapter<PerguntaResumi
                     carregarDetalhe(perguntaId);
                 } else {
                     Toast.makeText(holder.itemView.getContext(),
-                            "Erro ao enviar resposta (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            holder.itemView.getContext().getString(R.string.resposta_erro_enviar, resp.code()), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -213,14 +213,14 @@ public class PerguntaResumidaAdapter extends RecyclerView.Adapter<PerguntaResumi
                 pendingReplyCalls.remove(perguntaId);
                 holder.btnEnviarResposta.setEnabled(true);
                 Toast.makeText(holder.itemView.getContext(),
-                        "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        holder.itemView.getContext().getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private int findPosition(long perguntaId) {
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).id != null && lista.get(i).id == perguntaId) return i;
+            if (Long.valueOf(perguntaId).equals(lista.get(i).id)) return i;
         }
         return -1;
     }

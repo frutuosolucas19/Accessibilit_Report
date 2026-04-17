@@ -172,6 +172,22 @@
     <string name="dialogo_excluir_pergunta_mensagem">Tem certeza que deseja excluir "%1$s"?</string>
     <string name="dialogo_excluir_resposta_mensagem">Tem certeza que deseja excluir esta resposta?</string>
 
+    <!-- Toast / error messages -->
+    <string name="erro_de_rede">Erro de rede: %1$s</string>
+    <string name="forum_titulo_obrigatorio">Título obrigatório (máx. 200 caracteres)</string>
+    <string name="forum_criado">Fórum criado!</string>
+    <string name="forum_erro_criar">Erro ao criar fórum (%1$d)</string>
+    <string name="forum_erro_carregar">Erro ao carregar fóruns (%1$d)</string>
+    <string name="pergunta_titulo_obrigatorio">Título obrigatório (máx. 300 caracteres)</string>
+    <string name="pergunta_conteudo_obrigatorio">Conteúdo obrigatório</string>
+    <string name="pergunta_criada">Pergunta criada!</string>
+    <string name="pergunta_erro_criar">Erro ao criar pergunta (%1$d)</string>
+    <string name="pergunta_excluida">Pergunta excluída.</string>
+    <string name="pergunta_sem_permissao">Você não tem permissão para excluir esta pergunta.</string>
+    <string name="pergunta_erro_excluir">Erro ao excluir (%1$d)</string>
+    <string name="pergunta_erro_carregar">Erro ao carregar perguntas (%1$d)</string>
+    <string name="resposta_erro_enviar">Erro ao enviar resposta (%1$d)</string>
+
     <string-array name="tipos_denuncia">
         <item>Calçada inadequada</item>
         <item>Ausência de rampa</item>

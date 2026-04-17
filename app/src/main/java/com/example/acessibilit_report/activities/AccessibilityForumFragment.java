@@ -80,6 +80,13 @@ public class AccessibilityForumFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
+        if (pendingCreate != null) { pendingCreate.cancel(); pendingCreate = null; }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
@@ -98,7 +105,7 @@ public class AccessibilityForumFragment extends Fragment {
                 showLoading(false);
                 if (!resp.isSuccessful() || resp.body() == null) {
                     Toast.makeText(requireContext(),
-                            "Erro ao carregar fóruns (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            getString(R.string.forum_erro_carregar, resp.code()), Toast.LENGTH_SHORT).show();
                     showEmpty(true);
                     return;
                 }
@@ -112,7 +119,7 @@ public class AccessibilityForumFragment extends Fragment {
                 if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -130,7 +137,7 @@ public class AccessibilityForumFragment extends Fragment {
                             ? edtTitulo.getText().toString().trim() : "";
                     if (titulo.isEmpty() || titulo.length() > 200) {
                         Toast.makeText(requireContext(),
-                                "Título obrigatório (máx. 200 caracteres)", Toast.LENGTH_SHORT).show();
+                                getString(R.string.forum_titulo_obrigatorio), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String desc = edtDescricao.getText() != null
@@ -150,18 +157,18 @@ public class AccessibilityForumFragment extends Fragment {
             public void onResponse(Call<ForumResponse> call, Response<ForumResponse> resp) {
                 if (!isAdded()) return;
                 if (resp.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Fórum criado!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.forum_criado), Toast.LENGTH_SHORT).show();
                     loadData();
                 } else {
                     Toast.makeText(requireContext(),
-                            "Erro ao criar fórum (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            getString(R.string.forum_erro_criar, resp.code()), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ForumResponse> call, Throwable t) {
                 if (!isAdded()) return;
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }

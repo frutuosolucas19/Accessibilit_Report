@@ -284,6 +284,7 @@ public class ReportRegistrationFragment extends Fragment {
     private String uriToBase64Jpeg(Uri uri, int quality) {
         try (InputStream in = requireContext().getContentResolver().openInputStream(uri)) {
             Bitmap bmp = android.graphics.BitmapFactory.decodeStream(in);
+            if (bmp == null) return null;
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.JPEG, quality, baos);
             return Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);

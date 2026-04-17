@@ -113,7 +113,7 @@ public class ForumQuestionsFragment extends Fragment {
                 showLoading(false);
                 if (!resp.isSuccessful() || resp.body() == null) {
                     Toast.makeText(requireContext(),
-                            "Erro ao carregar perguntas (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            getString(R.string.pergunta_erro_carregar, resp.code()), Toast.LENGTH_SHORT).show();
                     showEmpty(true);
                     return;
                 }
@@ -127,7 +127,7 @@ public class ForumQuestionsFragment extends Fragment {
                 if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -147,11 +147,11 @@ public class ForumQuestionsFragment extends Fragment {
                             ? edtConteudo.getText().toString().trim() : "";
                     if (titulo.isEmpty() || titulo.length() > 300) {
                         Toast.makeText(requireContext(),
-                                "Título obrigatório (máx. 300 caracteres)", Toast.LENGTH_SHORT).show();
+                                getString(R.string.pergunta_titulo_obrigatorio), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (conteudo.isEmpty()) {
-                        Toast.makeText(requireContext(), "Conteúdo obrigatório", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), getString(R.string.pergunta_conteudo_obrigatorio), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     criarPergunta(titulo, conteudo);
@@ -169,18 +169,18 @@ public class ForumQuestionsFragment extends Fragment {
             public void onResponse(Call<PerguntaResponse> call, Response<PerguntaResponse> resp) {
                 if (!isAdded()) return;
                 if (resp.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Pergunta criada!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.pergunta_criada), Toast.LENGTH_SHORT).show();
                     loadData();
                 } else {
                     Toast.makeText(requireContext(),
-                            "Erro ao criar pergunta (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            getString(R.string.pergunta_erro_criar, resp.code()), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<PerguntaResponse> call, Throwable t) {
                 if (!isAdded()) return;
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -195,13 +195,13 @@ public class ForumQuestionsFragment extends Fragment {
             public void onResponse(Call<Void> call, Response<Void> resp) {
                 if (!isAdded()) return;
                 if (resp.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Pergunta excluída.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.pergunta_excluida), Toast.LENGTH_SHORT).show();
                     loadData();
                 } else {
                     showLoading(false);
                     String msg = resp.code() == 403
-                            ? "Você não tem permissão para excluir esta pergunta."
-                            : "Erro ao excluir (" + resp.code() + ")";
+                            ? getString(R.string.pergunta_sem_permissao)
+                            : getString(R.string.pergunta_erro_excluir, resp.code());
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -210,7 +210,7 @@ public class ForumQuestionsFragment extends Fragment {
             public void onFailure(Call<Void> call, Throwable t) {
                 if (!isAdded()) return;
                 showLoading(false);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
