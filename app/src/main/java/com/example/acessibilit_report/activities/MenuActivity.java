@@ -42,6 +42,7 @@ public class MenuActivity extends AppCompatActivity {
 
         if (navHostFragment == null) {
             Toast.makeText(this, "NavHostFragment não encontrado (verifique activity_menu.xml)", Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
 

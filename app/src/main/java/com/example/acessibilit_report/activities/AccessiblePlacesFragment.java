@@ -35,7 +35,7 @@ public class AccessiblePlacesFragment extends Fragment {
     private ProgressBar progress;
     private TextView empty;
     private PlaceAdapter adapter;
-    private Call<List<Place>> pendingCall;
+    private Call<List<Place>> pendingLoad;
 
     public AccessiblePlacesFragment() {}
 
@@ -46,7 +46,7 @@ public class AccessiblePlacesFragment extends Fragment {
 
         recycler = v.findViewById(R.id.rv_locais);
         progress = v.findViewById(R.id.pb_loading_locais);
-        empty    = v.findViewById(R.id.tv_empty_locais);
+        empty = v.findViewById(R.id.tv_empty_locais);
 
         adapter = new PlaceAdapter(new ArrayList<>());
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -63,28 +63,25 @@ public class AccessiblePlacesFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (pendingCall != null) {
-            pendingCall.cancel();
-            pendingCall = null;
-        }
+        if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
     }
 
     private void loadData() {
-        if (pendingCall != null) pendingCall.cancel();
+        if (pendingLoad != null) pendingLoad.cancel();
         showLoading(true);
         ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        pendingCall = api.locais();
-        pendingCall.enqueue(new Callback<List<Place>>() {
+        pendingLoad = api.locais();
+        pendingLoad.enqueue(new Callback<List<Place>>() {
             @Override
             public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
                 if (!isAdded()) return;
                 showLoading(false);
                 if (!response.isSuccessful() || response.body() == null) {
-                    if (response.code() == 401) {
-                        Toast.makeText(requireContext(), "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(requireContext(), "Falha (" + response.code() + ")", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(requireContext(),
+                            response.code() == 401
+                                    ? getString(R.string.sessao_expirada)
+                                    : getString(R.string.erro_falha_codigo, response.code()),
+                            Toast.LENGTH_LONG).show();
                     showEmpty(true);
                     return;
                 }
@@ -98,7 +95,7 @@ public class AccessiblePlacesFragment extends Fragment {
                 if (!isAdded()) return;
                 showLoading(false);
                 showEmpty(true);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }

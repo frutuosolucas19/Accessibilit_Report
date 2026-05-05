@@ -6,17 +6,18 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_forum_perguntas_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:accessibilityHeading="true"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:paddingBottom="8dp"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
         android:paddingTop="12dp"
-        android:text="@string/forumAcessibilidade"
-        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <FrameLayout
@@ -24,7 +25,7 @@
         android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/pb_forum"
+            android:id="@+id/pb_perguntas"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,26 +34,26 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/tv_empty_forum"
+            android:id="@+id/tv_empty_perguntas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:accessibilityLiveRegion="polite"
             android:gravity="center"
-            android:text="@string/forum_sem_foruns"
+            android:text="@string/forum_sem_perguntas"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_forums"
+            android:id="@+id/rv_perguntas"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_novo_forum"
+            android:id="@+id/fab_nova_pergunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:contentDescription="@string/forum_cd_novo_forum"
+            android:contentDescription="@string/forum_cd_nova_pergunta"
             android:src="@drawable/ic_add"
             app:backgroundTint="@color/azul_login"
             app:tint="@android:color/white" />

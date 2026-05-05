@@ -38,7 +38,7 @@ public class AccessibilityRightsFragment extends Fragment {
         lista.add(new AccessibilityRight("5. Educação inclusiva", "Acesso a escolas com estrutura adaptada e recursos pedagógicos inclusivos."));
         lista.add(new AccessibilityRight("6. Isenção de impostos", "Isenção de IPI, IOF, ICMS e IPVA na compra de veículos adaptados, conforme legislação vigente."));
         lista.add(new AccessibilityRight("7. Acesso à tecnologia assistiva", "Direito a cadeiras de rodas, próteses, softwares e outros equipamentos por meio do SUS ou programas governamentais."));
-        lista.add(new AccessibilityRight("8. Lei de proteção legal", "Amparo da Lei Brasileira de Inclusão da Person com Deficiência (Lei nº 13.146/2015), que garante e fiscaliza os direitos das pessoas com deficiência."));
+        lista.add(new AccessibilityRight("8. Lei de proteção legal", "Amparo da Lei Brasileira de Inclusão da Pessoa com Deficiência (Lei nº 13.146/2015), que garante e fiscaliza os direitos das pessoas com deficiência."));
 
         adapter = new AccessibilityRightAdapter(lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

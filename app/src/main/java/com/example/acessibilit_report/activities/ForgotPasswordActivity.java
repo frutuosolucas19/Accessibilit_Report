@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acessibilit_report.R;
 import com.example.acessibilit_report.dto.ForgotPasswordRequest;
-import com.example.acessibilit_report.dto.ForgotPasswordResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.UserService;
 
@@ -41,36 +40,31 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void enviarSolicitacao() {
         String email = txtEmail.getText().toString().trim().toLowerCase(Locale.ROOT);
         if (email.isEmpty()) {
-            Toast.makeText(this, "Informe o e-mail", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.forgot_email_obrigatorio), Toast.LENGTH_SHORT).show();
             return;
         }
 
         btnEnviar.setEnabled(false);
         UserService service = RetrofitInitializer.getUsuarioService(this);
-        service.forgotPassword(new ForgotPasswordRequest(email)).enqueue(new Callback<ForgotPasswordResponse>() {
+        service.forgotPassword(new ForgotPasswordRequest(email)).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 btnEnviar.setEnabled(true);
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ForgotPasswordActivity.this, "Não foi possível enviar a troca de senha", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPasswordActivity.this, getString(R.string.forgot_erro_enviar), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                ForgotPasswordResponse body = response.body();
-                String mensagem = (body != null && body.mensagem != null)
-                        ? body.mensagem
-                        : "Solicitação enviada";
-                Toast.makeText(ForgotPasswordActivity.this, mensagem, Toast.LENGTH_LONG).show();
-
+                Toast.makeText(ForgotPasswordActivity.this, getString(R.string.forgot_codigo_enviado), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ForgotPasswordActivity.this, ResetPasswordActivity.class);
                 intent.putExtra("email", email);
                 startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 btnEnviar.setEnabled(true);
-                Toast.makeText(ForgotPasswordActivity.this, "Erro ao conectar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgotPasswordActivity.this, getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }

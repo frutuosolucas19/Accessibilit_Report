@@ -4,25 +4,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acessibilit_report.R;
-import com.example.acessibilit_report.adapter.QuestionAdapter;
-import com.example.acessibilit_report.auth.TokenStore;
-import com.example.acessibilit_report.model.Forum;
-import com.example.acessibilit_report.model.Question;
-import com.example.acessibilit_report.model.User;
+import com.example.acessibilit_report.adapter.ForumAdapter;
+import com.example.acessibilit_report.dto.ForumRequest;
+import com.example.acessibilit_report.dto.ForumResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
-import com.example.acessibilit_report.services.ProtectedApiService;
+import com.example.acessibilit_report.services.ForumApiService;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,128 +35,152 @@ import retrofit2.Response;
 
 public class AccessibilityForumFragment extends Fragment {
 
-    private EditText edtPergunta;
-    private Button btnEnviarPergunta;
-    private RecyclerView recyclerPerguntas;
-    private ProgressBar progressBar;
-    private QuestionAdapter adapter;
-    private final List<Question> listaPerguntas = new ArrayList<>();
+    private RecyclerView recycler;
+    private ProgressBar progress;
+    private TextView tvEmpty;
+    private ForumAdapter adapter;
+    private Call<List<ForumResponse>> pendingLoad;
+    private Call<ForumResponse> pendingCreate;
 
-    private Call<List<Question>> pendingLoad;
-    private Call<Question> pendingSend;
+    public AccessibilityForumFragment() {}
 
-    private String nomeUsuario;
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_forum_acessibilidade, container, false);
+    public @Nullable View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                                       @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_forum_acessibilidade, container, false);
 
-        nomeUsuario = new TokenStore(requireContext()).getNome();
-        if (nomeUsuario.isEmpty()) nomeUsuario = getString(R.string.usuario_padrao);
+        recycler = v.findViewById(R.id.rv_forums);
+        progress = v.findViewById(R.id.pb_forum);
+        tvEmpty  = v.findViewById(R.id.tv_empty_forum);
 
-        edtPergunta       = view.findViewById(R.id.edtPergunta);
-        btnEnviarPergunta = view.findViewById(R.id.btnEnviarPergunta);
-        recyclerPerguntas = view.findViewById(R.id.recyclerPerguntas);
-        progressBar       = view.findViewById(R.id.pb_forum);
+        adapter = new ForumAdapter(new ArrayList<>());
+        adapter.setOnForumClickListener(forum -> {
+            if (!isAdded()) return;
+            Bundle args = new Bundle();
+            args.putLong("forumId", forum.id);
+            args.putString("forumTitulo", forum.titulo);
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_forumAcessibilidade_to_forumPerguntas, args);
+        });
 
-        adapter = new QuestionAdapter(listaPerguntas);
-        recyclerPerguntas.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerPerguntas.setAdapter(adapter);
+        recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recycler.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        recycler.setAdapter(adapter);
 
-        btnEnviarPergunta.setOnClickListener(v -> enviarPergunta());
+        FloatingActionButton fab = v.findViewById(R.id.fab_novo_forum);
+        if (fab != null) fab.setOnClickListener(view -> mostrarDialogNovoForum());
 
-        carregarPerguntas();
-        return view;
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
+        if (pendingCreate != null) { pendingCreate.cancel(); pendingCreate = null; }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (pendingLoad != null) { pendingLoad.cancel(); pendingLoad = null; }
-        if (pendingSend != null) { pendingSend.cancel(); pendingSend = null; }
+        if (pendingCreate != null) { pendingCreate.cancel(); pendingCreate = null; }
     }
 
-    private void enviarPergunta() {
-        String texto = edtPergunta.getText().toString().trim();
-        if (texto.isEmpty()) return;
-
-        Question nova = new Question();
-        nova.setPergunta(texto);
-
-        User user = new User();
-        user.setNome(nomeUsuario);
-        Forum forum = new Forum();
-        forum.setUsuario(user);
-        nova.setForum(forum);
-
-        btnEnviarPergunta.setEnabled(false);
-        ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        pendingSend = api.criarPergunta(nova);
-        pendingSend.enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                if (!isAdded()) return;
-                btnEnviarPergunta.setEnabled(true);
-                if (response.isSuccessful() && response.body() != null) {
-                    listaPerguntas.add(0, response.body());
-                    adapter.notifyItemInserted(0);
-                    edtPergunta.setText("");
-                    recyclerPerguntas.scrollToPosition(0);
-                } else {
-                    // Insere localmente se a API ainda nao tiver este endpoint
-                    listaPerguntas.add(0, nova);
-                    adapter.notifyItemInserted(0);
-                    edtPergunta.setText("");
-                    recyclerPerguntas.scrollToPosition(0);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                if (!isAdded()) return;
-                btnEnviarPergunta.setEnabled(true);
-                Toast.makeText(requireContext(), "Erro ao enviar pergunta: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void carregarPerguntas() {
+    private void loadData() {
         if (pendingLoad != null) pendingLoad.cancel();
-        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
-
-        ProtectedApiService api = RetrofitInitializer.getProtectedApiService(requireContext());
-        pendingLoad = api.perguntas();
-        pendingLoad.enqueue(new Callback<List<Question>>() {
+        showLoading(true);
+        ForumApiService api = RetrofitInitializer.getForumApiService(requireContext());
+        pendingLoad = api.listarForuns();
+        pendingLoad.enqueue(new Callback<List<ForumResponse>>() {
             @Override
-            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+            public void onResponse(Call<List<ForumResponse>> call, Response<List<ForumResponse>> resp) {
                 if (!isAdded()) return;
-                if (progressBar != null) progressBar.setVisibility(View.GONE);
-
-                if (!response.isSuccessful() || response.body() == null) {
+                showLoading(false);
+                if (!resp.isSuccessful() || resp.body() == null) {
                     Toast.makeText(requireContext(),
-                            "Não foi possível carregar as perguntas (" + response.code() + ")",
-                            Toast.LENGTH_SHORT).show();
+                            getString(R.string.forum_erro_carregar, resp.code()), Toast.LENGTH_SHORT).show();
+                    showEmpty(true);
                     return;
                 }
-
-                int antigos = listaPerguntas.size();
-                listaPerguntas.clear();
-                if (antigos > 0) adapter.notifyItemRangeRemoved(0, antigos);
-
-                listaPerguntas.addAll(response.body());
-                adapter.notifyItemRangeInserted(0, listaPerguntas.size());
+                List<ForumResponse> lista = resp.body();
+                adapter.submit(lista);
+                showEmpty(lista.isEmpty());
             }
 
             @Override
-            public void onFailure(Call<List<Question>> call, Throwable t) {
+            public void onFailure(Call<List<ForumResponse>> call, Throwable t) {
                 if (!isAdded()) return;
-                if (progressBar != null) progressBar.setVisibility(View.GONE);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                showLoading(false);
+                showEmpty(true);
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void mostrarDialogNovoForum() {
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_novo_forum, null);
+        TextInputEditText edtTitulo   = dialogView.findViewById(R.id.edt_forum_titulo);
+        TextInputEditText edtDescricao = dialogView.findViewById(R.id.edt_forum_descricao);
+
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.forum_novo_forum)
+                .setView(dialogView)
+                .setPositiveButton(R.string.forum_criar, (d, w) -> {
+                    String titulo = edtTitulo.getText() != null
+                            ? edtTitulo.getText().toString().trim() : "";
+                    if (titulo.isEmpty() || titulo.length() > 200) {
+                        Toast.makeText(requireContext(),
+                                getString(R.string.forum_titulo_obrigatorio), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String desc = edtDescricao.getText() != null
+                            ? edtDescricao.getText().toString().trim() : "";
+                    criarForum(titulo, desc.isEmpty() ? null : desc);
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void criarForum(String titulo, String descricao) {
+        if (pendingCreate != null) pendingCreate.cancel();
+        ForumApiService api = RetrofitInitializer.getForumApiService(requireContext());
+        pendingCreate = api.criarForum(new ForumRequest(titulo, descricao));
+        pendingCreate.enqueue(new Callback<ForumResponse>() {
+            @Override
+            public void onResponse(Call<ForumResponse> call, Response<ForumResponse> resp) {
+                if (!isAdded()) return;
+                if (resp.isSuccessful()) {
+                    Toast.makeText(requireContext(), getString(R.string.forum_criado), Toast.LENGTH_SHORT).show();
+                    loadData();
+                } else {
+                    Toast.makeText(requireContext(),
+                            getString(R.string.forum_erro_criar, resp.code()), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForumResponse> call, Throwable t) {
+                if (!isAdded()) return;
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showLoading(boolean show) {
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        recycler.setVisibility(show ? View.GONE : View.VISIBLE);
+        tvEmpty.setVisibility(View.GONE);
+    }
+
+    private void showEmpty(boolean show) {
+        tvEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
+        recycler.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
