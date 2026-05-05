@@ -20,8 +20,6 @@ import com.example.acessibilit_report.adapter.ReportAdapter;
 import com.example.acessibilit_report.dto.ReportResponse;
 import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.ReportService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +54,6 @@ public class MyReportsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         recycler.setAdapter(adapter);
-
-        FloatingActionButton fab = v.findViewById(R.id.fab_refresh);
-        if (fab != null) fab.setOnClickListener(view -> loadData());
 
         loadData();
         return v;
