@@ -52,11 +52,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String repetirSenha = txtRepetirSenha.getText().toString();
 
         if (codigo.isEmpty() || novaSenha.isEmpty() || repetirSenha.isEmpty()) {
-            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.reset_campos_obrigatorios), Toast.LENGTH_SHORT).show();
             return;
         }
         if (!novaSenha.equals(repetirSenha)) {
-            Toast.makeText(this, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.registro_senhas_diferentes), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -67,11 +67,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 btnSalvar.setEnabled(true);
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ResetPasswordActivity.this, "Não foi possível redefinir a senha", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, getString(R.string.reset_erro_redefinir), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(ResetPasswordActivity.this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResetPasswordActivity.this, getString(R.string.reset_senha_alterada), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
@@ -81,7 +81,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 btnSalvar.setEnabled(true);
-                Toast.makeText(ResetPasswordActivity.this, "Erro ao conectar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResetPasswordActivity.this, getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -113,7 +113,7 @@ public class QuestionDetailFragment extends Fragment {
                 progress.setVisibility(View.GONE);
                 if (!resp.isSuccessful() || resp.body() == null) {
                     Toast.makeText(requireContext(),
-                            "Erro ao carregar pergunta (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            getString(R.string.pergunta_erro_carregar_detalhe, resp.code()), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 perguntaAtual = resp.body();
@@ -135,7 +135,7 @@ public class QuestionDetailFragment extends Fragment {
             public void onFailure(Call<PerguntaDetailResponse> call, Throwable t) {
                 if (!isAdded()) return;
                 progress.setVisibility(View.GONE);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -143,7 +143,7 @@ public class QuestionDetailFragment extends Fragment {
     private void enviarResposta() {
         String conteudo = edtResposta.getText().toString().trim();
         if (conteudo.isEmpty()) {
-            Toast.makeText(requireContext(), "Escreva uma resposta antes de enviar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), getString(R.string.resposta_vazia), Toast.LENGTH_SHORT).show();
             return;
         }
         if (pendingCreateResposta != null) pendingCreateResposta.cancel();
@@ -160,7 +160,7 @@ public class QuestionDetailFragment extends Fragment {
                     loadData();
                 } else {
                     Toast.makeText(requireContext(),
-                            "Erro ao enviar resposta (" + resp.code() + ")", Toast.LENGTH_SHORT).show();
+                            getString(R.string.resposta_erro_enviar, resp.code()), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -168,7 +168,7 @@ public class QuestionDetailFragment extends Fragment {
             public void onFailure(Call<RespostaResponse> call, Throwable t) {
                 if (!isAdded()) return;
                 btnEnviar.setEnabled(true);
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -192,12 +192,12 @@ public class QuestionDetailFragment extends Fragment {
             public void onResponse(Call<Void> call, Response<Void> resp) {
                 if (!isAdded()) return;
                 if (resp.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Resposta excluída.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.resposta_excluida), Toast.LENGTH_SHORT).show();
                     loadData();
                 } else {
                     String msg = resp.code() == 403
-                            ? "Você não tem permissão para excluir esta resposta."
-                            : "Erro ao excluir (" + resp.code() + ")";
+                            ? getString(R.string.resposta_sem_permissao)
+                            : getString(R.string.resposta_erro_excluir, resp.code());
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -205,7 +205,7 @@ public class QuestionDetailFragment extends Fragment {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 if (!isAdded()) return;
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -229,12 +229,12 @@ public class QuestionDetailFragment extends Fragment {
             public void onResponse(Call<Void> call, Response<Void> resp) {
                 if (!isAdded()) return;
                 if (resp.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Pergunta excluída.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.pergunta_excluida), Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(requireView()).navigateUp();
                 } else {
                     String msg = resp.code() == 403
-                            ? "Você não tem permissão para excluir esta pergunta."
-                            : "Erro ao excluir (" + resp.code() + ")";
+                            ? getString(R.string.pergunta_sem_permissao)
+                            : getString(R.string.pergunta_erro_excluir, resp.code());
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -242,7 +242,7 @@ public class QuestionDetailFragment extends Fragment {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 if (!isAdded()) return;
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }

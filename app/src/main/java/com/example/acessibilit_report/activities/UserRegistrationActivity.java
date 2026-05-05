@@ -94,11 +94,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
             String confirma = txtConfirmaSenha.getText().toString();
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirma.isEmpty()) {
-                Toast.makeText(this, "Por favor, informe todos os campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.registro_campos_obrigatorios), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (!senha.equals(confirma)) {
-                Toast.makeText(this, "As senhas informadas não são iguais", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.registro_senhas_diferentes), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -121,7 +121,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(UserRegistrationActivity.this,
-                            "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                            getString(R.string.registro_usuario_cadastrado), Toast.LENGTH_SHORT).show();
                     new Handler(Looper.getMainLooper()).postDelayed(() -> {
                         startActivity(new Intent(UserRegistrationActivity.this, LoginActivity.class));
                         finish();
@@ -139,7 +139,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
                     String msg;
                     if (response.code() == 409) {
-                        msg = "E-mail já cadastrado";
+                        msg = getString(R.string.registro_email_ja_cadastrado);
                     } else if (response.code() == 400) {
                         msg = errorBody.isEmpty()
                                 ? "Dados inválidos (400)"
@@ -159,7 +159,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 btnCadastro.setEnabled(true);
                 Log.e(TAG, "Falha de rede no cadastro", t);
                 Toast.makeText(UserRegistrationActivity.this,
-                        "Falha na requisição: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        getString(R.string.erro_de_rede, t.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }

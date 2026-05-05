@@ -172,6 +172,31 @@
     <string name="dialogo_excluir_pergunta_mensagem">Tem certeza que deseja excluir "%1$s"?</string>
     <string name="dialogo_excluir_resposta_mensagem">Tem certeza que deseja excluir esta resposta?</string>
 
+    <!-- Registration / Reset Password -->
+    <string name="registro_campos_obrigatorios">Por favor, informe todos os campos</string>
+    <string name="registro_senhas_diferentes">As senhas informadas não são iguais</string>
+    <string name="registro_usuario_cadastrado">Usuário cadastrado com sucesso!</string>
+    <string name="registro_email_ja_cadastrado">E-mail já cadastrado</string>
+    <string name="reset_campos_obrigatorios">Preencha todos os campos</string>
+    <string name="reset_erro_redefinir">Não foi possível redefinir a senha</string>
+    <string name="reset_senha_alterada">Senha alterada com sucesso</string>
+    <!-- Report registration / images -->
+    <string name="imagens_maximo">Máximo de %1$d imagens.</string>
+    <string name="imagens_nenhuma_adicionada">Nenhuma imagem adicionada (limite atingido).</string>
+    <string name="imagens_selecionar">Selecione até %1$d imagens</string>
+    <string name="imagens_contagem">%1$d / %2$d imagem(ns)</string>
+    <string name="denuncia_campos_obrigatorios">Informe nome do local, problema, cidade e UF.</string>
+    <string name="numero_invalido">Número inválido.</string>
+    <string name="falha_processar_imagem">Falha ao processar imagem.</string>
+    <string name="denuncia_enviada">Denúncia enviada!</string>
+    <string name="mapa_endereco_obrigatorio">Preencha endereço/cidade para abrir no mapa.</string>
+    <string name="mapa_app_nao_encontrado">Nenhum app de mapa encontrado.</string>
+    <!-- Question / Answer detail -->
+    <string name="resposta_vazia">Escreva uma resposta antes de enviar.</string>
+    <string name="resposta_excluida">Resposta excluída.</string>
+    <string name="resposta_sem_permissao">Você não tem permissão para excluir esta resposta.</string>
+    <string name="resposta_erro_excluir">Erro ao excluir (%1$d)</string>
+    <string name="pergunta_erro_carregar_detalhe">Erro ao carregar pergunta (%1$d)</string>
     <!-- Toast / error messages -->
     <string name="erro_de_rede">Erro de rede: %1$s</string>
     <string name="sessao_expirada">Sessão expirada. Faça login novamente.</string>
