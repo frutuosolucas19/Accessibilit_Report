@@ -16,11 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -53,7 +55,7 @@ public class ReportRegistrationFragment extends Fragment {
     private LinearLayout containerPreviews;
     private final ArrayList<Uri> imagensSelecionadas = new ArrayList<>();
 
-    private EditText txtNomeLocal;
+    private EditText txtTitulo;
     private EditText txtLogradouro;
     private EditText txtNumero;
     private EditText txtComplemento;
@@ -61,8 +63,9 @@ public class ReportRegistrationFragment extends Fragment {
     private EditText txtUF;
     private EditText txtBairro;
     private EditText txtCEP;
-    private EditText txtProblema;
+    private EditText txtDescricao;
     private EditText txtSugestao;
+    private Spinner spinnerTipo;
 
     private Button btnImagem;
     private Button btnCadastrar;
@@ -104,7 +107,7 @@ public class ReportRegistrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_cadastro_denuncia, container, false);
 
-        txtNomeLocal   = view.findViewById(R.id.editTextNomeLocal);
+        txtTitulo      = view.findViewById(R.id.editTextTitulo);
         txtLogradouro  = view.findViewById(R.id.editTextLogradouro);
         txtNumero      = view.findViewById(R.id.editTextNumero);
         txtComplemento = view.findViewById(R.id.editTextComplemento);
@@ -112,8 +115,14 @@ public class ReportRegistrationFragment extends Fragment {
         txtUF          = view.findViewById(R.id.editTextUF);
         txtBairro      = view.findViewById(R.id.editTextBairro);
         txtCEP         = view.findViewById(R.id.editTextCEP);
-        txtProblema    = view.findViewById(R.id.editTextProblema);
+        txtDescricao   = view.findViewById(R.id.editTextDescricao);
         txtSugestao    = view.findViewById(R.id.editTextSugestao);
+        spinnerTipo    = view.findViewById(R.id.spinnerTipo);
+
+        ArrayAdapter<CharSequence> tipoAdapter = ArrayAdapter.createFromResource(
+                requireContext(), R.array.tipos_denuncia, android.R.layout.simple_spinner_item);
+        tipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTipo.setAdapter(tipoAdapter);
 
         containerPreviews = view.findViewById(R.id.containerPreviews);
 
@@ -129,20 +138,22 @@ public class ReportRegistrationFragment extends Fragment {
     }
 
     private void enviarDenuncia() {
-        String nomeLocal = s(txtNomeLocal);
-        String problema  = s(txtProblema);
+        String titulo    = s(txtTitulo);
+        String descricao = s(txtDescricao);
         String cidade    = s(txtCidade);
         String uf        = s(txtUF);
 
-        if (nomeLocal.isEmpty() || problema.isEmpty() || cidade.isEmpty() || uf.isEmpty()) {
+        if (titulo.isEmpty() || descricao.isEmpty() || cidade.isEmpty() || uf.isEmpty()) {
             Toast.makeText(requireContext(), getString(R.string.denuncia_campos_obrigatorios), Toast.LENGTH_SHORT).show();
             return;
         }
 
         ReportRequest req = new ReportRequest();
-        req.nomeLocal = nomeLocal;
-        req.problema  = problema;
+        req.titulo    = titulo;
+        req.descricao = descricao;
         req.sugestao  = s(txtSugestao);
+        req.tipo      = spinnerTipo.getSelectedItem() != null
+                ? spinnerTipo.getSelectedItem().toString() : "";
 
         ReportRequest.AddressRequest er = new ReportRequest.AddressRequest();
         er.logradouro  = s(txtLogradouro);
@@ -162,24 +173,6 @@ public class ReportRegistrationFragment extends Fragment {
             }
         }
         req.endereco = er;
-
-        if (!imagensSelecionadas.isEmpty()) {
-            req.imagens = new ArrayList<>();
-            int ordem = 1;
-            for (Uri uri : imagensSelecionadas) {
-                String base64 = uriToBase64Jpeg(uri, 80);
-                if (base64 == null) {
-                    Toast.makeText(requireContext(), getString(R.string.falha_processar_imagem), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                ReportRequest.ImageRequest im = new ReportRequest.ImageRequest();
-                im.base64 = base64;
-                im.contentType = "image/jpeg";
-                im.filename = getFilename(uri);
-                im.ordem = ordem++;
-                req.imagens.add(im);
-            }
-        }
 
         btnCadastrar.setEnabled(false);
 
@@ -235,8 +228,8 @@ public class ReportRegistrationFragment extends Fragment {
         containerPreviews.removeAllViews();
 
         float density = getResources().getDisplayMetrics().density;
-        int sizePx   = (int) (88 * density);
-        int marginPx = (int) (6 * density);
+        int sizePx    = (int) (88 * density);
+        int marginPx  = (int) (6 * density);
         int btnSizePx = (int) (28 * density);
 
         for (int i = 0; i < imagensSelecionadas.size(); i++) {
@@ -251,7 +244,7 @@ public class ReportRegistrationFragment extends Fragment {
             thumb.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             thumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
             thumb.setImageURI(uri);
-            thumb.setContentDescription("Imagem " + (i + 1) + " de " + imagensSelecionadas.size());
+            thumb.setContentDescription(getString(R.string.imagens_contagem, i + 1, imagensSelecionadas.size()));
             frame.addView(thumb);
 
             ImageButton btnX = new ImageButton(requireContext());
@@ -261,7 +254,7 @@ public class ReportRegistrationFragment extends Fragment {
             btnX.setLayoutParams(blp);
             btnX.setBackgroundResource(android.R.color.transparent);
             btnX.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-            btnX.setContentDescription("Remover imagem " + (i + 1));
+            btnX.setContentDescription(getString(R.string.imagens_contagem, i + 1, imagensSelecionadas.size()));
             btnX.setOnClickListener(v -> {
                 imagensSelecionadas.remove(uri);
                 renderizarMiniaturas();
@@ -278,32 +271,6 @@ public class ReportRegistrationFragment extends Fragment {
 
     private String s(EditText et) {
         return et.getText() == null ? "" : et.getText().toString().trim();
-    }
-
-    private String uriToBase64Jpeg(Uri uri, int quality) {
-        try (InputStream in = requireContext().getContentResolver().openInputStream(uri)) {
-            Bitmap bmp = android.graphics.BitmapFactory.decodeStream(in);
-            if (bmp == null) return null;
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, quality, baos);
-            return Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String getFilename(Uri uri) {
-        String result = "foto.jpg";
-        try (Cursor c = requireContext().getContentResolver()
-                .query(uri, new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null)) {
-            if (c != null && c.moveToFirst()) {
-                int idx = c.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                if (idx >= 0) result = c.getString(idx);
-            }
-        } catch (Exception e) {
-            Log.w(TAG, "getFilename: could not read display name", e);
-        }
-        return result;
     }
 
     private void abrirMapaComEndereco() {
