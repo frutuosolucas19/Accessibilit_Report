@@ -38,6 +38,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -193,7 +196,7 @@ public class ReportRegistrationFragment extends Fragment {
                     Toast.makeText(requireContext(), getString(R.string.sessao_expirada), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(requireContext(), LoginActivity.class));
                 } else {
-                    Toast.makeText(requireContext(), getString(R.string.erro_falha_codigo, resp.code()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(), parseApiError(resp.errorBody(), resp.code()), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -323,6 +326,23 @@ public class ReportRegistrationFragment extends Fragment {
         } else {
             Toast.makeText(requireContext(), "Nenhum app de mapa encontrado.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String parseApiError(ResponseBody errorBody, int code) {
+        if (errorBody != null) {
+            try {
+                String raw = errorBody.string();
+                if (!raw.isEmpty()) {
+                    JSONObject json = new JSONObject(raw);
+                    if (json.has("message")) return json.getString("message");
+                    if (json.has("error"))   return json.getString("error");
+                    return raw;
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "parseApiError: could not parse error body", e);
+            }
+        }
+        return getString(R.string.erro_falha_codigo, code);
     }
 
     private void appendPart(StringBuilder sb, String value) {
