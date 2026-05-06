@@ -185,7 +185,7 @@
     <string name="imagens_nenhuma_adicionada">Nenhuma imagem adicionada (limite atingido).</string>
     <string name="imagens_selecionar">Selecione até %1$d imagens</string>
     <string name="imagens_contagem">%1$d / %2$d imagem(ns)</string>
-    <string name="denuncia_campos_obrigatorios">Informe nome do local, problema, cidade e UF.</string>
+    <string name="denuncia_campos_obrigatorios">Informe título, tipo, descrição, logradouro, bairro, cidade e estado.</string>
     <string name="numero_invalido">Número inválido.</string>
     <string name="falha_processar_imagem">Falha ao processar imagem.</string>
     <string name="denuncia_enviada">Denúncia enviada!</string>
@@ -225,10 +225,37 @@
     <string-array name="tipos_denuncia">
         <item>Calçada inadequada</item>
         <item>Ausência de rampa</item>
-        <item>Falta de sinalização</item>
-        <item>Acesso bloqueado</item>
-        <item>Transporte inacessível</item>
+        <item>Estacionamento</item>
         <item>Banheiro inacessível</item>
+        <item>Elevador</item>
+        <item>Falta de sinalização</item>
         <item>Outros</item>
     </string-array>
+    <string-array name="tipos_denuncia_valores">
+        <item>CALCADA</item>
+        <item>RAMPA</item>
+        <item>ESTACIONAMENTO</item>
+        <item>BANHEIRO</item>
+        <item>ELEVADOR</item>
+        <item>SINALIZACAO</item>
+        <item>OUTROS</item>
+    </string-array>
+
+    <!-- Camera / image picker -->
+    <string name="dialog_adicionar_imagem">Adicionar imagem</string>
+    <string name="camera_tirar_foto">Tirar foto</string>
+    <string name="camera_galeria">Escolher da galeria</string>
+    <string name="imagem_muito_grande">Imagem muito grande (máx 10 MB).</string>
+    <string name="imagens_limite_atingido">Limite de %1$d imagens atingido.</string>
+    <string name="mapa_toque_instrucao">Toque no mapa para marcar um local</string>
+    <string name="coordenadas_formato">Local: %.6f, %.6f</string>
+    <string name="camera_permissao_negada">Permissão de câmera negada.</string>
+    <!-- Edit report -->
+    <string name="edit_campos_obrigatorios">Informe título, tipo, descrição, logradouro, bairro, cidade e estado.</string>
+    <string name="edit_salvar_erro">Erro ao salvar (%1$d)</string>
+    <string name="edit_remover_imagem_erro">Erro ao remover imagem (%1$d)</string>
+    <string name="edit_rede_remover_erro">Erro de rede ao remover imagem: %1$s</string>
+    <string name="edit_rede_salvar_erro">Erro de rede ao salvar: %1$s</string>
+    <string name="edit_excluir_erro">Erro ao excluir (%1$d)</string>
+    <string name="edit_rede_excluir_erro">Erro de rede ao excluir: %1$s</string>
 </resources>

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ import com.example.acessibilit_report.retrofit.RetrofitInitializer;
 import com.example.acessibilit_report.services.ReportService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -83,6 +86,8 @@ public class ReportEditFragment extends Fragment {
 
     private Uri photoUri;
     private okhttp3.Call pendingPutCall;
+    private Double latitudeEdit  = null;
+    private Double longitudeEdit = null;
 
     // ── Camera ───────────────────────────────────────────────────────────────
     private final ActivityResultLauncher<Uri> cameraLauncher =
@@ -96,7 +101,7 @@ public class ReportEditFragment extends Fragment {
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
                 if (granted) launchCamera();
                 else if (isAdded())
-                    Toast.makeText(requireContext(), "Permissão de câmera negada.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.camera_permissao_negada), Toast.LENGTH_SHORT).show();
             });
 
     // ── Gallery ──────────────────────────────────────────────────────────────
@@ -109,7 +114,7 @@ public class ReportEditFragment extends Fragment {
 
                 int espacoRestante = MAX_IMAGENS - totalImagens();
                 if (espacoRestante <= 0) {
-                    Toast.makeText(requireContext(), "Limite de " + MAX_IMAGENS + " imagens atingido.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.imagens_limite_atingido, MAX_IMAGENS), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -189,8 +194,9 @@ public class ReportEditFragment extends Fragment {
         if (report.sugestao != null)  editTextSugestao.setText(report.sugestao);
 
         if (report.tipo != null) {
-            for (int i = 0; i < tipos.length; i++) {
-                if (tipos[i].equals(report.tipo)) {
+            String[] tiposValores = getResources().getStringArray(R.array.tipos_denuncia_valores);
+            for (int i = 0; i < tiposValores.length; i++) {
+                if (tiposValores[i].equals(report.tipo)) {
                     spinnerTipo.setSelection(i);
                     break;
                 }
@@ -208,6 +214,9 @@ public class ReportEditFragment extends Fragment {
             if (e.getCep() != null)          editTextCEP.setText(e.getCep());
         }
 
+        latitudeEdit  = report.latitude;
+        longitudeEdit = report.longitude;
+
         // Copia lista de imagens existentes e renderiza
         if (report.imagens != null) {
             imagensExistentes = new ArrayList<>(report.imagens);
@@ -222,12 +231,12 @@ public class ReportEditFragment extends Fragment {
 
     private void mostrarDialogImagem() {
         if (totalImagens() >= MAX_IMAGENS) {
-            Toast.makeText(requireContext(), "Limite de " + MAX_IMAGENS + " imagens atingido.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), getString(R.string.imagens_limite_atingido, MAX_IMAGENS), Toast.LENGTH_SHORT).show();
             return;
         }
         new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Adicionar imagem")
-                .setItems(new String[]{"Tirar foto", "Escolher da galeria"}, (dialog, which) -> {
+                .setTitle(R.string.dialog_adicionar_imagem)
+                .setItems(new String[]{getString(R.string.camera_tirar_foto), getString(R.string.camera_galeria)}, (dialog, which) -> {
                     if (which == 0) cameraPermissionLauncher.launch(Manifest.permission.CAMERA);
                     else {
                         Intent pick = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -252,7 +261,7 @@ public class ReportEditFragment extends Fragment {
                     photo);
             cameraLauncher.launch(photoUri);
         } catch (IOException e) {
-            Toast.makeText(requireContext(), "Falha ao criar arquivo de foto.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), getString(R.string.falha_processar_imagem), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -335,14 +344,15 @@ public class ReportEditFragment extends Fragment {
         String descricao = t(editTextDescricao);
         String cidade    = t(editTextCidade);
         String uf        = t(editTextUF);
-        String tipo      = spinnerTipo.getSelectedItem() != null
-                ? spinnerTipo.getSelectedItem().toString() : "";
+        String[] tiposValores = getResources().getStringArray(R.array.tipos_denuncia_valores);
+        int pos = spinnerTipo.getSelectedItemPosition();
+        String tipo = (pos >= 0 && pos < tiposValores.length) ? tiposValores[pos] : "OUTROS";
 
         if (TextUtils.isEmpty(titulo) || TextUtils.isEmpty(descricao)
                 || TextUtils.isEmpty(cidade) || TextUtils.isEmpty(uf)
                 || TextUtils.isEmpty(tipo)) {
             Toast.makeText(requireContext(),
-                    "Informe título, tipo, descrição, cidade e UF.", Toast.LENGTH_SHORT).show();
+                    getString(R.string.edit_campos_obrigatorios), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -378,7 +388,7 @@ public class ReportEditFragment extends Fragment {
                         if (!isAdded()) return;
                         btnSalvar.setEnabled(true);
                         Toast.makeText(requireContext(),
-                                "Erro ao remover imagem (" + resp.code() + ")", Toast.LENGTH_LONG).show();
+                                getString(R.string.edit_remover_imagem_erro, resp.code()), Toast.LENGTH_LONG).show();
                     });
                 }
             }
@@ -390,98 +400,90 @@ public class ReportEditFragment extends Fragment {
                     if (!isAdded()) return;
                     btnSalvar.setEnabled(true);
                     Toast.makeText(requireContext(),
-                            "Erro de rede ao remover imagem: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                            getString(R.string.edit_rede_remover_erro, t.getMessage()), Toast.LENGTH_LONG).show();
                 });
             }
         });
     }
 
     private void executarPut(String titulo, String descricao, String tipo,
-                             String cidade, String uf) {
-        MultipartBody.Builder body = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("titulo",    titulo)
-                .addFormDataPart("descricao", descricao)
-                .addFormDataPart("tipo",      tipo)
-                .addFormDataPart("cidade",    cidade)
-                .addFormDataPart("uf",        uf);
-
+                             String cidade, String estado) {
         String sugestao    = t(editTextSugestao);
         String logradouro  = t(editTextLogradouro);
         String bairro      = t(editTextBairro);
         String cep         = t(editTextCEP);
         String complemento = t(editTextComplemento);
-        String numeroStr   = t(editTextNumero);
+        String numero      = t(editTextNumero);
 
-        if (!sugestao.isEmpty())    body.addFormDataPart("sugestao",    sugestao);
-        if (!logradouro.isEmpty())  body.addFormDataPart("logradouro",  logradouro);
-        if (!bairro.isEmpty())      body.addFormDataPart("bairro",      bairro);
-        if (!cep.isEmpty())         body.addFormDataPart("cep",         cep);
-        if (!complemento.isEmpty()) body.addFormDataPart("complemento", complemento);
-        if (!numeroStr.isEmpty()) {
-            try {
-                Integer.parseInt(numeroStr);
-                body.addFormDataPart("numero", numeroStr);
-            } catch (NumberFormatException e) {
-                if (isAdded()) {
-                    btnSalvar.setEnabled(true);
-                    Toast.makeText(requireContext(), "Número inválido.", Toast.LENGTH_SHORT).show();
+        try {
+            JSONObject enderecoJson = new JSONObject()
+                    .put("logradouro",  logradouro.isEmpty()  ? JSONObject.NULL : logradouro)
+                    .put("numero",      numero.isEmpty()       ? JSONObject.NULL : numero)
+                    .put("complemento", complemento.isEmpty()  ? JSONObject.NULL : complemento)
+                    .put("bairro",      bairro.isEmpty()       ? JSONObject.NULL : bairro)
+                    .put("cidade",      cidade)
+                    .put("estado",      estado)
+                    .put("cep",         cep.isEmpty()          ? JSONObject.NULL : cep);
+
+            JSONObject json = new JSONObject()
+                    .put("titulo",    titulo)
+                    .put("descricao", descricao)
+                    .put("sugestao",  sugestao.isEmpty() ? JSONObject.NULL : sugestao)
+                    .put("tipo",      tipo)
+                    .put("endereco",  enderecoJson)
+                    .put("latitude",  latitudeEdit  != null ? latitudeEdit  : JSONObject.NULL)
+                    .put("longitude", longitudeEdit != null ? longitudeEdit : JSONObject.NULL);
+
+            RequestBody body = RequestBody.create(json.toString(),
+                    MediaType.parse("application/json; charset=utf-8"));
+
+            if (pendingPutCall != null) pendingPutCall.cancel();
+
+            String url = BuildConfig.BASE_URL + "denuncias/" + report.id;
+            Request request = new Request.Builder()
+                    .url(url)
+                    .put(body)
+                    .build();
+
+            OkHttpClient client = RetrofitInitializer.getOkHttpClient(requireContext());
+            pendingPutCall = client.newCall(request);
+            pendingPutCall.enqueue(new okhttp3.Callback() {
+                @Override
+                public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) {
+                    if (!isAdded()) return;
+                    requireActivity().runOnUiThread(() -> {
+                        if (!isAdded()) return;
+                        btnSalvar.setEnabled(true);
+                        if (response.isSuccessful()) {
+                            Toast.makeText(requireContext(),
+                                    getString(R.string.msg_denuncia_atualizada), Toast.LENGTH_LONG).show();
+                            requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                        } else if (response.code() == 401) {
+                            Toast.makeText(requireContext(),
+                                    getString(R.string.sessao_expirada), Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(requireContext(), LoginActivity.class));
+                        } else {
+                            Toast.makeText(requireContext(),
+                                    getString(R.string.edit_salvar_erro, response.code()), Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-                return;
-            }
-        }
 
-        // Novas imagens como partes multipart
-        for (Uri uri : new ArrayList<>(imagensNovas)) {
-            byte[] bytes = uriToBytes(uri);
-            if (bytes == null) {
-                if (isAdded()) btnSalvar.setEnabled(true);
-                return;
-            }
-            body.addFormDataPart("imagens", getFilename(uri),
-                    RequestBody.create(bytes, MediaType.parse("image/jpeg")));
-        }
-
-        if (pendingPutCall != null) pendingPutCall.cancel();
-
-        String url = BuildConfig.BASE_URL + "denuncia/" + report.id;
-        Request request = new Request.Builder().url(url).put(body.build()).build();
-
-        OkHttpClient client = RetrofitInitializer.getOkHttpClient(requireContext());
-        pendingPutCall = client.newCall(request);
-        pendingPutCall.enqueue(new okhttp3.Callback() {
-            @Override
-            public void onResponse(@NonNull okhttp3.Call call, @NonNull Response response) {
-                if (!isAdded()) return;
-                requireActivity().runOnUiThread(() -> {
+                @Override
+                public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                     if (!isAdded()) return;
-                    btnSalvar.setEnabled(true);
-                    if (response.isSuccessful()) {
+                    requireActivity().runOnUiThread(() -> {
+                        if (!isAdded()) return;
+                        btnSalvar.setEnabled(true);
                         Toast.makeText(requireContext(),
-                                R.string.msg_denuncia_atualizada, Toast.LENGTH_LONG).show();
-                        requireActivity().getOnBackPressedDispatcher().onBackPressed();
-                    } else if (response.code() == 401) {
-                        Toast.makeText(requireContext(),
-                                "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(requireContext(), LoginActivity.class));
-                    } else {
-                        Toast.makeText(requireContext(),
-                                "Erro ao salvar (" + response.code() + ")", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
-                if (!isAdded()) return;
-                requireActivity().runOnUiThread(() -> {
-                    if (!isAdded()) return;
-                    btnSalvar.setEnabled(true);
-                    Toast.makeText(requireContext(),
-                            "Erro de rede: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
-            }
-        });
+                                getString(R.string.edit_rede_salvar_erro, e.getMessage()), Toast.LENGTH_LONG).show();
+                    });
+                }
+            });
+        } catch (org.json.JSONException e) {
+            btnSalvar.setEnabled(true);
+            Log.e("ReportEditFrag", "JSON error", e);
+        }
     }
 
     // ── Delete report ─────────────────────────────────────────────────────────
@@ -507,14 +509,14 @@ public class ReportEditFragment extends Fragment {
                     requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 } else {
                     Toast.makeText(requireContext(),
-                            "Erro ao excluir (" + resp.code() + ")", Toast.LENGTH_LONG).show();
+                            getString(R.string.edit_excluir_erro, resp.code()), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(retrofit2.Call<Void> call, Throwable t) {
                 if (!isAdded()) return;
-                Toast.makeText(requireContext(), "Erro de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getString(R.string.edit_rede_excluir_erro, t.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -532,7 +534,7 @@ public class ReportEditFragment extends Fragment {
                 if (total > MAX_IMAGE_BYTES) {
                     if (isAdded())
                         Toast.makeText(requireContext(),
-                                "Imagem muito grande (máx 10 MB).", Toast.LENGTH_SHORT).show();
+                                getString(R.string.imagem_muito_grande), Toast.LENGTH_SHORT).show();
                     return null;
                 }
                 baos.write(buf, 0, n);

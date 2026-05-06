@@ -41,7 +41,7 @@ public class MapPickerActivity extends AppCompatActivity implements OnMapReadyCa
 
         btnConfirmar.setOnClickListener(v -> {
             if (latitudeSelecionada == null || longitudeSelecionada == null) {
-                Toast.makeText(this, "Toque no mapa para marcar um local", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.mapa_toque_instrucao), Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent result = new Intent();

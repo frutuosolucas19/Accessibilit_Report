@@ -16,31 +16,31 @@ import retrofit2.http.Path;
 
 public interface ReportService {
 
-    @GET("denuncia")
+    @GET("denuncias")
     Call<List<ReportResponse>> denuncia();
 
-    @GET("denuncia/denuncias")
+    @GET("denuncias")
     Call<List<ReportResponse>> denuncias();
 
-    @POST("denuncia")
+    @POST("denuncias")
     Call<ReportResponse> criarDenuncia(@Body ReportRequest body);
 
-    @GET("denuncia/minhas")
+    @GET("denuncias/minhas")
     Call<List<ReportResponse>> minhas();
 
-    @GET("denuncia/{id}")
+    @GET("denuncias/{id}")
     Call<ReportResponse> obter(@Path("id") Long id);
 
-    @PUT("denuncia/{id}")
+    @PUT("denuncias/{id}")
     Call<ReportResponse> atualizar(@Path("id") Long id, @Body ReportRequest body);
 
-    @DELETE("denuncia/{id}")
+    @DELETE("denuncias/{id}")
     Call<Void> deletar(@Path("id") Long id);
 
-    @GET("denuncia/{id}/imagens/{imgId}")
+    @GET("denuncias/{id}/imagens/{imgId}")
     Call<ResponseBody> imagem(@Path("id") Long id, @Path("imgId") Long imgId);
 
-    @DELETE("denuncia/{id}/imagens/{imgId}")
+    @DELETE("denuncias/{id}/imagens/{imgId}")
     Call<Void> deletarImagem(@Path("id") Long reportId, @Path("imgId") Long imagemId);
 }
 
