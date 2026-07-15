@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>AccessibilIT Report — Protótipo</title>
+<style>
+  :root {
+    --azul: #1565C0;
+    --azul-dark: #0D47A1;
+    --azul-light: #E3F2FD;
+    --red: #B00020;
+    --grey: #757575;
+    --border: #C8C8C8;
+    --bg: #F5F5F5;
+    --white: #FFFFFF;
+    --black: #1A1A1A;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: #E0E0E0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px 12px;
+    gap: 20px;
+  }
+
+  /* ── Nav ───────────────────────────────────────── */
+  .nav-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #E0E0E0;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .nav-btn {
+    padding: 8px 16px;
+    border: 2px solid var(--azul);
+    background: var(--white);
+    color: var(--azul);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all .2s;
+  }
+  .nav-btn.active, .nav-btn:hover {
+    background: var(--azul);
+    color: var(--white);
+  }
+
+  /* ── Phone frame ───────────────────────────────── */
+  .phone {
+    width: 390px;
+    background: var(--white);
+    border-radius: 36px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+  }
+  .phone.visible { display: flex; }
+
+  .status-bar {
+    background: var(--azul-dark);
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 780px;
+  }
+
+  /* ── Top App Bar ────────────────────────────────── */
+  .app-bar {
+    background: var(--azul);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .app-bar .back-icon {
+    font-size: 22px;
+    cursor: pointer;
+    opacity: .9;
+  }
+
+  /* ── Bottom nav ─────────────────────────────────── */
+  .bottom-nav {
+    display: flex;
+    background: var(--white);
+    border-top: 1px solid #E0E0E0;
+    padding: 8px 0 4px;
+  }
+  .bnav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 10px;
+    color: var(--grey);
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .bnav-item.active { color: var(--azul); }
+  .bnav-item .icon { font-size: 22px; }
+
+  /* ── Form elements ──────────────────────────────── */
+  .form-wrap { padding: 16px; background: var(--white); }
+
+  .screen-title {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--black);
+    margin-bottom: 16px;
+    margin-top: 4px;
+  }
+
+  .field-label {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 4px;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  .input-field {
+    width: 100%;
+    height: 52px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 14px;
+    font-size: 15px;
+    color: var(--black);
+    background: var(--white);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .input-field:focus { border-color: var(--azul); }
+  .input-field::placeholder { color: #AAAAAA; }
+
+  .input-field.multiline {
+    height: 110px;
+    padding: 12px 14px;
+    resize: none;
+    display: block;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+  .input-row .input-field { min-width: 0; }
+  .flex-2 { flex: 2; }
+  .flex-1 { flex: 1; }
+
+  .section-heading {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--black);
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  /* ── Buttons ────────────────────────────────────── */
+  .btn-primary {
+    width: 100%;
+    height: 52px;
+    background: var(--azul);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    letter-spacing: .3px;
+    transition: background .2s;
+  }
+  .btn-primary:hover { background: var(--azul-dark); }
+
+  .btn-outlined {
+    width: 100%;
+    height: 52px;
+    background: transparent;
+    color: var(--azul);
+    border: 2px solid var(--azul);
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background .2s;
+  }
+  .btn-outlined:hover { background: var(--azul-light); }
+
+  .btn-danger {
+    width: 100%;
+    height: 52px;
+    background: transparent;
+    color: var(--red);
+    border: 2px solid var(--red);
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background .2s;
+  }
+  .btn-danger:hover { background: #FFEBEE; }
+
+  /* ── Login screen ───────────────────────────────── */
+  .login-bg {
+    background: var(--azul);
+    min-height: 780px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 32px 32px;
+  }
+
+  .login-logo {
+    width: 130px;
+    height: 130px;
+    background: var(--white);
+    border-radius: 50%;
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .login-title {
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 28px;
+    margin-bottom: 52px;
+    letter-spacing: .5px;
+  }
+
+  .login-input {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0 44px 0 16px;
+    font-size: 15px;
+    background: var(--white);
+    color: var(--black);
+    outline: none;
+    position: relative;
+  }
+
+  .input-wrap {
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .input-wrap .input-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--grey);
+    pointer-events: none;
+  }
+
+  .btn-login {
+    width: 100%;
+    height: 52px;
+    background: var(--white);
+    color: var(--azul);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 24px;
+    box-shadow: var(--shadow);
+    transition: opacity .2s;
+  }
+  .btn-login:hover { opacity: .92; }
+
+  .link-text {
+    color: var(--white);
+    font-size: 17px;
+    margin-top: 24px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+  }
+  .link-small {
+    color: rgba(255,255,255,.85);
+    font-size: 15px;
+    font-style: italic;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  /* ── Card list ──────────────────────────────────── */
+  .report-card {
+    background: var(--white);
+    border-bottom: 1px solid #EBEBEB;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .report-card:hover { background: var(--azul-light); }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+  .card-addr {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 3px;
+  }
+  .card-tipo {
+    font-size: 12px;
+    color: var(--grey);
+    margin-bottom: 5px;
+  }
+  .card-date {
+    font-size: 11px;
+    color: var(--grey);
+  }
+  .card-badge {
+    display: inline-block;
+    background: var(--azul-light);
+    color: var(--azul);
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+  .card-btn-edit {
+    padding: 5px 16px;
+    border: 1.5px solid var(--azul);
+    color: var(--azul);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    background: transparent;
+    cursor: pointer;
+  }
+  .card-btn-del {
+    padding: 5px 16px;
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  /* ── Image previews ─────────────────────────────── */
+  .preview-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+  }
+  .preview-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius);
+    background: #CFD8DC;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    position: relative;
+    border: 1.5px solid var(--border);
+  }
+  .preview-thumb .remove-x {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    background: var(--grey);
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* ── Coord chip ─────────────────────────────────── */
+  .coord-chip {
+    background: #E8F5E9;
+    border: 1px solid #A5D6A7;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: #2E7D32;
+    text-align: center;
+    margin: 6px auto;
+    width: fit-content;
+    display: block;
+  }
+
+  /* ── Empty state ────────────────────────────────── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    color: var(--grey);
+    gap: 12px;
+  }
+  .empty-state .empty-icon { font-size: 56px; }
+  .empty-state p { font-size: 15px; text-align: center; max-width: 220px; }
+
+  /* ── Select / Spinner ───────────────────────────── */
+  select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23757575' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="nav-bar">
+  <button class="nav-btn active" onclick="showScreen('login')">🔑 Login</button>
+  <button class="nav-btn" onclick="showScreen('lista')">📋 Minhas Denúncias</button>
+  <button class="nav-btn" onclick="showScreen('cadastro')">➕ Nova Denúncia</button>
+  <button class="nav-btn" onclick="showScreen('editar')">✏️ Editar Denúncia</button>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SCREEN 1 — LOGIN                                -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="phone visible" id="screen-login">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="screen-body">
+    <div class="login-bg">
+      <div class="login-logo">♿</div>
+      <div class="login-title">AccessibilIT Report</div>
+
+      <div class="input-wrap">
+        <input class="login-input" type="text" placeholder="E-mail ou usuário">
+        <span class="input-icon">✉️</span>
+      </div>
+
+      <div class="input-wrap">
+        <input class="login-input" type="password" placeholder="Senha">
+        <span class="input-icon">👁️</span>
+      </div>
+
+      <span class="link-small">Esqueceu sua senha?</span>
+      <button class="btn-login" onclick="showScreen('lista')">ENTRAR</button>
+      <span class="link-text">Criar conta</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SCREEN 2 — MINHAS DENÚNCIAS                     -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="phone" id="screen-lista">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="screen-body">
+    <div class="app-bar">
+      <span style="font-size:26px">♿</span>
+      <span style="flex:1">AccessibilIT Report</span>
+      <span style="font-size:22px">👤</span>
+    </div>
+
+    <div style="padding:16px 16px 8px; background:white; border-bottom:1px solid #eee;">
+      <div style="font-size:22px;font-weight:700;color:#1A1A1A;text-align:center;">Minhas Denúncias</div>
+    </div>
+
+    <div class="report-card">
+      <span class="card-badge">CALCADA</span>
+      <div class="card-title">Calçada quebrada na Av. Paulista</div>
+      <div class="card-addr">📍 Av. Paulista, 1000 — São Paulo, SP</div>
+      <div class="card-tipo">Bairro Bela Vista · CEP 01310-100</div>
+      <div class="card-date">🗓 Criado em 10/07/2025</div>
+      <div class="card-actions">
+        <button class="card-btn-edit" onclick="showScreen('editar')">Editar</button>
+        <button class="card-btn-del">Excluir</button>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <span class="card-badge">RAMPA</span>
+      <div class="card-title">Ausência de rampa na entrada</div>
+      <div class="card-addr">📍 Rua Augusta, 500 — São Paulo, SP</div>
+      <div class="card-tipo">Bairro Consolação · CEP 01304-000</div>
+      <div class="card-date">🗓 Criado em 08/07/2025</div>
+      <div class="card-actions">
+        <button class="card-btn-edit" onclick="showScreen('editar')">Editar</button>
+        <button class="card-btn-del">Excluir</button>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <span class="card-badge">BANHEIRO</span>
+      <div class="card-title">Banheiro acessível bloqueado</div>
+      <div class="card-addr">📍 Shopping Morumbi, Nível 2</div>
+      <div class="card-tipo">Bairro Morumbi · CEP 05651-901</div>
+      <div class="card-date">🗓 Criado em 03/07/2025</div>
+      <div class="card-actions">
+        <button class="card-btn-edit" onclick="showScreen('editar')">Editar</button>
+        <button class="card-btn-del">Excluir</button>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <span class="card-badge">SINALIZACAO</span>
+      <div class="card-title">Falta de sinalização sonora no semáforo</div>
+      <div class="card-addr">📍 Rua da Consolação, 2200</div>
+      <div class="card-tipo">Bairro Cerqueira César · CEP 01302-000</div>
+      <div class="card-date">🗓 Criado em 01/07/2025</div>
+      <div class="card-actions">
+        <button class="card-btn-edit" onclick="showScreen('editar')">Editar</button>
+        <button class="card-btn-del">Excluir</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-nav">
+    <div class="bnav-item"><div class="icon">🏠</div>Início</div>
+    <div class="bnav-item active"><div class="icon">📋</div>Denúncias</div>
+    <div class="bnav-item" onclick="showScreen('cadastro')"><div class="icon">➕</div>Nova</div>
+    <div class="bnav-item"><div class="icon">💬</div>Fórum</div>
+    <div class="bnav-item"><div class="icon">👤</div>Perfil</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SCREEN 3 — CADASTRO DE DENÚNCIA                 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="phone" id="screen-cadastro">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="screen-body">
+    <div class="app-bar">
+      <span class="back-icon" onclick="showScreen('lista')">←</span>
+      <span>Nova Denúncia</span>
+    </div>
+
+    <div class="form-wrap">
+      <div class="screen-title">Cadastro de Denúncia</div>
+
+      <input class="input-field" type="text" placeholder="Título da denúncia">
+
+      <div class="field-label">Tipo de problema</div>
+      <select class="input-field">
+        <option>Calçada inadequada</option>
+        <option>Ausência de rampa</option>
+        <option>Estacionamento</option>
+        <option>Banheiro inacessível</option>
+        <option>Elevador</option>
+        <option>Falta de sinalização</option>
+        <option>Outros</option>
+      </select>
+
+      <div class="section-heading">📍 Endereço</div>
+
+      <input class="input-field" type="text" placeholder="Logradouro (rua, avenida...)">
+
+      <div class="input-row" style="margin-top:10px">
+        <input class="input-field flex-1" type="text" placeholder="Número">
+        <input class="input-field flex-2" type="text" placeholder="Complemento">
+      </div>
+
+      <div class="input-row" style="margin-top:10px">
+        <input class="input-field flex-2" type="text" placeholder="Cidade">
+        <input class="input-field flex-1" type="text" placeholder="UF" maxlength="2">
+      </div>
+
+      <div class="input-row" style="margin-top:10px">
+        <input class="input-field flex-2" type="text" placeholder="Bairro">
+        <input class="input-field flex-1" type="text" placeholder="CEP">
+      </div>
+
+      <div class="section-heading">📝 Descrição</div>
+
+      <textarea class="input-field multiline" placeholder="Descreva o problema com detalhes..."></textarea>
+
+      <div style="margin-top:10px"></div>
+      <textarea class="input-field" style="height:88px;padding:12px;display:block;resize:none" placeholder="Alguma sugestão de melhoria? (opcional)"></textarea>
+
+      <!-- Image previews -->
+      <div class="preview-row" style="margin-top:14px">
+        <div class="preview-thumb">🖼️<span class="remove-x">✕</span></div>
+        <div class="preview-thumb">🖼️<span class="remove-x">✕</span></div>
+      </div>
+
+      <button class="btn-outlined" style="margin-top:8px">
+        📷 Adicionar imagens
+      </button>
+
+      <button class="btn-outlined" style="margin-top:10px">
+        📌 Marcar local no mapa
+      </button>
+
+      <span class="coord-chip">📍 Local: -23.561480, -46.656240</span>
+
+      <button class="btn-primary">CRIAR DENÚNCIA</button>
+      <div style="height:24px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SCREEN 4 — EDITAR DENÚNCIA                      -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="phone" id="screen-editar">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="screen-body">
+    <div class="app-bar">
+      <span class="back-icon" onclick="showScreen('lista')">←</span>
+      <span>Editar Denúncia</span>
+    </div>
+
+    <div class="form-wrap">
+      <div class="screen-title">Editar Denúncia</div>
+
+      <input class="input-field" type="text" value="Calçada quebrada na Av. Paulista">
+
+      <div class="field-label">Tipo de problema</div>
+      <select class="input-field">
+        <option selected>Calçada inadequada</option>
+        <option>Ausência de rampa</option>
+        <option>Estacionamento</option>
+        <option>Banheiro inacessível</option>
+        <option>Elevador</option>
+        <option>Falta de sinalização</option>
+        <option>Outros</option>
+      </select>
+
+      <div class="section-heading">📍 Endereço</div>
+
+      <input class="input-field" type="text" value="Av. Paulista">
+
+      <div class="input-row" style="margin-top:10px">
+        <input class="input-field flex-1" type="text" value="1000">
+        <input class="input-field flex-2" type="text" placeholder="Complemento">
+      </div>
+
+      <div class="input-row" style="margin-top:10px">
+        <input class="input-field flex-2" type="text" value="São Paulo">
+        <input class="input-field flex-1" type="text" value="SP">
+      </div>
+
+      <div class="input-row" style="margin-top:10px">
+        <input class="input-field flex-2" type="text" value="Bela Vista">
+        <input class="input-field flex-1" type="text" value="01310100">
+      </div>
+
+      <div class="section-heading">📝 Descrição</div>
+
+      <textarea class="input-field multiline">Calçada com buracos e desníveis que impedem a passagem de cadeirantes e pessoas com mobilidade reduzida.</textarea>
+
+      <div style="margin-top:10px"></div>
+      <textarea class="input-field" style="height:88px;padding:12px;display:block;resize:none" placeholder="Alguma sugestão? (opcional)">Refazer o piso com material antiderrapante nivelado.</textarea>
+
+      <!-- Image previews -->
+      <div class="preview-row" style="margin-top:14px">
+        <div class="preview-thumb">🖼️<span class="remove-x">✕</span></div>
+        <div class="preview-thumb" style="background:#E8F5E9;border:2px dashed #A5D6A7;color:#888;font-size:14px;">+ foto</div>
+      </div>
+
+      <button class="btn-outlined" style="margin-top:8px">
+        📷 Adicionar imagens
+      </button>
+
+      <button class="btn-primary">SALVAR ALTERAÇÕES</button>
+      <button class="btn-danger">EXCLUIR DENÚNCIA</button>
+      <div style="height:24px"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showScreen(name) {
+    document.querySelectorAll('.phone').forEach(p => p.classList.remove('visible'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('visible');
+    const labels = { login: '🔑 Login', lista: '📋 Minhas Denúncias', cadastro: '➕ Nova Denúncia', editar: '✏️ Editar Denúncia' };
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      if (b.textContent.trim() === labels[name]) b.classList.add('active');
+    });
+  }
+</script>
+</body>
+</html>
